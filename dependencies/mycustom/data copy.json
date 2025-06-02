@@ -1,0 +1,19 @@
+{
+	"name":	"Banana",
+	"age":	30,
+	"email":	"john.doe@example.com",
+	"other": {
+		"thing": "home",
+		"anyway": ["q", "w", "e", "r", "t", "y"],
+		"air": [
+			{
+				"a": 2323,
+				"b": 2151
+			},
+			{
+				"a": 3456,
+				"b": 1567
+			}
+		]
+	}
+}
