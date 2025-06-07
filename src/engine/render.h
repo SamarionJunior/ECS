@@ -12,9 +12,9 @@
 #include "../architecture/systems/systems.h"
 
 void render();
-void fillAuxRect(SDL_FRect* auxRect, ComponentsForLayer *componentsForSystem);
+void fillAuxRect(SDL_FRect* auxRect, Position position, Size size);
 void setColor(Color color);
 void clearWindow(Color color);
-void draw(SDL_FRect* auxRect, ComponentsForLayer *componentsForSystem);
+void draw(SDL_FRect* auxRect, Position position, Size size, Color color);
 
  #endif

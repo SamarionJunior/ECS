@@ -137,7 +137,7 @@ bool setCellColor(VectorColor* vectorColor, size_t collum, Color data){
 
 }
 
-int* getCellColor(VectorColor* vectorColor, size_t collum){
+Color* getCellColor(VectorColor* vectorColor, size_t collum){
 
     if(!verifyParamsColor(vectorColor, collum)){
         return NULL;

@@ -138,7 +138,7 @@ bool setCellSize(VectorSize* vectorSize, size_t collum, Size data){
 
 }
 
-int* getCellSize(VectorSize* vectorSize, size_t collum){
+Size* getCellSize(VectorSize* vectorSize, size_t collum){
 
     if(!verifyParamsSize(vectorSize, collum)){
         return NULL;

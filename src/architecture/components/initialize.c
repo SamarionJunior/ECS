@@ -10,6 +10,13 @@
 #include "../../../dependencies/my/matrix/matrix.h"
 #include "../../../dependencies/my/matrix/initialize.h"
 
+#include "../../../dependencies/my/dynamicvectors/components/information.h"
+#include "../../../dependencies/my/dynamicvectors/components/position.h"
+#include "../../../dependencies/my/dynamicvectors/components/size.h"
+#include "../../../dependencies/my/dynamicvectors/components/color.h"
+#include "../../../dependencies/my/dynamicvectors/components/collider.h"
+#include "../../../dependencies/my/dynamicvectors/components/layer.h"
+
 Information defualtInformation = (Information){
 	.id = ID_INIT,
 	.name = "",
@@ -63,6 +70,13 @@ Layer defualtLayer = (Layer){
 void initializeComponents();
 
 void initializeComponents(){
+
+	initializeVectorInformation(&vectorInformation, MAX_COMPONENTS);
+	initializeVectorPosition(&vectorPosition, MAX_COMPONENTS);
+	initializeVectorSize(&vectorSize, MAX_COMPONENTS);
+	initializeVectorColor(&vectorColor, MAX_COMPONENTS);
+	initializeVectorCollider(&vectorCollider, MAX_COMPONENTS);
+	initializeVectorLayer(&vectorLayer, MAX_COMPONENTS);
 	// initializeMatrix(&information, SUBCOMPONENTS, MAX_COMPONENTS);
 	// initializeMatrix(&position, SUBCOMPONENTS, MAX_COMPONENTS);
 	// initializeMatrix(&direction, SUBCOMPONENTS, MAX_COMPONENTS);

@@ -9,7 +9,7 @@
 #include "../components/components.h"
 #include "systems.h"
 
-void gravity();
+// void gravity();
 
 // void move();
 

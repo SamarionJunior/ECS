@@ -9,6 +9,6 @@
 #include "../components/components.h"
 #include "systems.h"
 
-void move();
+// void move();
 
 #endif

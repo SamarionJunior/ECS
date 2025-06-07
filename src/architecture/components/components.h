@@ -58,38 +58,46 @@ typedef struct Vector4{
 //////////////////////////
 
 typedef struct Information{
+	int id;
 	char *name;
 	unsigned int lengthName;
 } Information;
 
 typedef struct Position {
+	int id;
 	Vector2 current2;
 	Vector2 old2;
 } Position;
 
 typedef struct Direction{
+	int id;
 	Vector2 vector2;
 }Direction;
 
 typedef struct Velocity{
+	int id;
 	Vector2 vector2;
 }Velocity;
 
 typedef struct Acceleration{
+	int id;
 	Vector2 vector2;
 }Acceleration;
 
 typedef struct Size{
+	int id;
 	Vector2 vector2;
 } Size;
 
 typedef struct Color{
+	int id;
 	Vector4 vector4;
 } Color;
 
 // top right bottom left
 
 typedef struct Collider {
+	int id;
 	bool isItColliding;
 	int collisionDirection[TOTALCOORDENATE];
 	bool isStatic;
@@ -113,7 +121,7 @@ extern char *namesOfCompenents[QTD_TYPE_COMPONENTS];
 #define SUBCOMPONENTS 2
 
 // int getDirectionCollision(int indexSubsistem, int id, Coordenate direction);
-// void destroyComponents();
+void destroyComponents();
 
 #endif
 

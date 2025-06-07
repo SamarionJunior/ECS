@@ -5,71 +5,71 @@
 #include "components.h"
 #include "create.h"
 
-Information *createInformation(int id, char *name, unsigned int lengthName);
-Position *createPosition(int id, float x, float y, float oldX, float oldY);
-Direction *createDirection(int id, float x, float y);
-Velocity *createVelocity(int id, float x, float y);
-Acceleration *createAcceleration(int id, float x, float y);
-Size *createSize(int id, float width, float height);
-Color *createColor(int id, int red, int green, int blue, int alpha);
-Collider *createCollider(int id, int isItColliding, int *direction, int isStatic);
-Layer *createLayer(int id, int number);
+Information createInformation(int id, char *name, unsigned int lengthName);
+Position createPosition(int id, float x, float y, float oldX, float oldY);
+Direction createDirection(int id, float x, float y);
+Velocity createVelocity(int id, float x, float y);
+Acceleration createAcceleration(int id, float x, float y);
+Size createSize(int id, float width, float height);
+Color createColor(int id, int red, int green, int blue, int alpha);
+Collider createCollider(int id, int isItColliding, int *direction, int isStatic);
+Layer createLayer(int id, int number);
 
-Information *createInformation(int id, char *name, unsigned int lengthName){
-	static Information information;
+Information createInformation(int id, char *name, unsigned int lengthName){
+	Information information;
 	information.id = id;
 	information.name = name;
 	information.lengthName = lengthName;
-	return &information;
+	return information;
 }
-Position *createPosition(int id, float x, float y, float oldX, float oldY){
-	static Position position;
+Position createPosition(int id, float x, float y, float oldX, float oldY){
+	Position position;
 	position.id = id;
 	position.current2.x = x;
 	position.current2.y = y;
 	position.old2.x = oldX;
 	position.old2.y = oldY;
-	return &position;
+	return position;
 }
-Direction *createDirection(int id, float x, float y){
-	static Direction direction;
+Direction createDirection(int id, float x, float y){
+	Direction direction;
 	direction.id = id;
 	direction.vector2.x = x;
 	direction.vector2.y = y;
-	return &direction;
+	return direction;
 }
-Velocity *createVelocity(int id, float x, float y){
-	static Velocity velocity;
+Velocity createVelocity(int id, float x, float y){
+	Velocity velocity;
 	velocity.id = id;
 	velocity.vector2.x = x;
 	velocity.vector2.y = y;
-	return &velocity;
+	return velocity;
 }
-Acceleration *createAcceleration(int id, float x, float y){
-	static Acceleration acceleration;
+Acceleration createAcceleration(int id, float x, float y){
+	Acceleration acceleration;
 	acceleration.id = id;
 	acceleration.vector2.x = x;
 	acceleration.vector2.y = y;
-	return &acceleration;
+	return acceleration;
 }
-Size *createSize(int id, float width, float height){
-	static Size size;
+Size createSize(int id, float width, float height){
+	Size size;
 	size.id = id;
 	size.vector2.x = width;
 	size.vector2.y = height;
-	return &size;
+	return size;
 }
-Color *createColor(int id, int red, int green, int blue, int alpha){
-	static Color color;
+Color createColor(int id, int red, int green, int blue, int alpha){
+	Color color;
 	color.id = id;
 	color.vector4.x = red;
 	color.vector4.y = green; 
 	color.vector4.z = blue;
 	color.vector4.w = alpha;
-	return &color;
+	return color;
 }
-Collider *createCollider(int id, int isItColliding, int *direction, int isStatic){
-	static Collider collision;
+Collider createCollider(int id, int isItColliding, int *direction, int isStatic){
+	Collider collision;
 
 	collision.id = id;
 
@@ -87,11 +87,11 @@ Collider *createCollider(int id, int isItColliding, int *direction, int isStatic
 
 	collision.isStatic = isStatic;
 
-	return &collision;
+	return collision;
 }
-Layer *createLayer(int id, int number){
-	static Layer layer;
+Layer createLayer(int id, int number){
+	Layer layer;
 	layer.id = id;
 	layer.layer = number;
-	return &layer;
+	return layer;
 }

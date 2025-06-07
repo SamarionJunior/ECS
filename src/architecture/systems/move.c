@@ -17,138 +17,160 @@
 #include "../../../dependencies/my/matrix/length.h"
 #include "../../../dependencies/my/matrix/get.h"
 
-double kmH = 70.7106781187;
+// double kmH = 70.7106781187;
 
-void move(){
+// void move(){
 
-	double moveDefualt = (double)300;
+// 	double moveDefualt = (double)300;
 
-	double moveKMH = (((moveDefualt * (double)delta_time)/100)*kmH);
+// 	double moveKMH = (((moveDefualt * (double)delta_time)/100)*kmH);
 
-	ComponentsForMove *comp = NULL;
+// 	ComponentsForMove *comp = NULL;
 
-	ComponentsForMove auxCompA;
-	Position auxPosA;
-	Size auxSizA;
+// 	ComponentsForMove auxCompA;
+// 	Position auxPosA;
+// 	Size auxSizA;
 
-	ComponentsForMove *auxCompB = NULL;
+// 	ComponentsForMove *auxCompB = NULL;
 
-	for (size_t i = 0; i < lengthRow(&componentsForMove, 0); i++){
+// 	for (size_t i = 0; i < lengthRow(&componentsForMove, 0); i++){
 		
-		comp = ((ComponentsForMove *)(getCell(&componentsForMove, 0, i)->data));
+// 		comp = ((ComponentsForMove *)(getCell(&componentsForMove, 0, i)->data));
 
-		auxCompA = *comp;
-		auxPosA = *(auxCompA.position);
-		auxSizA = *(auxCompA.size);
+// 		auxCompA = *comp;
+// 		auxPosA = *(auxCompA.position);
+// 		auxSizA = *(auxCompA.size);
 
-		auxCompB = NULL;
+// 		auxCompB = NULL;
 
-		if(arrayKey[MY_TOP] && arrayKey[MY_CLIKER_TOP] == false){
+// 		if(arrayKey[MY_TOP] && arrayKey[MY_CLIKER_TOP] == false){
 
-			auxPosA.current2.y -= 32;
+// 			auxPosA.current2.y -= 32;
 
-			auxCompB = collisionBetween(&auxPosA, &auxSizA);
+// 			auxCompB = collisionBetween(&auxPosA, &auxSizA);
 
-			if(auxCompB != NULL){
-				// printf("%s\n", auxCompB->information->name);
+// 			if(auxCompB != NULL){
+// 				// printf("%s\n", auxCompB->information->name);
 
-			}else{
+// 			}else{
 
-				comp->position->old2.y = comp->position->current2.y;
+// 				comp->position->old2.y = comp->position->current2.y;
 	
-				comp->position->current2.y -= 32;
+// 				comp->position->current2.y -= 32;
 
-				// globalCount++;
+// 				// globalCount++;
 
-			}
+// 			}
 
-			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
+// 			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
 
-			arrayKey[MY_CLIKER_TOP] = true;
+// 			arrayKey[MY_CLIKER_TOP] = true;
 
-			continue;
-		}
+// 			continue;
+// 		}
 
-		if(arrayKey[MY_BOTTOM] && arrayKey[MY_CLIKER_BOTTOM] == false){
+// 		if(arrayKey[MY_BOTTOM] && arrayKey[MY_CLIKER_BOTTOM] == false){
 
-			auxPosA.current2.y += 32;
+// 			auxPosA.current2.y += 32;
 
-			auxCompB = collisionBetween(&auxPosA, &auxSizA);
+// 			auxCompB = collisionBetween(&auxPosA, &auxSizA);
 
-			if(auxCompB != NULL){
-				// printf("%s\n", auxCompB->information->name);
+// 			if(auxCompB != NULL){
+// 				// printf("%s\n", auxCompB->information->name);
 
-			}else{
+// 			}else{
 
-				comp->position->old2.y = comp->position->current2.y;
+// 				comp->position->old2.y = comp->position->current2.y;
 		
-				comp->position->current2.y += 32;
+// 				comp->position->current2.y += 32;
 
-				// globalCount++;
+// 				// globalCount++;
 
-			}
+// 			}
 
-			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
+// 			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
 
-			arrayKey[MY_CLIKER_BOTTOM] = true;
+// 			arrayKey[MY_CLIKER_BOTTOM] = true;
 
-			continue;
-		}
+// 			continue;
+// 		}
 
-		if(arrayKey[MY_RIGHT] && arrayKey[MY_CLIKER_RIGHT] == false){
+// 		if(arrayKey[MY_RIGHT] && arrayKey[MY_CLIKER_RIGHT] == false){
 
-			auxPosA.current2.x += 32;
+// 			auxPosA.current2.x += 32;
 
-			auxCompB = collisionBetween(&auxPosA, &auxSizA);
+// 			auxCompB = collisionBetween(&auxPosA, &auxSizA);
 
-			if(auxCompB != NULL){
-				// printf("%s\n", auxCompB->information->name);
+// 			if(auxCompB != NULL){
+// 				// printf("%s\n", auxCompB->information->name);
 
-			}else{
+// 			}else{
 
-				comp->position->old2.x = comp->position->current2.x;
+// 				comp->position->old2.x = comp->position->current2.x;
 	
-				comp->position->current2.x += 32;
+// 				comp->position->current2.x += 32;
 
-				// globalCount++;
+// 				// globalCount++;
 
-			}
+// 			}
 
-			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
+// 			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
 
-			arrayKey[MY_CLIKER_RIGHT] = true;
+// 			arrayKey[MY_CLIKER_RIGHT] = true;
 			
-			continue;
-		}
+// 			continue;
+// 		}
 
-		if(arrayKey[MY_LEFT] && arrayKey[MY_CLIKER_LEFT] == false){
+// 		if(arrayKey[MY_LEFT] && arrayKey[MY_CLIKER_LEFT] == false){
 
-			auxPosA.current2.x -= 32;
+// 			auxPosA.current2.x -= 32;
 
-			auxCompB = collisionBetween(&auxPosA, &auxSizA);
+// 			auxCompB = collisionBetween(&auxPosA, &auxSizA);
 
-			if(auxCompB != NULL){
-				// printf("%s\n", auxCompB->information->name);
+// 			if(auxCompB != NULL){
+// 				// printf("%s\n", auxCompB->information->name);
 
-			}else{
+// 			}else{
 
-				comp->position->old2.x = comp->position->current2.x;
+// 				comp->position->old2.x = comp->position->current2.x;
 	
-				comp->position->current2.x -= 32;
+// 				comp->position->current2.x -= 32;
 
-				// globalCount++;
+// 				// globalCount++;
 
-			}
+// 			}
 
-			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
+// 			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
 
-			arrayKey[MY_CLIKER_LEFT] = true;
+// 			arrayKey[MY_CLIKER_LEFT] = true;
 
-			continue;
-		}
+// 			continue;
+// 		}
 
-	}
-}
+// 	}
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// if(arrayKey[MY_TOP] && arrayKey[MY_LEFT]){
 

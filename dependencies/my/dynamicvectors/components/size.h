@@ -12,7 +12,7 @@ bool verifyParamsSize(VectorSize* vectorSize, size_t collum);
 bool addCellSize(VectorSize* vectorSize, size_t collum, Size data);
 bool removeCellSize(VectorSize* vectorSize, size_t collum);
 bool setCellSize(VectorSize* vectorSize, size_t collum, Size data);
-int* getCellSize(VectorSize* vectorSize, size_t collum);
+Size* getCellSize(VectorSize* vectorSize, size_t collum);
 bool fullCollumnSize(VectorSize* vectorSize);
 bool emptyCollumnSize(VectorSize* vectorSize);
 int lengthCollumnSize(VectorSize* vectorSize);

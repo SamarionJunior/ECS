@@ -138,7 +138,7 @@ bool setCellCollider(VectorCollider* vectorCollider, size_t collum, Collider dat
 
 }
 
-int* getCellCollider(VectorCollider* vectorCollider, size_t collum){
+Collider* getCellCollider(VectorCollider* vectorCollider, size_t collum){
 
     if(!verifyParamsCollider(vectorCollider, collum)){
         return NULL;

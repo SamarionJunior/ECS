@@ -4,8 +4,13 @@
 
 #include "components.h"
 #include "../../constants.h"
-#include "../../../dependencies/my/matrix/get.h"
-#include "../../../dependencies/my/matrix/destroy.h"
+#include "../../../dependencies/my/dynamicvectors/vector.h"
+#include "../../../dependencies/my/dynamicvectors/components/information.h"
+#include "../../../dependencies/my/dynamicvectors/components/position.h"
+#include "../../../dependencies/my/dynamicvectors/components/size.h"
+#include "../../../dependencies/my/dynamicvectors/components/color.h"
+#include "../../../dependencies/my/dynamicvectors/components/collider.h"
+#include "../../../dependencies/my/dynamicvectors/components/layer.h"
 
 // #include "dynamicvectors/vector.h"
 
@@ -30,14 +35,11 @@ char *namesOfCompenents[QTD_TYPE_COMPONENTS] = {
 // 	return (*(Collider*)(getCell(&collider, scene, index))).collisionDirection[direction];
 // }
 
-// void destroyComponents(){
-// 	destroyMatrix(&information);
-// 	destroyMatrix(&position);
-// 	destroyMatrix(&direction);
-// 	destroyMatrix(&velocity);
-// 	destroyMatrix(&acceleration);
-// 	destroyMatrix(&size);
-// 	destroyMatrix(&color);
-// 	destroyMatrix(&collider);
-// 	destroyMatrix(&layer);
-// }
+void destroyComponents(){
+	destroyVectorInformation(&vectorInformation);
+	destroyVectorPosition(&vectorPosition);
+	destroyVectorSize(&vectorSize);
+	destroyVectorColor(&vectorColor);
+	destroyVectorCollider(&vectorCollider);
+	destroyVectorLayer(&vectorLayer);
+}

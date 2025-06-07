@@ -15,9 +15,14 @@
 #include "../constants.h"
 #include "../manager/WindowManage.h"
 
-#include "../../dependencies/my/matrix/matrix.h"
-#include "../../dependencies/my/matrix/length.h"
-#include "../../dependencies/my/matrix/get.h"
+#include "../../dependencies/my/dynamicvectors/vector.h"
+
+#include "../../dependencies/my/dynamicvectors/components/layer.h"
+#include "../../dependencies/my/dynamicvectors/components/position.h"
+#include "../../dependencies/my/dynamicvectors/components/size.h"
+#include "../../dependencies/my/dynamicvectors/components/color.h"
+
+#include "../../dependencies/my/dynamicvectors/entities/entity.h"
 
 // void fillauxRect(SDL_FRect* auxRect, int id);
 // void setColor(Color color);
@@ -25,10 +30,10 @@
 // void draw(SDL_FRect* auxRect, int id);
 
 void render();
-void fillAuxRect(SDL_FRect* auxRect, ComponentsForLayer *componentsForSystem);
+void fillAuxRect(SDL_FRect* auxRect, Position position, Size size);
 void setColor(Color color);
 void clearWindow(Color color);
-void draw(SDL_FRect* auxRect, ComponentsForLayer *componentsForSystem);
+void draw(SDL_FRect* auxRect, Position position, Size size, Color color);
 
 void render() {
 
@@ -38,25 +43,91 @@ void render() {
 
 	// printf("\n%d - render\n", rand()%100);
 
-	if(lengthRow(&entities, 0) == 0){
+	if(lengthCollumnLayer(&vectorLayer) == 0){
 		return;
 	}
 
 	SDL_FRect auxRect;
 
-	clearWindow(*createColor(ID_INIT, 0, 0, 0, 255));
+	clearWindow(createColor(ID_INIT, 0, 0, 0, 255));
 
 	for(size_t layerOrder = 0; layerOrder < MAX_LAYER ; layerOrder++){
 
-		for(int i = 0 ; i < lengthRow(&Position, 0); i++){
-			ComponentsForLayer *componentsForSystem = (ComponentsForLayer*)getCell(&componentsForLayer, 0, i)->data;
+		for(int i = 0 ; i < lengthCollumnEntity(&vectorEntity); i++){
+
+			Entity* id = getCellEntity(&vectorEntity, i);
+
+			// printf("\n%p\n", id);
+
+			if(id == NULL){
+				break;
+			}
+
+			// printf("\n%d\n", id->index);
+
+			// if(id->index == NULL){
+			// 	break;
+			// }
+
+			int index = id->index;
+
+			// printf("\n%d\n", index);
+
+			int count = 0;
+
+			Position* auxPosition = NULL;
+			Size* auxSize = NULL;
+			Color* auxColor = NULL;
+			Layer* auxLayer = NULL;
+
+			for (size_t j = 0; j < lengthCollumnPosition(&vectorPosition); j++){
+				Position* tempPosition = getCellPosition(&vectorPosition, j);
+				if(tempPosition != NULL){
+					if(tempPosition->id == index){
+						auxPosition = tempPosition;
+						count++;
+						break;
+					}
+				}
+			}
+			for (size_t j = 0; j < lengthCollumnSize(&vectorSize); j++){
+				Size* tempSize = getCellSize(&vectorSize, j);
+				if(tempSize != NULL){
+					if(tempSize->id == index){
+						auxSize = tempSize;
+						count++;
+						break;
+					}
+				}
+			}
+			for (size_t j = 0; j < lengthCollumnColor(&vectorColor); j++){
+				Color* tempColor = getCellColor(&vectorColor, j);
+				if(tempColor != NULL){
+					if(tempColor->id == index){
+						auxColor = tempColor;
+						count++;
+						break;
+					}
+				}
+			}
+			for (size_t j = 0; j < lengthCollumnLayer(&vectorLayer); j++){
+				Layer* tempLayer = getCellLayer(&vectorLayer, j);
+				if(tempLayer != NULL){
+					if(tempLayer->id == index){
+						auxLayer = tempLayer;
+						count++;
+						break;
+					}
+				}
+			}
 	
-			if(
-				// existEntities(*(int *)getIdInSystem(LAYERS, i)) && 
-				componentsForSystem->layer->layer == layerOrder
-			){
+			if(count != 4){
+				break;
+			}
+
+			if(auxLayer->layer == layerOrder){
 				// printf("\n%d - draw 0\n", rand()%100);
-				draw(&auxRect, componentsForSystem);
+				draw(&auxRect, *auxPosition, *auxSize, *auxColor);
 			}
 		}
 	
@@ -82,11 +153,11 @@ void render() {
 
 }
 
-void fillAuxRect(SDL_FRect* auxRect, ComponentsForLayer *componentsForSystem){
-	auxRect->x = componentsForSystem->position->current2.x;
-	auxRect->y = componentsForSystem->position->current2.y;
-	auxRect->w = componentsForSystem->size->vector2.x;
-	auxRect->h = componentsForSystem->size->vector2.y;
+void fillAuxRect(SDL_FRect* auxRect, Position position, Size size){
+	auxRect->x = position.current2.x;
+	auxRect->y = position.current2.y;
+	auxRect->w = size.vector2.x;
+	auxRect->h = size.vector2.y;
 }
 
 void setColor(Color color){
@@ -104,11 +175,11 @@ void clearWindow(Color color){
 	SDL_RenderClear(renderer);
 }
 
-void draw(SDL_FRect* auxRect, ComponentsForLayer *componentsForSystem){
+void draw(SDL_FRect* auxRect, Position position, Size size, Color color){
 
-	fillAuxRect(auxRect, componentsForSystem);
+	fillAuxRect(auxRect, position, size);
 
-	setColor(*(componentsForSystem->color));
+	setColor(color);
 
 	if (!SDL_RenderFillRect(renderer, auxRect)) {
 		// // // // printf("SDL_RenderFillRect\n");

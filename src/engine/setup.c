@@ -6,37 +6,45 @@
 
 #include "../architecture/components/components.h"
 #include "../architecture/components/create.h"
-#include "../architecture/components/initialize.h"
+// #include "../architecture/components/initialize.h"
 
 #include "../architecture/entities/entities.h"
+#include "../architecture/entities/utility.h"
+
 #include "../architecture/systems/systems.h"
 
 #include "../constants.h"
 
 #include "../../dependencies/mycustom/myjson.h"
 
-#include "../../dependencies/my/matrix/matrix.h"
-#include "../../dependencies/my/matrix/add.h"
-#include "../../dependencies/my/matrix/length.h"
-#include "../../dependencies/my/matrix/get.h"
+#include "../../dependencies/my/dynamicvectors/vector.h"
+
+#include "../../dependencies/my/dynamicvectors/entities/entity.h"
+
+#include "../../dependencies/my/dynamicvectors/components/information.h"
+#include "../../dependencies/my/dynamicvectors/components/position.h"
+#include "../../dependencies/my/dynamicvectors/components/size.h"
+#include "../../dependencies/my/dynamicvectors/components/color.h"
+#include "../../dependencies/my/dynamicvectors/components/collider.h"
+#include "../../dependencies/my/dynamicvectors/components/layer.h"
 
 #include "../loader/json.h"
 #include "../loader/map.h"
 
 #include "../utilities/space.h"
 
-void createScene(){
-	addRow(&information, 0, NULL, 0);
-	addRow(&position, 0, NULL, 0);
-	addRow(&direction, 0, NULL, 0);
-	addRow(&velocity, 0, NULL, 0);
-	addRow(&acceleration, 0, NULL, 0);
-	addRow(&size, 0, NULL, 0);
-	addRow(&color, 0, NULL, 0);
-	addRow(&collider, 0, NULL, 0);
-	addRow(&layer, 0, NULL, 0);
-	addRow(&entities, 0, NULL, 0);
-}
+// void createScene(){
+// 	addRow(&information, 0, NULL, 0);
+// 	addRow(&position, 0, NULL, 0);
+// 	addRow(&direction, 0, NULL, 0);
+// 	addRow(&velocity, 0, NULL, 0);
+// 	addRow(&acceleration, 0, NULL, 0);
+// 	addRow(&size, 0, NULL, 0);
+// 	addRow(&color, 0, NULL, 0);
+// 	addRow(&collider, 0, NULL, 0);
+// 	addRow(&layer, 0, NULL, 0);
+// 	addRow(&entities, 0, NULL, 0);
+// }
 
 void setup(void){
 
@@ -48,7 +56,7 @@ void setup(void){
 
 	initializeEntities();
 	
-	createScene();
+	// createScene();
 	
 	for (size_t i = 0; i < 12; i++){
 		for (size_t j = 0; j < 12; j++){
@@ -58,105 +66,98 @@ void setup(void){
 					continue;
 				}
 
-				addEntity(0, &id);
+				// addEntity(&vectorEntity, lengthCollumnEntity(&vectorEntity), &id);
+				addCellEntity(
+					&vectorEntity,
+					lengthCollumnEntity(&vectorEntity),
+					(Entity){
+						.index = id
+					}
+				);
+
+				printVectorEntity(&vectorEntity);
 		
 				for (size_t l = 0; l < temporaryComponents[k].lengtharrayComponentTypes; l++){
 					
-					Data auxData;
+					// Data auxData;
 
 					switch (temporaryComponents[k].arrayComponentTypes[l]){
 						case INFORMATION:
-							auxData.data = malloc(sizeof(Information) * 1);
-							(*((Information*)(auxData.data))) = *createInformation(
-								id, 
-								temporaryComponents[k].information.name,
-								(strlen(temporaryComponents[k].information.name) + 1)
+							addCellInformation(
+								&vectorInformation, 
+								lengthCollumnInformation(&vectorInformation), 
+								createInformation(
+									id,
+									temporaryComponents[k].information.name,
+									(strlen(temporaryComponents[k].information.name) + 1)
+								)
 							);
-							addCell(&information, 0, lengthRow(&information, 0), auxData);
 							break;
 						case POSITION:
-							auxData.data = malloc(sizeof(Position) * 1);
-							(*((Position*)(auxData.data))) = *createPosition(
-								id, 
-								(j*SPRITE) + (SPRITE * 1), 
-								(i*SPRITE) + (SPRITE * 1), 
-								temporaryComponents[k].position.old2.x,
-								temporaryComponents[k].position.old2.y
+							addCellPosition(
+								&vectorPosition, 
+								lengthCollumnInformation(&vectorPosition), 
+								createPosition(
+									id, 
+									(j*SPRITE) + (SPRITE * 1), 
+									(i*SPRITE) + (SPRITE * 1), 
+									temporaryComponents[k].position.old2.x,
+									temporaryComponents[k].position.old2.y
+								)
 							);
-							addCell(&position, 0, lengthRow(&position, 0), auxData);
 							break;
-
-						case DIRECTION:
-							auxData.data = malloc(sizeof(Direction) * 1);
-							(*((Direction*)(auxData.data))) = *createDirection(
-								id, 
-								temporaryComponents[k].direction.vector2.x,
-								temporaryComponents[k].direction.vector2.y
-							);
-							addCell(&direction, 0, lengthRow(&direction, 0), auxData);
-							break;
-						case VELOCITY:
-							auxData.data = malloc(sizeof(Velocity) * 1);
-							(*((Velocity*)(auxData.data))) = *createVelocity(
-								id, 
-								temporaryComponents[k].velocity.vector2.x,
-								temporaryComponents[k].velocity.vector2.y
-							);
-							addCell(&velocity, 0, lengthRow(&velocity, 0), auxData);
-							break;
-						case ACCELERATION:
-							auxData.data = malloc(sizeof(Acceleration) * 1);
-							(*((Acceleration*)(auxData.data))) = *createAcceleration(
-								id, 
-								temporaryComponents[k].acceleration.vector2.x,
-								temporaryComponents[k].acceleration.vector2.y
-							);
-							addCell(&acceleration, 0, lengthRow(&acceleration, 0), auxData);
-							break;
-
-
 						case SIZE:
-							auxData.data = malloc(sizeof(Size) * 1);
-							(*((Size*)(auxData.data))) = *createSize(
-								id, 
-								temporaryComponents[k].size.vector2.x,
-								temporaryComponents[k].size.vector2.y
+							addCellSize(
+								&vectorSize, 
+								lengthCollumnSize(&vectorSize), 
+								createSize(
+									id, 
+									temporaryComponents[k].size.vector2.x,
+									temporaryComponents[k].size.vector2.y
+								)
 							);
-							addCell(&size, 0, lengthRow(&size, 0), auxData);
 							break;
 						case COLOR:
-							auxData.data = malloc(sizeof(Color) * 1);
-							(*((Color*)(auxData.data))) = *createColor(
-								id, 
-								temporaryComponents[k].color.vector4.x,
-								temporaryComponents[k].color.vector4.y,
-								temporaryComponents[k].color.vector4.z,
-								temporaryComponents[k].color.vector4.y
+							addCellColor(
+								&vectorColor, 
+								lengthCollumnColor(&vectorColor), 
+								createColor(
+									id, 
+									temporaryComponents[k].color.vector4.x,
+									temporaryComponents[k].color.vector4.y,
+									temporaryComponents[k].color.vector4.z,
+									temporaryComponents[k].color.vector4.y
+								)
 							);
-							addCell(&color, 0, lengthRow(&color, 0), auxData);
 							break;
 						case COLLIDER:
-							auxData.data = malloc(sizeof(Collider) * 1);
-							(*((Collider*)(auxData.data))) = *createCollider(
-								id, 
-								temporaryComponents[k].collider.isItColliding,
-								temporaryComponents[k].collider.collisionDirection,
-								temporaryComponents[k].collider.isStatic
+							addCellCollider(
+								&vectorCollider, 
+								lengthCollumnCollider(&vectorCollider), 
+								createCollider(
+									id, 
+									temporaryComponents[k].collider.isItColliding,
+									temporaryComponents[k].collider.collisionDirection,
+									temporaryComponents[k].collider.isStatic
+								)
 							);
-							addCell(&collider, 0, lengthRow(&collider, 0), auxData);
 							break;
 						case LAYER:
-							auxData.data = malloc(sizeof(Layer) * 1);
-							(*((Layer*)(auxData.data))) = *createLayer(
-								id, 
-								temporaryComponents[k].layer.layer
+							addCellLayer(
+								&vectorLayer, 
+								lengthCollumnLayer(&vectorLayer), 
+								createLayer(
+									id, 
+									temporaryComponents[k].layer.layer
+								)
 							);
-							addCell(&layer, 0, lengthRow(&layer, 0), auxData);
 							break;
 					}
 				
 				}
 				
+				id++;
+
 			}
 			
 		}
@@ -179,3 +180,42 @@ void setup(void){
 	// // // // printf(  "///////////////////\n\n");
 
 }
+
+// case DIRECTION:
+// 	auxData.data = malloc(sizeof(Direction) * 1);
+// 	(*((Direction*)(auxData.data))) = *createDirection(
+// 		id, 
+// 		temporaryComponents[k].direction.vector2.x,
+// 		temporaryComponents[k].direction.vector2.y
+// 	);
+// 	addCell(&direction, 0, lengthRow(&direction, 0), auxData);
+// 	addCell(
+// 		&vector, 
+// 		lengthCollumn(&vector), 
+// 		create(
+// 			id, 
+// 			(j*SPRITE) + (SPRITE * 1), 
+// 			(i*SPRITE) + (SPRITE * 1), 
+// 			temporaryComponents[k].position.old2.x,
+// 			temporaryComponents[k].position.old2.y
+// 		)
+// 	);
+// 	break;
+// case VELOCITY:
+// 	auxData.data = malloc(sizeof(Velocity) * 1);
+// 	(*((Velocity*)(auxData.data))) = *createVelocity(
+// 		id, 
+// 		temporaryComponents[k].velocity.vector2.x,
+// 		temporaryComponents[k].velocity.vector2.y
+// 	);
+// 	addCell(&velocity, 0, lengthRow(&velocity, 0), auxData);
+// 	break;
+// case ACCELERATION:
+// 	auxData.data = malloc(sizeof(Acceleration) * 1);
+// 	(*((Acceleration*)(auxData.data))) = *createAcceleration(
+// 		id, 
+// 		temporaryComponents[k].acceleration.vector2.x,
+// 		temporaryComponents[k].acceleration.vector2.y
+// 	);
+// 	addCell(&acceleration, 0, lengthRow(&acceleration, 0), auxData);
+// 	break;

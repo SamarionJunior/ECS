@@ -12,7 +12,7 @@ bool verifyParamsPosition(VectorPosition* vectorPosition, size_t collum);
 bool addCellPosition(VectorPosition* vectorPosition, size_t collum, Position data);
 bool removeCellPosition(VectorPosition* vectorPosition, size_t collum);
 bool setCellPosition(VectorPosition* vectorPosition, size_t collum, Position data);
-int* getCellPosition(VectorPosition* vectorPosition, size_t collum);
+Position* getCellPosition(VectorPosition* vectorPosition, size_t collum);
 bool fullCollumnPosition(VectorPosition* vectorPosition);
 bool emptyCollumnPosition(VectorPosition* vectorPosition);
 int lengthCollumnPosition(VectorPosition* vectorPosition);

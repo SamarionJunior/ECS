@@ -12,7 +12,7 @@ bool verifyParamsEntity(VectorEntity* vectorEntity, size_t collum);
 bool addCellEntity(VectorEntity* vectorEntity, size_t collum, Entity data);
 bool removeCellEntity(VectorEntity* vectorEntity, size_t collum);
 bool setCellEntity(VectorEntity* vectorEntity, size_t collum, Entity data);
-int* getCellEntity(VectorEntity* vectorEntity, size_t collum);
+Entity* getCellEntity(VectorEntity* vectorEntity, size_t collum);
 bool fullCollumnEntity(VectorEntity* vectorEntity);
 bool emptyCollumnEntity(VectorEntity* vectorEntity);
 int lengthCollumnEntity(VectorEntity* vectorEntity);

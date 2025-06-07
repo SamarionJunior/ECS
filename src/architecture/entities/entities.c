@@ -5,6 +5,4 @@
 #include "entities.h"
 #include "../../constants.h"
 
-int idcount = 0;
-
-Entity entityDefualt = (Entity){.index = &(int){-1}};
+// Entity entityDefualt = (Entity){.index = &(int){-1}};

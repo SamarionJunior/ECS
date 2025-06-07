@@ -138,7 +138,7 @@ bool setCellInformation(VectorInformation* vectorInformation, size_t collum, Inf
 
 }
 
-int* getCellInformation(VectorInformation* vectorInformation, size_t collum){
+Information* getCellInformation(VectorInformation* vectorInformation, size_t collum){
 
     if(!verifyParamsInformation(vectorInformation, collum)){
         return NULL;

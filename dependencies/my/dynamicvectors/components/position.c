@@ -138,7 +138,7 @@ bool setCellPosition(VectorPosition* vectorPosition, size_t collum, Position dat
 
 }
 
-int* getCellPosition(VectorPosition* vectorPosition, size_t collum){
+Position* getCellPosition(VectorPosition* vectorPosition, size_t collum){
 
     if(!verifyParamsPosition(vectorPosition, collum)){
         return NULL;

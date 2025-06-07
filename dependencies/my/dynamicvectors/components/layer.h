@@ -12,7 +12,7 @@ bool verifyParamsLayer(VectorLayer* vectorLayer, size_t collum);
 bool addCellLayer(VectorLayer* vectorLayer, size_t collum, Layer data);
 bool removeCellLayer(VectorLayer* vectorLayer, size_t collum);
 bool setCellLayer(VectorLayer* vectorLayer, size_t collum, Layer data);
-int* getCellLayer(VectorLayer* vectorLayer, size_t collum);
+Layer* getCellLayer(VectorLayer* vectorLayer, size_t collum);
 bool fullCollumnLayer(VectorLayer* vectorLayer);
 bool emptyCollumnLayer(VectorLayer* vectorLayer);
 int lengthCollumnLayer(VectorLayer* vectorLayer);

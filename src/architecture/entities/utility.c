@@ -11,7 +11,7 @@
 int idcount = 0;
 
 void initializeEntities();
-bool addEntity(Entity* entity, size_t row, int *id);
+bool addEntity(VectorEntity* vectorEntity, size_t row, int *id);
 // bool existEntities(size_t scene, size_t index);
 // void printEntity(size_t scene, size_t index);
 // void printEntities(size_t scene);
@@ -21,9 +21,9 @@ void initializeEntities(){
 	initializeVectorEntity(&vectorEntity, MAX_ENTITIES);
 }
 
-bool addEntity(Entity* entity, size_t row, int *id){
+bool addEntity(VectorEntity* vectorEntity, size_t row, int *id){
 
-	if(fullCollumnEntity(entity)){
+	if(fullCollumnEntity(vectorEntity)){
 		printf("Entity is full\n");
 		return false;
 	}
@@ -39,7 +39,9 @@ bool addEntity(Entity* entity, size_t row, int *id){
 	/// CREATE TYPE FILES ///
 	/////////////////////////
 
-	addCellEntity(entity, lengthCollumnEntity(&entity) - 1, auxEntity);
+	printf("\n\n%d\n\n", lengthCollumnEntity(&vectorEntity));
+
+	addCellEntity(&vectorEntity, lengthCollumnEntity(&vectorEntity), auxEntity);
 	return true;
 }
 

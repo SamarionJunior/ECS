@@ -8,7 +8,7 @@
 #define MAX_ENTITIES 100
 
 typedef struct entity{
-    int *index;
+    int index;
 } Entity;
 
 #endif

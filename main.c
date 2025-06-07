@@ -139,7 +139,7 @@ int main(int argc, char* args[]) {
 
 	destroyComponents();
 	destroyEntities();
-	destroySystem();
+	// destroySystem();
 	destroy_window();
 
     for (size_t i = 0; i < ROW; i++){

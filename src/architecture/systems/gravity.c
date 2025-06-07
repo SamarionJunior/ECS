@@ -18,34 +18,34 @@
 #include "../../../dependencies/my/matrix/length.h"
 #include "../../../dependencies/my/matrix/get.h"
 
-void gravity();
+// void gravity();
 
-void gravity(){
+// void gravity(){
 
-	// ComponentsForGravity* components;
+// 	// ComponentsForGravity* components;
 
-	// for (size_t i = 0; i < lengthRow(&componentsForGravity, 0); i++){
+// 	// for (size_t i = 0; i < lengthRow(&componentsForGravity, 0); i++){
 
-	// 	// printf("\n%d\n", *(int *)getIdInSystem(GRAVITY, i));
+// 	// 	// printf("\n%d\n", *(int *)getIdInSystem(GRAVITY, i));
 
 
-	// 	// printf("\noi-2\n");
+// 	// 	// printf("\noi-2\n");
 
-	// 	// if(!existEntities(0 ,*(int*)(getCell(&componentsForGravity, 0, i)->data))){
-	// 	// 	continue;
-	// 	// }
+// 	// 	// if(!existEntities(0 ,*(int*)(getCell(&componentsForGravity, 0, i)->data))){
+// 	// 	// 	continue;
+// 	// 	// }
 		
-	// 	components = (ComponentsForGravity *)getCompontFromSystem(GRAVITY, i);
+// 	// 	components = (ComponentsForGravity *)getCompontFromSystem(GRAVITY, i);
 		
-	// 	if(!components->collision->collisionDirection[BOTTOM]){
-	// 		// // // // printf("\ndsdsdsd\n");
-	// 		components->position->current2.y += 300 * delta_time;
-	// 	}
+// 	// 	if(!components->collision->collisionDirection[BOTTOM]){
+// 	// 		// // // // printf("\ndsdsdsd\n");
+// 	// 		components->position->current2.y += 300 * delta_time;
+// 	// 	}
 
-	// 	// if(arrayKey[MY_TOP]){
-	// 	// 	// // // // printf("\n%p\n", ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity)));
-	// 	// 	((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y -= 300 * delta_time;
-	// 	// }
+// 	// 	// if(arrayKey[MY_TOP]){
+// 	// 	// 	// // // // printf("\n%p\n", ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity)));
+// 	// 	// 	((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y -= 300 * delta_time;
+// 	// 	// }
 
-	// }
-}
+// 	// }
+// }

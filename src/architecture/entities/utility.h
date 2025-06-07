@@ -9,7 +9,7 @@
 #include "../../../dependencies/my/dynamicvectors/vector.h"
 
 void initializeEntities();
-bool addEntity(Entity* entity, size_t row, int *id);
+bool addEntity(VectorEntity* vectorEntity, size_t row, int *id);
 // bool existEntities(size_t scene, size_t index);
 // void printEntity(size_t scene, size_t index);
 // void printEntities(size_t scene);

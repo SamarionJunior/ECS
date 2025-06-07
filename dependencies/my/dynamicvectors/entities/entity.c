@@ -3,7 +3,6 @@
 #include <stdbool.h>
 
 #include "../vector.h"
-#include "information.h"
 #include "../../../../src/architecture/entities/entities.h"
 
 bool verifyParamsEntity(VectorEntity* vectorEntity, size_t collum){
@@ -138,11 +137,12 @@ bool setCellEntity(VectorEntity* vectorEntity, size_t collum, Entity data){
 
 }
 
-int* getCellEntity(VectorEntity* vectorEntity, size_t collum){
+Entity* getCellEntity(VectorEntity* vectorEntity, size_t collum){
 
     if(!verifyParamsEntity(vectorEntity, collum)){
         return NULL;
     }
+    // printf("\n%d\n", collum);
 
 	return &(vectorEntity->data[collum]);
 
@@ -185,7 +185,7 @@ bool printVectorEntity(VectorEntity* vectorEntity){
     }
 
     for (size_t j = 0; j < vectorEntity->columnLength; j++){
-        printf("%p - [%d]: %d\n", &vectorEntity->data[j], j, vectorEntity->data[j]);
+        printf("%p - [%d]: %d\n", &vectorEntity->data[j].index, j, vectorEntity->data[j].index);
     }
     printf("\n");
 

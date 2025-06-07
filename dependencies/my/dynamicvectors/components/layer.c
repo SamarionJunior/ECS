@@ -138,7 +138,7 @@ bool setCellLayer(VectorLayer* vectorLayer, size_t collum, Layer data){
 
 }
 
-int* getCellLayer(VectorLayer* vectorLayer, size_t collum){
+Layer* getCellLayer(VectorLayer* vectorLayer, size_t collum){
 
     if(!verifyParamsLayer(vectorLayer, collum)){
         return NULL;

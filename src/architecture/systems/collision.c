@@ -13,147 +13,147 @@
 #include "../../../dependencies/my/matrix/length.h"
 #include "../../../dependencies/my/matrix/get.h"
 
-int isItColliding(float xA, float yA, float wA, float hA, float xB, float yB, float wB, float hB);
-int isTheSameIndex(Position entityA, Position entityB);
-void initializeCollisionVariables(Position entity, Size size, float* x, float* y, float* w, float* h);
-ComponentsForCollision *collisionBetween(Position *positionA, Size *sizeA);
+// int isItColliding(float xA, float yA, float wA, float hA, float xB, float yB, float wB, float hB);
+// int isTheSameIndex(Position entityA, Position entityB);
+// void initializeCollisionVariables(Position entity, Size size, float* x, float* y, float* w, float* h);
+// ComponentsForCollision *collisionBetween(Position *positionA, Size *sizeA);
 
-int isItColliding(
-	float xA, float yA, float wA, float hA,
-	float xB, float yB, float wB, float hB
-){
-	if(
-		// xA + wA >= xB &&
-		// xA <= xB + wB &&
-		// yA + hA >= yB &&
-		// yA <= yB + hB
-		xA + (wA - 1) >= xB &&
-		xA <= xB + (wB - 1) &&
-		yA + (hA - 1) >= yB &&
-		yA <= yB + (hB - 1)
-	){
-		return true;
-	}
-	return false;
-}
+// int isItColliding(
+// 	float xA, float yA, float wA, float hA,
+// 	float xB, float yB, float wB, float hB
+// ){
+// 	if(
+// 		// xA + wA >= xB &&
+// 		// xA <= xB + wB &&
+// 		// yA + hA >= yB &&
+// 		// yA <= yB + hB
+// 		xA + (wA - 1) >= xB &&
+// 		xA <= xB + (wB - 1) &&
+// 		yA + (hA - 1) >= yB &&
+// 		yA <= yB + (hB - 1)
+// 	){
+// 		return true;
+// 	}
+// 	return false;
+// }
 
-int isTheSameIndex(Position entityA, Position entityB){
-	if(entityA.id == entityB.id){
-		return true;
-	}
-	return false;
-}
+// int isTheSameIndex(Position entityA, Position entityB){
+// 	if(entityA.id == entityB.id){
+// 		return true;
+// 	}
+// 	return false;
+// }
 
-void initializeCollisionVariables(Position entity, Size size, float* x, float* y, float* w, float* h){
-	*x = entity.current2.x;
-	*y = entity.current2.y;
-	*w = size.vector2.x;
-	*h = size.vector2.y;
-}
+// void initializeCollisionVariables(Position entity, Size size, float* x, float* y, float* w, float* h){
+// 	*x = entity.current2.x;
+// 	*y = entity.current2.y;
+// 	*w = size.vector2.x;
+// 	*h = size.vector2.y;
+// }
 
-bool *collisionBetween(Position *positionA, Size *sizeA){
+// bool *collisionBetween(Position *positionA, Size *sizeA){
 
-	// int count = 0;
+// 	// int count = 0;
 
-	Position *positionB = NULL;
-	Size *sizeB = NULL;
+// 	Position *positionB = NULL;
+// 	Size *sizeB = NULL;
 
-	float xA = 0, yA = 0, wA = 0, hA = 0;
-	float xB = 0, yB = 0, wB = 0, hB = 0;
+// 	float xA = 0, yA = 0, wA = 0, hA = 0;
+// 	float xB = 0, yB = 0, wB = 0, hB = 0;
 
-	initializeCollisionVariables(*positionA, *sizeA, &xA, &yA, &wA, &hA);
+// 	initializeCollisionVariables(*positionA, *sizeA, &xA, &yA, &wA, &hA);
 		
-	for (size_t j = 0; j < lengthRow(&position, 0); j++){
+// 	for (size_t j = 0; j < lengthRow(&position, 0); j++){
 
-		Position *comp = (Position*)(getCell(&position, 0, j)->data);
+// 		Position *comp = (Position*)(getCell(&position, 0, j)->data);
 		
-		positionB = comp->position;
-		sizeB = comp->size;
+// 		positionB = comp->position;
+// 		sizeB = comp->size;
 		
-		if(isTheSameIndex(*positionA, *positionB)){
-			continue;
-		}
+// 		if(isTheSameIndex(*positionA, *positionB)){
+// 			continue;
+// 		}
 
-		initializeCollisionVariables(*positionB, *sizeB, &xB, &yB, &wB, &hB);
+// 		initializeCollisionVariables(*positionB, *sizeB, &xB, &yB, &wB, &hB);
 
-		if(isItColliding( xA, yA, wA, hA, xB, yB, wB, hB)){
+// 		if(isItColliding( xA, yA, wA, hA, xB, yB, wB, hB)){
 
-			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, xB, yB);
+// 			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, xB, yB);
 
-			return True;
-		}
-	}
+// 			return True;
+// 		}
+// 	}
 
-	return NULL;
+// 	return NULL;
 
-}
+// }
 
-void setIsItColliding(int entity, int count, int future){
-	// if(count > 0){
-	// 	components[0].collision[entity].isItColliding = true;
-	// }else if (count == 0 && future == 0){
-	// 	components[0].collision[entity].isItColliding = false;
-	// 	components[0].collision[entity].direction[TOP] = false;
-	// 	components[0].collision[entity].direction[BOTTOM] = false;
-	// 	components[0].collision[entity].direction[RIGHT] = false;
-	// 	components[0].collision[entity].direction[LEFT] = false;
-	// }else if (count == 0 && future > 0){
-	// 	components[0].collision[entity].isItColliding = false;
-	// }
-}
+// void setIsItColliding(int entity, int count, int future){
+// 	// if(count > 0){
+// 	// 	components[0].collision[entity].isItColliding = true;
+// 	// }else if (count == 0 && future == 0){
+// 	// 	components[0].collision[entity].isItColliding = false;
+// 	// 	components[0].collision[entity].direction[TOP] = false;
+// 	// 	components[0].collision[entity].direction[BOTTOM] = false;
+// 	// 	components[0].collision[entity].direction[RIGHT] = false;
+// 	// 	components[0].collision[entity].direction[LEFT] = false;
+// 	// }else if (count == 0 && future > 0){
+// 	// 	components[0].collision[entity].isItColliding = false;
+// 	// }
+// }
 
-int isItCollidingBottom(
-	float yA, float hA,
-	float yB, float hB,
-	float size
-){
-	if(
-		(yA + hA) + size >= yB &&
-		(yA + hA) <= yB + hB
-	){
-		return true;
-	}
-	return false;
-}
+// int isItCollidingBottom(
+// 	float yA, float hA,
+// 	float yB, float hB,
+// 	float size
+// ){
+// 	if(
+// 		(yA + hA) + size >= yB &&
+// 		(yA + hA) <= yB + hB
+// 	){
+// 		return true;
+// 	}
+// 	return false;
+// }
 
-int isItCollidingTop(
-	float yA,
-	float yB, float hB,
-	float size
-){
-	if(
-		yA - size >= yB &&
-		yA <= yB + hB
-	){
-		return true;
-	}
-	return false;
-}
+// int isItCollidingTop(
+// 	float yA,
+// 	float yB, float hB,
+// 	float size
+// ){
+// 	if(
+// 		yA - size >= yB &&
+// 		yA <= yB + hB
+// 	){
+// 		return true;
+// 	}
+// 	return false;
+// }
 
-int isItCollidingRight(
-	float xA, float wA,
-	float xB, float wB,
-	float size
-){
-	if(
-		(xA + wA) + size >= xB &&
-		xA + wA <= xB + wB
-	){
-		return true;
-	}
-	return false;
-}
+// int isItCollidingRight(
+// 	float xA, float wA,
+// 	float xB, float wB,
+// 	float size
+// ){
+// 	if(
+// 		(xA + wA) + size >= xB &&
+// 		xA + wA <= xB + wB
+// 	){
+// 		return true;
+// 	}
+// 	return false;
+// }
 
-int isItCollidingLeft(
-	float xA,
-	float xB, float wB,
-	float size
-){
-	if(
-		xA - size <= xB + wB &&
-		xA >= xB
-	){
-		return true;
-	}
-	return false;
-}
+// int isItCollidingLeft(
+// 	float xA,
+// 	float xB, float wB,
+// 	float size
+// ){
+// 	if(
+// 		xA - size <= xB + wB &&
+// 		xA >= xB
+// 	){
+// 		return true;
+// 	}
+// 	return false;
+// }

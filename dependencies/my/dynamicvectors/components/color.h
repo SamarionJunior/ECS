@@ -12,7 +12,7 @@ bool verifyParamsColor(VectorColor* vectorColor, size_t collum);
 bool addCellColor(VectorColor* vectorColor, size_t collum, Color data);
 bool removeCellColor(VectorColor* vectorColor, size_t collum);
 bool setCellColor(VectorColor* vectorColor, size_t collum, Color data);
-int* getCellColor(VectorColor* vectorColor, size_t collum);
+Color* getCellColor(VectorColor* vectorColor, size_t collum);
 bool fullCollumnColor(VectorColor* vectorColor);
 bool emptyCollumnColor(VectorColor* vectorColor);
 int lengthCollumnColor(VectorColor* vectorColor);
