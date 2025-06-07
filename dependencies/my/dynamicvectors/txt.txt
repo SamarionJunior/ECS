@@ -1,0 +1,18 @@
+VectorInformation* vectorInformation
+vectorInformation->
+vectorInformation,
+vectorInformation ==
+*vectorInformation)
+*vectorInformation =
+(VectorInformation)
+sizeof(Information)
+Information *tempColumn
+Information data
+vectorInformation
+
+VectorInformation vectorInformation;
+VectorPosition vectorPosition;
+VectorSize vectorSize;
+VectorColor vectorColor;
+VectorCollider vectorCollider;
+VectorLayer vectorLayer;

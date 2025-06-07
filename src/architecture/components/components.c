@@ -7,6 +7,8 @@
 #include "../../../dependencies/my/matrix/get.h"
 #include "../../../dependencies/my/matrix/destroy.h"
 
+// #include "dynamicvectors/vector.h"
+
 Color black = {0, 0, 0, 255};
 
 char *namesOfCompenents[QTD_TYPE_COMPONENTS] = {
@@ -21,31 +23,21 @@ char *namesOfCompenents[QTD_TYPE_COMPONENTS] = {
 	"Layer"
 };
 
-Matrix information;
-Matrix position;
-Matrix direction;
-Matrix velocity;
-Matrix acceleration;
-Matrix size;
-Matrix color;
-Matrix collider;
-Matrix layer;
+// void destroyComponents();
+// int getDirectionCollision(int scene, int index, Coordenate direction);
 
-void destroyComponents();
-int getDirectionCollision(int scene, int index, Coordenate direction);
+// int getDirectionCollision(int scene, int index, Coordenate direction){
+// 	return (*(Collider*)(getCell(&collider, scene, index))).collisionDirection[direction];
+// }
 
-int getDirectionCollision(int scene, int index, Coordenate direction){
-	return (*(Collider*)(getCell(&collider, scene, index))).collisionDirection[direction];
-}
-
-void destroyComponents(){
-	destroyMatrix(&information);
-	destroyMatrix(&position);
-	destroyMatrix(&direction);
-	destroyMatrix(&velocity);
-	destroyMatrix(&acceleration);
-	destroyMatrix(&size);
-	destroyMatrix(&color);
-	destroyMatrix(&collider);
-	destroyMatrix(&layer);
-}
+// void destroyComponents(){
+// 	destroyMatrix(&information);
+// 	destroyMatrix(&position);
+// 	destroyMatrix(&direction);
+// 	destroyMatrix(&velocity);
+// 	destroyMatrix(&acceleration);
+// 	destroyMatrix(&size);
+// 	destroyMatrix(&color);
+// 	destroyMatrix(&collider);
+// 	destroyMatrix(&layer);
+// }

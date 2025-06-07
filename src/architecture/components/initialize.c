@@ -63,15 +63,15 @@ Layer defualtLayer = (Layer){
 void initializeComponents();
 
 void initializeComponents(){
-	initializeMatrix(&information, SUBCOMPONENTS, MAX_COMPONENTS);
-	initializeMatrix(&position, SUBCOMPONENTS, MAX_COMPONENTS);
-	initializeMatrix(&direction, SUBCOMPONENTS, MAX_COMPONENTS);
-	initializeMatrix(&velocity, SUBCOMPONENTS, MAX_COMPONENTS);
-	initializeMatrix(&acceleration, SUBCOMPONENTS, MAX_COMPONENTS);
-	initializeMatrix(&size, SUBCOMPONENTS, MAX_COMPONENTS);
-	initializeMatrix(&color, SUBCOMPONENTS, MAX_COMPONENTS);
-	initializeMatrix(&collider, SUBCOMPONENTS, MAX_COMPONENTS);
-	initializeMatrix(&layer, SUBCOMPONENTS, MAX_COMPONENTS);
+	// initializeMatrix(&information, SUBCOMPONENTS, MAX_COMPONENTS);
+	// initializeMatrix(&position, SUBCOMPONENTS, MAX_COMPONENTS);
+	// initializeMatrix(&direction, SUBCOMPONENTS, MAX_COMPONENTS);
+	// initializeMatrix(&velocity, SUBCOMPONENTS, MAX_COMPONENTS);
+	// initializeMatrix(&acceleration, SUBCOMPONENTS, MAX_COMPONENTS);
+	// initializeMatrix(&size, SUBCOMPONENTS, MAX_COMPONENTS);
+	// initializeMatrix(&color, SUBCOMPONENTS, MAX_COMPONENTS);
+	// initializeMatrix(&collider, SUBCOMPONENTS, MAX_COMPONENTS);
+	// initializeMatrix(&layer, SUBCOMPONENTS, MAX_COMPONENTS);
 
 	// for (size_t i = 0; i < SUBCOMPONENTS; i++){
 	// 	for (size_t j = 0; j < MAX_ENTITIES; j++){
