@@ -48,7 +48,7 @@ void render() {
 
 	for(size_t layerOrder = 0; layerOrder < MAX_LAYER ; layerOrder++){
 
-		for(int i = 0 ; i < lengthRow(&componentsForLayer, 0); i++){
+		for(int i = 0 ; i < lengthRow(&Position, 0); i++){
 			ComponentsForLayer *componentsForSystem = (ComponentsForLayer*)getCell(&componentsForLayer, 0, i)->data;
 	
 			if(

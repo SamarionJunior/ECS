@@ -2,10 +2,10 @@
 *.temp*
 
 notes
-tests
+# tests
 build
 
-testes
+# testes
 
 kill.sh
 *.sh*

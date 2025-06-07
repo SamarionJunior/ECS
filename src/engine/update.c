@@ -34,9 +34,10 @@ void update(int *game_is_running) {
 	// gravity();
 	// collision();
 	/////// MOVE ////////
-	move();
+	
+	// move();
 
-	scoreCalculator();
+	// scoreCalculator();
 
 	/////// CLICK ////////
 	/////// JUMPER ///////

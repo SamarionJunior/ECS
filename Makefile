@@ -38,3 +38,17 @@ mybuild:
 
 myrun: 
 	@$(MY_APP)
+
+MY_TEST_PATH=tests
+MY_TEST_SRC=$(MY_TEST_PATH)/testArrayDynamic.c
+MY_TEST_BUILD=$(MY_TEST_PATH)/build
+MY_TEST_TARGET=testArrayDynamic.exe
+MY_TEST_APP=$(MY_TEST_BUILD)/$(MY_TEST_TARGET)
+
+mytestall:	mytestbuild mytestrun
+
+mytestbuild:
+	@$(MY_CC) $(MY_CCFLAGS) $(MY_TEST_SRC) $(MY_OPT) $(MY_TEST_APP) $(MY_LIBS)
+
+mytestrun: 
+	@$(MY_TEST_APP)
