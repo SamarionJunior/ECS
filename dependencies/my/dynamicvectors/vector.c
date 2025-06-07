@@ -13,6 +13,8 @@ VectorColor vectorColor;
 VectorCollider vectorCollider;
 VectorLayer vectorLayer;
 
+VectorPlayer vectorPlayer;
+
 ///////////////////////////////////////////
 
 VectorEntity vectorEntity;

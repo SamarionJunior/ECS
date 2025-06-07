@@ -95,3 +95,9 @@ Layer createLayer(int id, int number){
 	layer.layer = number;
 	return layer;
 }
+
+Player createPlayer(int id){
+	Player player;
+	player.id = id;
+	return player;
+}

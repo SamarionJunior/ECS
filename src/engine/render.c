@@ -57,21 +57,11 @@ void render() {
 
 			Entity* id = getCellEntity(&vectorEntity, i);
 
-			// printf("\n%p\n", id);
-
 			if(id == NULL){
 				break;
 			}
 
-			// printf("\n%d\n", id->index);
-
-			// if(id->index == NULL){
-			// 	break;
-			// }
-
 			int index = id->index;
-
-			// printf("\n%d\n", index);
 
 			int count = 0;
 
@@ -130,18 +120,6 @@ void render() {
 				draw(&auxRect, *auxPosition, *auxSize, *auxColor);
 			}
 		}
-	
-		// for(int i = 0 ; i < lengthRow(&componentsForLayer, 0); i++){
-		// 	ComponentsForLayer *componentsForSystem = (ComponentsForLayer*)getCell(&componentsForLayer, 0, i)->data;
-		// 	if(
-		// 		// existEntities(*(int *)getIdInSystem(LAYERS, i)) && 
-		// 		// ((Layer *)(getCell(&layer, 0, i)->data))->layer == 1
-		// 		componentsForSystem->layer->layer == 1
-		// 	){
-		// 		// draw(&auxRect, *(int *)getIdInSystem(LAYERS, i));
-		// 		draw(&auxRect, componentsForSystem);
-		// 	}
-		// }
 
 	}
 

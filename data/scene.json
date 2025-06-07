@@ -11,18 +11,6 @@
 				"oldX": 0,
 				"oldY": 0
 			},
-			"direction": {
-				"x": 0,
-				"y": 0
-			},
-			"velocity":	{
-				"x": 0,
-				"y": 0
-			},
-			"acceleration":	{
-				"x": 0,
-				"y": 0
-			},
 			"size": {
 				"width": 32,
 				"height": 32
@@ -54,18 +42,6 @@
 				"y": 0,
 				"oldX": 0,
 				"oldY": 0
-			},
-			"direction": {
-				"x": 0,
-				"y": 0
-			},
-			"velocity":	{
-				"x": 0,
-				"y": 0
-			},
-			"acceleration":	{
-				"x": 0,
-				"y": 0
 			},
 			"size": {
 				"width": 32,
@@ -128,6 +104,9 @@
 			},
 			"layer": {
 				"layer": 2
+			},
+			"player": {
+				"id": 0
 			}
 		},
 		"systems": [0, 1, 2, 3]

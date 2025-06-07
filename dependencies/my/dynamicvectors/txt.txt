@@ -9,6 +9,7 @@ sizeof(Information)
 Information *tempColumn
 Information data
 vectorInformation
+Information
 
 VectorInformation vectorInformation;
 VectorPosition vectorPosition;

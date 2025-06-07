@@ -20,7 +20,7 @@ float delta_time = 0;
 
 void resetDelay(void);
 void delay(int *isPaused);
-void move();
+// void move();
 // void point();
 
 void update(int *game_is_running) {
@@ -35,7 +35,7 @@ void update(int *game_is_running) {
 	// collision();
 	/////// MOVE ////////
 	
-	// move();
+	move();
 
 	// scoreCalculator();
 

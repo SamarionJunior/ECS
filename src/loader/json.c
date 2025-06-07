@@ -64,7 +64,9 @@ void printJSONScene(){
 		}
 
 		temporaryComponents[i].collider.isStatic = true;
+		temporaryComponents[i].layer.id = -1;
 		temporaryComponents[i].layer.layer = 0;
+		temporaryComponents[i].player.id = -1;
 		
 	}
 
@@ -352,6 +354,32 @@ void printJSONScene(){
 						// printf("\n%d\n", lay->valueint);
 						temporaryComponents[i].layer.layer = lay->valueint;
 					}
+
+					// printf(
+					// 	"\nType: %d - Length: %d\n", 
+					// 	temporaryComponents[i].arrayComponentTypes[temporaryComponents[i].lengtharrayComponentTypes-1], 
+					// 	temporaryComponents[i].lengtharrayComponentTypes
+					// );
+
+				}
+				
+				cJSON * play = cJSON_GetObjectItemCaseSensitive(comps, "player");
+				if(verifyTypeAndLength(play, OBJECT)){
+
+					temporaryComponents[i].arrayComponentTypes[temporaryComponents[i].lengtharrayComponentTypes] = PLAYER;
+					temporaryComponents[i].lengtharrayComponentTypes++;
+
+					// printf(
+					// 	"\nType: %d - Length: %d\n", 
+					// 	temporaryComponents[i].arrayComponentTypes[temporaryComponents[i].lengtharrayComponentTypes-1], 
+					// 	temporaryComponents[i].lengtharrayComponentTypes
+					// );
+
+					// cJSON * lay = cJSON_GetObjectItemCaseSensitive(laye, "id");
+					// if(verifyTypeAndLength(lay, NUMBER)){
+					// 	// printf("\n%d\n", lay->valueint);
+					// 	temporaryComponents[i].layer.layer = lay->valueint;
+					// }
 
 					// printf(
 					// 	"\nType: %d - Length: %d\n", 

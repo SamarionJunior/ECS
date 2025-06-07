@@ -25,6 +25,7 @@ typedef struct TemporaryComponent{
 	Color color;
 	Collider collider;
 	Layer layer;
+	Player player;
 	int arrayComponentTypes[QTD_TYPE_COMPONENTS];
 	int lengtharrayComponentTypes;
 	int arraySystems[MAX_SYSTEMS];

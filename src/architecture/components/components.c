@@ -25,7 +25,8 @@ char *namesOfCompenents[QTD_TYPE_COMPONENTS] = {
 	"Size",
 	"Color",
 	"Collider",
-	"Layer"
+	"Layer",
+	"Player"
 };
 
 // void destroyComponents();

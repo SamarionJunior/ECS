@@ -17,5 +17,7 @@ Color createColor(int id, int red, int green, int blue, int alpha);
 Collider createCollider(int id, int isItColliding, int *direction, int isStatic);
 Layer createLayer(int id, int number);
 
+Player createPlayer(int id);
+
 #endif
 

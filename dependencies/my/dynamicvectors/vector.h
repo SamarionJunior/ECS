@@ -44,6 +44,14 @@ typedef struct vectorLayer{
     unsigned int maximumCollumn;
 } VectorLayer;
 
+
+
+typedef struct vectorPlayer{
+    Player *data;
+    unsigned int columnLength;
+    unsigned int maximumCollumn;
+} VectorPlayer;
+
 //////////////////////////////////
 
 typedef struct vectorEntity{
@@ -58,6 +66,8 @@ extern VectorSize vectorSize;
 extern VectorColor vectorColor;
 extern VectorCollider vectorCollider;
 extern VectorLayer vectorLayer;
+
+extern VectorPlayer vectorPlayer;
 
 ///////////////////////////////////////////
 

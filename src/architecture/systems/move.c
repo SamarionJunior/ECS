@@ -13,142 +13,261 @@
 
 #include "../../engine/input.h"
 
-#include "../../../dependencies/my/matrix/matrix.h"
-#include "../../../dependencies/my/matrix/length.h"
-#include "../../../dependencies/my/matrix/get.h"
+#include "../../../dependencies/my/dynamicvectors/vector.h"
 
-// double kmH = 70.7106781187;
+#include "../../../dependencies/my/dynamicvectors/entities/entity.h"
 
-// void move(){
+#include "../../../dependencies/my/dynamicvectors/components/position.h"
+#include "../../../dependencies/my/dynamicvectors/components/size.h"
+#include "../../../dependencies/my/dynamicvectors/components/player.h"
 
-// 	double moveDefualt = (double)300;
+double kmH = 70.7106781187;
 
-// 	double moveKMH = (((moveDefualt * (double)delta_time)/100)*kmH);
+void move(){
 
-// 	ComponentsForMove *comp = NULL;
-
-// 	ComponentsForMove auxCompA;
-// 	Position auxPosA;
-// 	Size auxSizA;
-
-// 	ComponentsForMove *auxCompB = NULL;
-
-// 	for (size_t i = 0; i < lengthRow(&componentsForMove, 0); i++){
-		
-// 		comp = ((ComponentsForMove *)(getCell(&componentsForMove, 0, i)->data));
-
-// 		auxCompA = *comp;
-// 		auxPosA = *(auxCompA.position);
-// 		auxSizA = *(auxCompA.size);
-
-// 		auxCompB = NULL;
-
-// 		if(arrayKey[MY_TOP] && arrayKey[MY_CLIKER_TOP] == false){
-
-// 			auxPosA.current2.y -= 32;
-
-// 			auxCompB = collisionBetween(&auxPosA, &auxSizA);
-
-// 			if(auxCompB != NULL){
-// 				// printf("%s\n", auxCompB->information->name);
-
-// 			}else{
-
-// 				comp->position->old2.y = comp->position->current2.y;
+	if(lengthCollumnPlayer(&vectorPlayer) == 0){
+		return;
+	}	
 	
-// 				comp->position->current2.y -= 32;
+	double moveDefualt = (double)300;
 
-// 				// globalCount++;
+	double moveKMH = (((moveDefualt * (double)delta_time)/100)*kmH);
 
-// 			}
+	for(int i = 0 ; i < lengthCollumnEntity(&vectorEntity); i++){
 
-// 			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
+		Entity* id = getCellEntity(&vectorEntity, i);
 
-// 			arrayKey[MY_CLIKER_TOP] = true;
+		if(id == NULL){
+			continue;
+		}
 
-// 			continue;
-// 		}
+		// printf("\n%d\n", id);
+		// printf("\n%d\n", id->index);
 
-// 		if(arrayKey[MY_BOTTOM] && arrayKey[MY_CLIKER_BOTTOM] == false){
+		int index = id->index;
 
-// 			auxPosA.current2.y += 32;
+		int count = 0;
 
-// 			auxCompB = collisionBetween(&auxPosA, &auxSizA);
+		Position* auxPosition = NULL;
+		Size* auxSize = NULL;
+		Player* auxPlayer = NULL;
 
-// 			if(auxCompB != NULL){
-// 				// printf("%s\n", auxCompB->information->name);
+		for (size_t j = 0; j < lengthCollumnPosition(&vectorPosition); j++){
+			Position* tempPosition = getCellPosition(&vectorPosition, j);
+			if(tempPosition != NULL){
+				if(tempPosition->id == index){
+					auxPosition = tempPosition;
+					count++;
+					// printf("\nPosition: %d\n", count);
+					break;
+				}
+			}
+		}
+		for (size_t j = 0; j < lengthCollumnSize(&vectorSize); j++){
+			Size* tempSize = getCellSize(&vectorSize, j);
+			if(tempSize != NULL){
+				if(tempSize->id == index){
+					auxSize = tempSize;
+					count++;
+					// printf("\nSize: %d\n", count);
+					break;
+				}
+			}
+		}
+		for (size_t j = 0; j < lengthCollumnPlayer(&vectorPlayer); j++){
+			Player* tempPlayer = getCellPlayer(&vectorPlayer, j);
+			if(tempPlayer != NULL){
+				if(tempPlayer->id == index){
+					auxPlayer = tempPlayer;
+					count++;
+					// printf("\nPlayer: %d\n", count);
+					break;
+				}
+			}
+		}
+		// printf("\n%d\n", index);
+		// printf("\n%d\n", lengthCollumnPosition(&vectorPosition));
+		// printf("\n%d\n", lengthCollumnSize(&vectorSize));
+		// printf("\n%d\n", lengthCollumnPlayer(&vectorPlayer));
 
-// 			}else{
+		if(count != 3){
+			continue;
+		}
 
-// 				comp->position->old2.y = comp->position->current2.y;
-		
-// 				comp->position->current2.y += 32;
+		// printf("\n%d\n", count);
 
-// 				// globalCount++;
+		Position tempPosition = *auxPosition;
+		Size tempSize = *auxSize;
 
-// 			}
+		if(arrayKey[MY_TOP] && arrayKey[MY_CLIKER_TOP] == false){
+			tempPosition.current2.y -= 32;
+			bool result = collisionBetween(&tempPosition, &tempSize);
+			if(result != false){
+				// printf("%s\n", auxCompB->information->name);
+			}else{
+				auxPosition->old2.y = auxPosition->current2.y;
+				auxPosition->current2.y -= 32;
+				// globalCount++;
+			}
+			arrayKey[MY_CLIKER_TOP] = true;
+			continue;
+		}
 
-// 			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
+		if(arrayKey[MY_BOTTOM] && arrayKey[MY_CLIKER_BOTTOM] == false){
+			tempPosition.current2.y += 32;
+			bool result = collisionBetween(&tempPosition, &tempSize);
+			if(result != false){
+				// printf("%s\n", auxCompB->information->name);
+			}else{
+				auxPosition->old2.y = auxPosition->current2.y;
+				auxPosition->current2.y += 32;
+				// globalCount++;
+			}
+			arrayKey[MY_CLIKER_BOTTOM] = true;
+			continue;
+		}
 
-// 			arrayKey[MY_CLIKER_BOTTOM] = true;
+		if(arrayKey[MY_RIGHT] && arrayKey[MY_CLIKER_RIGHT] == false){
+			tempPosition.current2.x += 32;
+			bool result = collisionBetween(&tempPosition, &tempSize);
+			if(result != NULL){
+				// printf("%s\n", auxCompB->information->name);
+			}else{
+				auxPosition->old2.x = auxPosition->current2.x;
+				auxPosition->current2.x += 32;
+				// globalCount++;
+			}
+			arrayKey[MY_CLIKER_RIGHT] = true;
+			continue;
+		}
 
-// 			continue;
-// 		}
+		if(arrayKey[MY_LEFT] && arrayKey[MY_CLIKER_LEFT] == false){
+			tempPosition.current2.x -= 32;
+			bool result = collisionBetween(&tempPosition, &tempSize);
+			if(result != NULL){
+				// printf("%s\n", auxCompB->information->name);
+			}else{
+				auxPosition->old2.x = auxPosition->current2.x;
+				auxPosition->current2.x -= 32;
+				// globalCount++;
+			}
+			arrayKey[MY_CLIKER_LEFT] = true;
+			continue;
+		}
 
-// 		if(arrayKey[MY_RIGHT] && arrayKey[MY_CLIKER_RIGHT] == false){
-
-// 			auxPosA.current2.x += 32;
-
-// 			auxCompB = collisionBetween(&auxPosA, &auxSizA);
-
-// 			if(auxCompB != NULL){
-// 				// printf("%s\n", auxCompB->information->name);
-
-// 			}else{
-
-// 				comp->position->old2.x = comp->position->current2.x;
+	}
 	
-// 				comp->position->current2.x += 32;
+	// Position auxPosA;
+	// Size auxSizA;
 
-// 				// globalCount++;
+	// for (size_t i = 0; i < lengthRow(&componentsForMove, 0); i++){
+		
+	// 	comp = ((ComponentsForMove *)(getCell(&componentsForMove, 0, i)->data));
 
-// 			}
+	// 	auxCompA = *comp;
+	// 	auxPosA = *(auxCompA.position);
+	// 	auxSizA = *(auxCompA.size);
 
-// 			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
+	// 	auxCompB = NULL;
 
-// 			arrayKey[MY_CLIKER_RIGHT] = true;
+	// 	if(arrayKey[MY_TOP] && arrayKey[MY_CLIKER_TOP] == false){
+
+	// 		auxPosA.current2.y -= 32;
+
+	// 		auxCompB = collisionBetween(&auxPosA, &auxSizA);
+
+	// 		if(auxCompB != NULL){
+	// 			// printf("%s\n", auxCompB->information->name);
+
+	// 		}else{
+
+	// 			comp->position->old2.y = comp->position->current2.y;
+	
+	// 			comp->position->current2.y -= 32;
+
+	// 			// globalCount++;
+
+	// 		}
+
+	// 		arrayKey[MY_CLIKER_TOP] = true;
+
+	// 		continue;
+	// 	}
+
+	// 	if(arrayKey[MY_BOTTOM] && arrayKey[MY_CLIKER_BOTTOM] == false){
+
+	// 		auxPosA.current2.y += 32;
+
+	// 		auxCompB = collisionBetween(&auxPosA, &auxSizA);
+
+	// 		if(auxCompB != NULL){
+	// 			// printf("%s\n", auxCompB->information->name);
+
+	// 		}else{
+
+	// 			comp->position->old2.y = comp->position->current2.y;
+		
+	// 			comp->position->current2.y += 32;
+
+	// 			// globalCount++;
+
+	// 		}
+
+	// 		arrayKey[MY_CLIKER_BOTTOM] = true;
+
+	// 		continue;
+	// 	}
+
+	// 	if(arrayKey[MY_RIGHT] && arrayKey[MY_CLIKER_RIGHT] == false){
+
+	// 		auxPosA.current2.x += 32;
+
+	// 		auxCompB = collisionBetween(&auxPosA, &auxSizA);
+
+	// 		if(auxCompB != NULL){
+	// 			// printf("%s\n", auxCompB->information->name);
+
+	// 		}else{
+
+	// 			comp->position->old2.x = comp->position->current2.x;
+	
+	// 			comp->position->current2.x += 32;
+
+	// 			// globalCount++;
+
+	// 		}
+
+	// 		arrayKey[MY_CLIKER_RIGHT] = true;
 			
-// 			continue;
-// 		}
+	// 		continue;
+	// 	}
 
-// 		if(arrayKey[MY_LEFT] && arrayKey[MY_CLIKER_LEFT] == false){
+	// 	if(arrayKey[MY_LEFT] && arrayKey[MY_CLIKER_LEFT] == false){
 
-// 			auxPosA.current2.x -= 32;
+	// 		auxPosA.current2.x -= 32;
 
-// 			auxCompB = collisionBetween(&auxPosA, &auxSizA);
+	// 		auxCompB = collisionBetween(&auxPosA, &auxSizA);
 
-// 			if(auxCompB != NULL){
-// 				// printf("%s\n", auxCompB->information->name);
+	// 		if(auxCompB != NULL){
+	// 			// printf("%s\n", auxCompB->information->name);
 
-// 			}else{
+	// 		}else{
 
-// 				comp->position->old2.x = comp->position->current2.x;
+	// 			comp->position->old2.x = comp->position->current2.x;
 	
-// 				comp->position->current2.x -= 32;
+	// 			comp->position->current2.x -= 32;
 
-// 				// globalCount++;
+	// 			// globalCount++;
 
-// 			}
+	// 		}
 
-// 			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
+	// 		arrayKey[MY_CLIKER_LEFT] = true;
 
-// 			arrayKey[MY_CLIKER_LEFT] = true;
+	// 		continue;
+	// 	}
 
-// 			continue;
-// 		}
-
-// 	}
-// }
+	// }
+}
 
 
 

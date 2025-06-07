@@ -75,7 +75,7 @@ void setup(void){
 					}
 				);
 
-				printVectorEntity(&vectorEntity);
+				// printVectorEntity(&vectorEntity);
 		
 				for (size_t l = 0; l < temporaryComponents[k].lengtharrayComponentTypes; l++){
 					
@@ -149,6 +149,16 @@ void setup(void){
 								createLayer(
 									id, 
 									temporaryComponents[k].layer.layer
+								)
+							);
+							break;
+						case PLAYER:
+							// printf("\noi\n");
+							addCellPlayer(
+								&vectorPlayer, 
+								lengthCollumnPlayer(&vectorPlayer), 
+								createPlayer(
+									id
 								)
 							);
 							break;

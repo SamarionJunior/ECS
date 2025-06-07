@@ -16,6 +16,7 @@
 #include "../../../dependencies/my/dynamicvectors/components/color.h"
 #include "../../../dependencies/my/dynamicvectors/components/collider.h"
 #include "../../../dependencies/my/dynamicvectors/components/layer.h"
+#include "../../../dependencies/my/dynamicvectors/components/player.h"
 
 Information defualtInformation = (Information){
 	.id = ID_INIT,
@@ -66,6 +67,9 @@ Layer defualtLayer = (Layer){
 	.id = ID_INIT,
 	.layer = 0
 };
+Player defualtPlayer = (Player){
+	.id = ID_INIT
+};
 
 void initializeComponents();
 
@@ -77,6 +81,8 @@ void initializeComponents(){
 	initializeVectorColor(&vectorColor, MAX_COMPONENTS);
 	initializeVectorCollider(&vectorCollider, MAX_COMPONENTS);
 	initializeVectorLayer(&vectorLayer, MAX_COMPONENTS);
+
+	initializeVectorPlayer(&vectorPlayer, MAX_COMPONENTS);
 	// initializeMatrix(&information, SUBCOMPONENTS, MAX_COMPONENTS);
 	// initializeMatrix(&position, SUBCOMPONENTS, MAX_COMPONENTS);
 	// initializeMatrix(&direction, SUBCOMPONENTS, MAX_COMPONENTS);
