@@ -53,13 +53,11 @@
 				"blue":	0,
 				"alpha": 255
 			},
-			"collider": {
-				"isItColliding": "false",
-				"direction": "NULL",
-				"isStatic": "true"
-			},
 			"layer": {
 				"layer": 1
+			},
+			"collectible": {
+				"id": 0
 			}
 		},
 		"systems": [0, 2, 4]

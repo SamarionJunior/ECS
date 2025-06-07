@@ -18,6 +18,7 @@ Collider createCollider(int id, int isItColliding, int *direction, int isStatic)
 Layer createLayer(int id, int number);
 
 Player createPlayer(int id);
+Collectible createCollectible(int id);
 
 #endif
 

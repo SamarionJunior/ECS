@@ -26,6 +26,7 @@ typedef struct TemporaryComponent{
 	Collider collider;
 	Layer layer;
 	Player player;
+	Collectible collectible;
 	int arrayComponentTypes[QTD_TYPE_COMPONENTS];
 	int lengtharrayComponentTypes;
 	int arraySystems[MAX_SYSTEMS];

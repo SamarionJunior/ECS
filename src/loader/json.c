@@ -67,7 +67,7 @@ void printJSONScene(){
 		temporaryComponents[i].layer.id = -1;
 		temporaryComponents[i].layer.layer = 0;
 		temporaryComponents[i].player.id = -1;
-		
+		temporaryComponents[i].collectible.id = -1;
 	}
 
     cJSON *ents = cJSON_GetObjectItemCaseSensitive(json, "entities"); 
@@ -367,6 +367,31 @@ void printJSONScene(){
 				if(verifyTypeAndLength(play, OBJECT)){
 
 					temporaryComponents[i].arrayComponentTypes[temporaryComponents[i].lengtharrayComponentTypes] = PLAYER;
+					temporaryComponents[i].lengtharrayComponentTypes++;
+
+					// printf(
+					// 	"\nType: %d - Length: %d\n", 
+					// 	temporaryComponents[i].arrayComponentTypes[temporaryComponents[i].lengtharrayComponentTypes-1], 
+					// 	temporaryComponents[i].lengtharrayComponentTypes
+					// );
+
+					// cJSON * lay = cJSON_GetObjectItemCaseSensitive(laye, "id");
+					// if(verifyTypeAndLength(lay, NUMBER)){
+					// 	// printf("\n%d\n", lay->valueint);
+					// 	temporaryComponents[i].layer.layer = lay->valueint;
+					// }
+
+					// printf(
+					// 	"\nType: %d - Length: %d\n", 
+					// 	temporaryComponents[i].arrayComponentTypes[temporaryComponents[i].lengtharrayComponentTypes-1], 
+					// 	temporaryComponents[i].lengtharrayComponentTypes
+					// );
+
+				}
+				cJSON * collectib = cJSON_GetObjectItemCaseSensitive(comps, "collectible");
+				if(verifyTypeAndLength(collectib, OBJECT)){
+
+					temporaryComponents[i].arrayComponentTypes[temporaryComponents[i].lengtharrayComponentTypes] = COLLECTIBLE;
 					temporaryComponents[i].lengtharrayComponentTypes++;
 
 					// printf(

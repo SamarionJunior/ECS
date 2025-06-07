@@ -37,7 +37,7 @@ void update(int *game_is_running) {
 	
 	move();
 
-	// scoreCalculator();
+	scoreCalculator();
 
 	/////// CLICK ////////
 	/////// JUMPER ///////

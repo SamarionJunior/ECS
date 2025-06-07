@@ -11,6 +11,7 @@
 #include "../../../dependencies/my/dynamicvectors/components/color.h"
 #include "../../../dependencies/my/dynamicvectors/components/collider.h"
 #include "../../../dependencies/my/dynamicvectors/components/layer.h"
+#include "../../../dependencies/my/dynamicvectors/components/collectible.h"
 
 // #include "dynamicvectors/vector.h"
 
@@ -26,7 +27,8 @@ char *namesOfCompenents[QTD_TYPE_COMPONENTS] = {
 	"Color",
 	"Collider",
 	"Layer",
-	"Player"
+	"Player",
+	"Collectible"
 };
 
 // void destroyComponents();
@@ -43,4 +45,5 @@ void destroyComponents(){
 	destroyVectorColor(&vectorColor);
 	destroyVectorCollider(&vectorCollider);
 	destroyVectorLayer(&vectorLayer);
+	destroyVectorCollectible(&vectorCollectible);
 }

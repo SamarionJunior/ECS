@@ -33,6 +33,7 @@ typedef enum{
 	COLLIDER,
 	LAYER,
 	PLAYER,
+	COLLECTIBLE,
 	TOTALCOMPONENTS
 } TypesOfComponents;
 
@@ -113,9 +114,15 @@ typedef struct Layer {
 	int layer;
 } Layer;
 
+
+
 typedef struct Player {
 	int id;
 } Player;
+
+typedef struct Collectible {
+	int id;
+} Collectible;
 
 #define QTD_TYPE_COMPONENTS TOTALCOMPONENTS
 

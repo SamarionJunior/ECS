@@ -14,6 +14,7 @@ VectorCollider vectorCollider;
 VectorLayer vectorLayer;
 
 VectorPlayer vectorPlayer;
+VectorCollectible vectorCollectible;
 
 ///////////////////////////////////////////
 

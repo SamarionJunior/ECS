@@ -27,6 +27,8 @@
 #include "../../dependencies/my/dynamicvectors/components/color.h"
 #include "../../dependencies/my/dynamicvectors/components/collider.h"
 #include "../../dependencies/my/dynamicvectors/components/layer.h"
+#include "../../dependencies/my/dynamicvectors/components/player.h"
+#include "../../dependencies/my/dynamicvectors/components/collectible.h"
 
 #include "../loader/json.h"
 #include "../loader/map.h"
@@ -158,6 +160,16 @@ void setup(void){
 								&vectorPlayer, 
 								lengthCollumnPlayer(&vectorPlayer), 
 								createPlayer(
+									id
+								)
+							);
+							break;
+						case COLLECTIBLE:
+							// printf("\noi\n");
+							addCellCollectible(
+								&vectorCollectible, 
+								lengthCollumnCollectible(&vectorCollectible), 
+								createCollectible(
 									id
 								)
 							);
