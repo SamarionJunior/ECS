@@ -6,7 +6,10 @@
 #include "collision.h"
 #include "systems.h"
 #include "../entities/entities.h"
+
 #include "../components/components.h"
+#include "../components/get.h"
+
 #include "../../constants.h"
 #include "../../engine/update.h"
 #include <stdlib.h>
@@ -25,9 +28,7 @@ double kmH = 70.7106781187;
 
 void move(){
 
-	if(lengthCollumnPlayer(&vectorPlayer) == 0){
-		return;
-	}	
+	if(lengthCollumnPlayer(&vectorPlayer) == 0){return;}	
 	
 	double moveDefualt = (double)300;
 
@@ -37,9 +38,7 @@ void move(){
 
 		Entity* id = getCellEntity(&vectorEntity, i);
 
-		if(id == NULL){
-			continue;
-		}
+		if(id == NULL){continue;}
 
 		// printf("\n%d\n", id);
 		// printf("\n%d\n", id->index);
@@ -48,51 +47,16 @@ void move(){
 
 		int count = 0;
 
-		Position* auxPosition = NULL;
-		Size* auxSize = NULL;
-		Player* auxPlayer = NULL;
+		Position* auxPosition = getPositionById(index, &count);
+		Size* auxSize = getSizeById(index, &count);
+		Player* auxPlayer = getPlayerById(index, &count);
 
-		for (size_t j = 0; j < lengthCollumnPosition(&vectorPosition); j++){
-			Position* tempPosition = getCellPosition(&vectorPosition, j);
-			if(tempPosition != NULL){
-				if(tempPosition->id == index){
-					auxPosition = tempPosition;
-					count++;
-					// printf("\nPosition: %d\n", count);
-					break;
-				}
-			}
-		}
-		for (size_t j = 0; j < lengthCollumnSize(&vectorSize); j++){
-			Size* tempSize = getCellSize(&vectorSize, j);
-			if(tempSize != NULL){
-				if(tempSize->id == index){
-					auxSize = tempSize;
-					count++;
-					// printf("\nSize: %d\n", count);
-					break;
-				}
-			}
-		}
-		for (size_t j = 0; j < lengthCollumnPlayer(&vectorPlayer); j++){
-			Player* tempPlayer = getCellPlayer(&vectorPlayer, j);
-			if(tempPlayer != NULL){
-				if(tempPlayer->id == index){
-					auxPlayer = tempPlayer;
-					count++;
-					// printf("\nPlayer: %d\n", count);
-					break;
-				}
-			}
-		}
 		// printf("\n%d\n", index);
 		// printf("\n%d\n", lengthCollumnPosition(&vectorPosition));
 		// printf("\n%d\n", lengthCollumnSize(&vectorSize));
 		// printf("\n%d\n", lengthCollumnPlayer(&vectorPlayer));
 
-		if(count != 3){
-			continue;
-		}
+		if(count != 3){continue;}
 
 		// printf("\n%d\n", count);
 
@@ -102,9 +66,7 @@ void move(){
 		if(arrayKey[MY_TOP] && arrayKey[MY_CLIKER_TOP] == false){
 			tempPosition.current2.y -= 32;
 			bool result = collisionBetween(&tempPosition, &tempSize);
-			if(result != false){
-				// printf("%s\n", auxCompB->information->name);
-			}else{
+			if(result == false){
 				auxPosition->old2.y = auxPosition->current2.y;
 				auxPosition->current2.y -= 32;
 				// globalCount++;
@@ -116,9 +78,7 @@ void move(){
 		if(arrayKey[MY_BOTTOM] && arrayKey[MY_CLIKER_BOTTOM] == false){
 			tempPosition.current2.y += 32;
 			bool result = collisionBetween(&tempPosition, &tempSize);
-			if(result != false){
-				// printf("%s\n", auxCompB->information->name);
-			}else{
+			if(result == false){
 				auxPosition->old2.y = auxPosition->current2.y;
 				auxPosition->current2.y += 32;
 				// globalCount++;
@@ -130,9 +90,7 @@ void move(){
 		if(arrayKey[MY_RIGHT] && arrayKey[MY_CLIKER_RIGHT] == false){
 			tempPosition.current2.x += 32;
 			bool result = collisionBetween(&tempPosition, &tempSize);
-			if(result != NULL){
-				// printf("%s\n", auxCompB->information->name);
-			}else{
+			if(result == false){
 				auxPosition->old2.x = auxPosition->current2.x;
 				auxPosition->current2.x += 32;
 				// globalCount++;
@@ -144,9 +102,7 @@ void move(){
 		if(arrayKey[MY_LEFT] && arrayKey[MY_CLIKER_LEFT] == false){
 			tempPosition.current2.x -= 32;
 			bool result = collisionBetween(&tempPosition, &tempSize);
-			if(result != NULL){
-				// printf("%s\n", auxCompB->information->name);
-			}else{
+			if(result == false){
 				auxPosition->old2.x = auxPosition->current2.x;
 				auxPosition->current2.x -= 32;
 				// globalCount++;
@@ -157,116 +113,6 @@ void move(){
 
 	}
 	
-	// Position auxPosA;
-	// Size auxSizA;
-
-	// for (size_t i = 0; i < lengthRow(&componentsForMove, 0); i++){
-		
-	// 	comp = ((ComponentsForMove *)(getCell(&componentsForMove, 0, i)->data));
-
-	// 	auxCompA = *comp;
-	// 	auxPosA = *(auxCompA.position);
-	// 	auxSizA = *(auxCompA.size);
-
-	// 	auxCompB = NULL;
-
-	// 	if(arrayKey[MY_TOP] && arrayKey[MY_CLIKER_TOP] == false){
-
-	// 		auxPosA.current2.y -= 32;
-
-	// 		auxCompB = collisionBetween(&auxPosA, &auxSizA);
-
-	// 		if(auxCompB != NULL){
-	// 			// printf("%s\n", auxCompB->information->name);
-
-	// 		}else{
-
-	// 			comp->position->old2.y = comp->position->current2.y;
-	
-	// 			comp->position->current2.y -= 32;
-
-	// 			// globalCount++;
-
-	// 		}
-
-	// 		arrayKey[MY_CLIKER_TOP] = true;
-
-	// 		continue;
-	// 	}
-
-	// 	if(arrayKey[MY_BOTTOM] && arrayKey[MY_CLIKER_BOTTOM] == false){
-
-	// 		auxPosA.current2.y += 32;
-
-	// 		auxCompB = collisionBetween(&auxPosA, &auxSizA);
-
-	// 		if(auxCompB != NULL){
-	// 			// printf("%s\n", auxCompB->information->name);
-
-	// 		}else{
-
-	// 			comp->position->old2.y = comp->position->current2.y;
-		
-	// 			comp->position->current2.y += 32;
-
-	// 			// globalCount++;
-
-	// 		}
-
-	// 		arrayKey[MY_CLIKER_BOTTOM] = true;
-
-	// 		continue;
-	// 	}
-
-	// 	if(arrayKey[MY_RIGHT] && arrayKey[MY_CLIKER_RIGHT] == false){
-
-	// 		auxPosA.current2.x += 32;
-
-	// 		auxCompB = collisionBetween(&auxPosA, &auxSizA);
-
-	// 		if(auxCompB != NULL){
-	// 			// printf("%s\n", auxCompB->information->name);
-
-	// 		}else{
-
-	// 			comp->position->old2.x = comp->position->current2.x;
-	
-	// 			comp->position->current2.x += 32;
-
-	// 			// globalCount++;
-
-	// 		}
-
-	// 		arrayKey[MY_CLIKER_RIGHT] = true;
-			
-	// 		continue;
-	// 	}
-
-	// 	if(arrayKey[MY_LEFT] && arrayKey[MY_CLIKER_LEFT] == false){
-
-	// 		auxPosA.current2.x -= 32;
-
-	// 		auxCompB = collisionBetween(&auxPosA, &auxSizA);
-
-	// 		if(auxCompB != NULL){
-	// 			// printf("%s\n", auxCompB->information->name);
-
-	// 		}else{
-
-	// 			comp->position->old2.x = comp->position->current2.x;
-	
-	// 			comp->position->current2.x -= 32;
-
-	// 			// globalCount++;
-
-	// 		}
-
-	// 		arrayKey[MY_CLIKER_LEFT] = true;
-
-	// 		continue;
-	// 	}
-
-	// }
 }
 
 

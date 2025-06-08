@@ -35,19 +35,6 @@
 
 #include "../utilities/space.h"
 
-// void createScene(){
-// 	addRow(&information, 0, NULL, 0);
-// 	addRow(&position, 0, NULL, 0);
-// 	addRow(&direction, 0, NULL, 0);
-// 	addRow(&velocity, 0, NULL, 0);
-// 	addRow(&acceleration, 0, NULL, 0);
-// 	addRow(&size, 0, NULL, 0);
-// 	addRow(&color, 0, NULL, 0);
-// 	addRow(&collider, 0, NULL, 0);
-// 	addRow(&layer, 0, NULL, 0);
-// 	addRow(&entities, 0, NULL, 0);
-// }
-
 void setup(void){
 
 	score = 0;

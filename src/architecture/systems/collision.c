@@ -5,7 +5,10 @@
 #include "systems.h"
 #include "collision.h"
 #include "../entities/entities.h"
+
 #include "../components/components.h"
+#include "../components/get.h"
+
 #include "../../constants.h"
 #include "../../engine/update.h"
 
@@ -57,8 +60,6 @@ void initializeCollisionVariables(Position entity, Size size, float* x, float* y
 
 bool *collisionBetween(Position *positionA, Size *sizeA){
 
-	// int count = 0;
-
 	Position positionB;
 	Size sizeB;
 
@@ -71,63 +72,22 @@ bool *collisionBetween(Position *positionA, Size *sizeA){
 
 		Entity* id = getCellEntity(&vectorEntity, i);
 
-		if(id == NULL){
-			continue;
-		}
+		if(id == NULL){continue;}
 
 		int index = id->index;
 
-        if(index == positionA->id){
-			continue;
-        }
+        if(index == positionA->id){continue;}
 
 		int count = 0;
 
-		Position* auxPosition = NULL;
-		Size* auxSize = NULL;
-		Collider* auxCollider = NULL;
+		Position* auxPosition = getPositionById(index, &count);
+		Size* auxSize = getSizeById(index, &count);
+		Collider* auxCollider = getColliderById(index, &count);
 
-		for (size_t j = 0; j < lengthCollumnPosition(&vectorPosition); j++){
-			Position* tempPosition = getCellPosition(&vectorPosition, j);
-			if(tempPosition != NULL){
-				if(tempPosition->id == index){
-					auxPosition = tempPosition;
-					count++;
-					break;
-				}
-			}
-		}
-		for (size_t j = 0; j < lengthCollumnSize(&vectorSize); j++){
-			Size* tempSize = getCellSize(&vectorSize, j);
-			if(tempSize != NULL){
-				if(tempSize->id == index){
-					auxSize = tempSize;
-					count++;
-					break;
-				}
-			}
-		}
-		for (size_t j = 0; j < lengthCollumnCollider(&vectorCollider); j++){
-			Collider* tempCollider = getCellCollider(&vectorCollider, j);
-			if(tempCollider != NULL){
-				if(tempCollider->id == index){
-					auxCollider = tempCollider;
-					count++;
-					break;
-				}
-			}
-		}
-
-		if(count != 3){
-			continue;
-		}
+		if(count != 3){continue;}
 		
 		Position positionB = *auxPosition;
 		Size sizeB = *auxSize;
-		
-		// if(isTheSameIndex(*positionA, *positionB)){
-		// 	continue;
-		// }
 
 		initializeCollisionVariables(positionB, sizeB, &xB, &yB, &wB, &hB);
 

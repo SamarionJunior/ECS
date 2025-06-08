@@ -88,40 +88,4 @@ void initializeComponents(){
 
 	initializeVectorPlayer(&vectorPlayer, MAX_COMPONENTS);
 	initializeVectorCollectible(&vectorCollectible, MAX_COMPONENTS);
-	// initializeMatrix(&information, SUBCOMPONENTS, MAX_COMPONENTS);
-	// initializeMatrix(&position, SUBCOMPONENTS, MAX_COMPONENTS);
-	// initializeMatrix(&direction, SUBCOMPONENTS, MAX_COMPONENTS);
-	// initializeMatrix(&velocity, SUBCOMPONENTS, MAX_COMPONENTS);
-	// initializeMatrix(&acceleration, SUBCOMPONENTS, MAX_COMPONENTS);
-	// initializeMatrix(&size, SUBCOMPONENTS, MAX_COMPONENTS);
-	// initializeMatrix(&color, SUBCOMPONENTS, MAX_COMPONENTS);
-	// initializeMatrix(&collider, SUBCOMPONENTS, MAX_COMPONENTS);
-	// initializeMatrix(&layer, SUBCOMPONENTS, MAX_COMPONENTS);
-
-	// for (size_t i = 0; i < SUBCOMPONENTS; i++){
-	// 	for (size_t j = 0; j < MAX_ENTITIES; j++){
-			
-	// 		/////////////////
-	// 		/// SET METOD ///
-	// 		/////////////////
-
-	// 		*((Information*)(information.matrix[i][j].data)) = defualtInformation;
-	// 		*((Position*)(position.matrix[i][j].data)) = defualtPosition;
-	// 		*((Size*)(size.matrix[i][j].data)) = defualtSize;
-	// 		*((Color*)(color.matrix[i][j].data)) = defualtColor;
-	// 		*((Collider*)(Collider.matrix[i][j].data)) = defualtCollider;
-	// 		*((Layer*)(layer.matrix[i][j].data)) = defualtLayer;
-	// 		// printf("\n%f\n", components[i].position[j].x);
-	// 	}
-	// 	for (size_t j = 0; j < QTD_TYPE_COMPONENTS; j++){
-	// 		// components[i].length[j]	= 0;
-	// 	}
-	// }
 }
-
-// defualtInformation 	= *createInformation(ID_INIT, "");
-// defualtPosition 	= *createPosition(ID_INIT, 0, 0, 0, 0);
-// defualtSize 		= *createSize(ID_INIT, 0, 0);
-// defualtColor 		= *createColor(ID_INIT, 0, 0, 0, 0);
-// defualtCollider 	= *createCollider(ID_INIT, false, NULL, true);
-// defualtLayer 		= *createLayer(ID_INIT, 0);

@@ -7,6 +7,7 @@
 
 #include "../architecture/components/components.h"
 #include "../architecture/components/create.h"
+#include "../architecture/components/get.h"
 
 #include "../architecture/entities/entities.h"
 
@@ -23,11 +24,6 @@
 #include "../../dependencies/my/dynamicvectors/components/color.h"
 
 #include "../../dependencies/my/dynamicvectors/entities/entity.h"
-
-// void fillauxRect(SDL_FRect* auxRect, int id);
-// void setColor(Color color);
-// void clearWindow(Color color);
-// void draw(SDL_FRect* auxRect, int id);
 
 void render();
 void fillAuxRect(SDL_FRect* auxRect, Position position, Size size);
@@ -61,55 +57,12 @@ void render() {
 				break;
 			}
 
-			int index = id->index;
+			int index = id->index, count = 0;
 
-			int count = 0;
-
-			Position* auxPosition = NULL;
-			Size* auxSize = NULL;
-			Color* auxColor = NULL;
-			Layer* auxLayer = NULL;
-
-			for (size_t j = 0; j < lengthCollumnPosition(&vectorPosition); j++){
-				Position* tempPosition = getCellPosition(&vectorPosition, j);
-				if(tempPosition != NULL){
-					if(tempPosition->id == index){
-						auxPosition = tempPosition;
-						count++;
-						break;
-					}
-				}
-			}
-			for (size_t j = 0; j < lengthCollumnSize(&vectorSize); j++){
-				Size* tempSize = getCellSize(&vectorSize, j);
-				if(tempSize != NULL){
-					if(tempSize->id == index){
-						auxSize = tempSize;
-						count++;
-						break;
-					}
-				}
-			}
-			for (size_t j = 0; j < lengthCollumnColor(&vectorColor); j++){
-				Color* tempColor = getCellColor(&vectorColor, j);
-				if(tempColor != NULL){
-					if(tempColor->id == index){
-						auxColor = tempColor;
-						count++;
-						break;
-					}
-				}
-			}
-			for (size_t j = 0; j < lengthCollumnLayer(&vectorLayer); j++){
-				Layer* tempLayer = getCellLayer(&vectorLayer, j);
-				if(tempLayer != NULL){
-					if(tempLayer->id == index){
-						auxLayer = tempLayer;
-						count++;
-						break;
-					}
-				}
-			}
+			Position* auxPosition = getPositionById(index, &count);
+			Size* auxSize = getSizeById(index, &count);
+			Color* auxColor = getColorById(index, &count);
+			Layer* auxLayer = getLayerById(index, &count);
 	
 			if(count != 4){
 				break;
@@ -119,6 +72,7 @@ void render() {
 				// printf("\n%d - draw 0\n", rand()%100);
 				draw(&auxRect, *auxPosition, *auxSize, *auxColor);
 			}
+
 		}
 
 	}

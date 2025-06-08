@@ -29,10 +29,11 @@ void update(int *game_is_running) {
 	// printf(  "/// UPDATE ///\n");
 	// printf(  "//////////////\n\n");
 
-	delay(game_is_running);
+	// delay(game_is_running);
 
 	// gravity();
 	// collision();
+	
 	/////// MOVE ////////
 	
 	move();
@@ -48,58 +49,6 @@ void update(int *game_is_running) {
 
 }
 
-// void point(){
-
-// 	double moveDefualt = (double)300;
-
-// 	double moveKMH = (((moveDefualt * (double)delta_time)/100)*kmH);
-
-// 	ComponentsForMove *comp = NULL;
-
-// 	ComponentsForMove auxCompA;
-// 	Position auxPosA;
-// 	Size auxSizA;
-
-// 	ComponentsForMove *auxCompB = NULL;
-
-// 	for (size_t i = 0; i < lengthRow(&componentsForMove, 0); i++){
-		
-// 		comp = ((ComponentsForMove *)(getCell(&componentsForMove, 0, i)->data));
-
-// 		auxCompA = *comp;
-// 		auxPosA = *(auxCompA.position);
-// 		auxSizA = *(auxCompA.size);
-
-// 		auxCompB = NULL;
-
-// 		if(arrayKey[MY_TOP] && arrayKey[MY_CLIKER_TOP] == false){
-
-// 			auxPosA.current2.y -= 32;
-
-// 			auxCompB = collisionBetween(&auxPosA, &auxSizA);
-
-// 			if(auxCompB != NULL){
-// 				// printf("%s\n", auxCompB->information->name);
-
-// 			}else{
-
-// 				comp->position->old2.y = comp->position->current2.y;
-	
-// 				comp->position->current2.y -= 32;
-
-// 				// globalCount++;
-
-// 			}
-
-// 			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, comp->position->current2.x, comp->position->current2.y);
-
-// 			arrayKey[MY_CLIKER_TOP] = true;
-
-// 			continue;
-// 		}
-
-// 	}
-// }
 
 void resetDelay(void){
 

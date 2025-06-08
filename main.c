@@ -4,6 +4,7 @@
 #include <string.h>
 #include <time.h>
 #include <signal.h>
+#include <sys/time.h>
 
 #include <SDL3/SDL.h>
 
@@ -46,13 +47,28 @@ void loop(){
 
 	printf("%d\n",score);
 
+	long int count = 0;
+
+	long int media = 0;
+
+	long int secunds = 0;
+
+	long int countSecunds = 0.0;
+
+	struct timeval stop, start;
+
 	while (true) {
+
+		gettimeofday(&start, NULL);
 
 		// printf("\n////////////////////\n");
 		// printf(  "/// LOOP - WHILE ///\n");
 		// printf(  "////////////////////\n\n");
 
 		process_input(&game_is_running);
+
+		delay(&game_is_running);
+
 		if(game_is_running == RESUME){
 			resetDelay();
 			game_is_running = RUN;
@@ -71,6 +87,32 @@ void loop(){
 			break;
 		}
 		render();
+
+		gettimeofday(&stop, NULL);
+
+		if(stop.tv_usec < start.tv_usec){
+			long int q = 999999 - start.tv_usec;
+			long int w = stop.tv_usec + q;
+			countSecunds += w;
+		}else{
+			countSecunds += (stop.tv_usec - start.tv_usec);
+		}
+
+		count++;
+
+		if (countSecunds > 999999){
+			
+			secunds++;
+
+			media += count;
+
+			printf("secunds: %lu | microsecunds: %lu | FPS: %lu | media: %lu\n", secunds, countSecunds, count, (media / secunds));
+			// printf("start\t %lu us\n", start.tv_usec);
+			// printf("stop\t %lu us\n", stop.tv_usec);
+			countSecunds = 0.0;
+			count = 0;
+		}
+
 	}
 
 	// // // // printf("\n//////////////////\n");
