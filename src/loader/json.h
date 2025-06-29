@@ -14,24 +14,24 @@
 
 #include "../../dependencies/mycustom/myjson.h"
 
-typedef struct TemporaryComponent{
-	int index;
-	Information information;
-	Position position;
-	Direction direction;
-	Velocity velocity;
-	Acceleration acceleration;
-	Size size;
-	Color color;
-	Collider collider;
-	Layer layer;
-	Player player;
-	Collectible collectible;
-	int arrayComponentTypes[QTD_TYPE_COMPONENTS];
-	int lengtharrayComponentTypes;
-	int arraySystems[MAX_SYSTEMS];
-	int lengthArraySystems;
-} TemporaryComponent;
+// typedef struct TemporaryComponent{
+// 	int index;
+// 	Information information;
+// 	Position position;
+// 	Direction direction;
+// 	Velocity velocity;
+// 	Acceleration acceleration;
+// 	Size size;
+// 	Color color;
+// 	Collider collider;
+// 	Layer layer;
+// 	Player player;
+// 	Collectible collectible;
+// 	int arrayComponentTypes[QTD_TYPE_COMPONENTS];
+// 	int lengtharrayComponentTypes;
+// 	int arraySystems[MAX_SYSTEMS];
+// 	int lengthArraySystems;
+// } TemporaryComponent;
 
 extern int lengthtemporaryComponents;
 

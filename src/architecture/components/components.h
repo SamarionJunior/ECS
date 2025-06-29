@@ -114,8 +114,6 @@ typedef struct Layer {
 	int layer;
 } Layer;
 
-
-
 typedef struct Player {
 	int id;
 } Player;
@@ -135,7 +133,33 @@ extern char *namesOfCompenents[QTD_TYPE_COMPONENTS];
 // int getDirectionCollision(int indexSubsistem, int id, Coordenate direction);
 void destroyComponents();
 
-#endif
+typedef struct TemporaryComponent{
+	int index;
+	Information information;
+	bool isThereInformation;
+	Position position;
+	bool isTherePosition;
+	Direction direction;
+	bool isThereDirection;
+	Velocity velocity;
+	bool isThereVelocity;
+	Acceleration acceleration;
+	bool isThereAcceleration;
+	Size size;
+	bool isThereSize;
+	Color color;
+	bool isThereColor;
+	Collider collider;
+	bool isThereCollider;
+	Layer layer;
+	bool isThereLayer;
+	Player player;
+	bool isTherePlayer;
+	Collectible collectible;
+	bool isThereCollectible;
+	int arrayComponentTypes[QTD_TYPE_COMPONENTS];
+	int lengtharrayComponentTypes;
+} TemporaryComponent;
 
 // typedef enum types{
 //     NOTYPES,
@@ -148,3 +172,5 @@ void destroyComponents();
 //     char id;
 //     void* data;
 // }Component;
+
+#endif

@@ -1,5 +1,6 @@
 #include <stdio.h> 
 #include <stdlib.h>
+#include <stdbool.h>
 #include "../pure/cJSON.h"
 #include "myjson.h"
 #include "../../src/constants.h"
@@ -24,7 +25,7 @@ void writeInFile(const char *string, char *nameFile);
 void writeJSONinFile();
 void copyFileContentToBuffer(int size, int *length);
 void copyFileToBuffer(char *nameFile, int *length);
-int verifyTypeAndLength(cJSON *object, typeOBjectJson type);
+bool verifyTypeAndLength(cJSON *object, typeOBjectJson type);
 void printJSONItem(cJSON *object, typeOBjectJson type, const char *format);
 void printJSON();
 void modifyJSON();
@@ -124,7 +125,7 @@ void copyFileToBuffer(char *nameFile, int *length){
     // if(!length) *length = len;
 }
 
-int verifyTypeAndLength(cJSON *object, typeOBjectJson type){
+bool verifyTypeAndLength(cJSON *object, typeOBjectJson type){
     switch (type){
         case STRING:
             if(!(cJSON_IsString(object))) return false; 

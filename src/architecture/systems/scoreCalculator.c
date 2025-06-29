@@ -53,29 +53,29 @@ void  scoreCalculator(){
 
 		for(int i = 0 ; i < lengthCollumnEntity(&vectorEntity); i++){
 
-            Entity* idB = getCellEntity(&vectorEntity, i);
+			Entity* idB = getCellEntity(&vectorEntity, i);
 
-            if(idB == NULL){continue;}
+			if(idB == NULL){continue;}
 
-            int indexB = idB->index;
+			int indexB = idB->index;
 
-            if(indexB == indexA){continue;}
+			if(indexB == indexA){continue;}
 
-            int countB = 0;
+			int countB = 0;
 
-            Position* auxPositionB = getPositionById(indexB, &countB);
-            Size* auxSizeB = getSizeById(indexB, &countB);
-            Collectible* auxCollectibleB = getCollectibleById(indexB, &countB);
+			Position* auxPositionB = getPositionById(indexB, &countB);
+			Size* auxSizeB = getSizeById(indexB, &countB);
+			Collectible* auxCollectibleB = getCollectibleById(indexB, &countB);
 
-            if(countB != 3){continue;}
-            
-            Position positionB = *auxPositionB;
-            Size sizeB = *auxSizeB;
+			if(countB != 3){continue;}
+			
+			Position positionB = *auxPositionB;
+			Size sizeB = *auxSizeB;
 		
 			initializeCollisionVariables(positionB, sizeB, &xB, &yB, &wB, &hB);
 
 			if(isItColliding(xA, yA, wA, hA, xB, yB, wB, hB)){
-                printf("\noi\n");
+        printf("\noi\n");
 				if(arrayKey[MY_SCORE] == true){
 					arrayKey[MY_SCORE] = false;
 					system("clear");
@@ -87,7 +87,7 @@ void  scoreCalculator(){
 					do{
 						newX = ((rand() % (9 - 0 + 1) + 0)*SPRITE) + (SPRITE * 2);
 						newY = ((rand() % (9 - 0 + 1) + 0)*SPRITE) + (SPRITE * 2);
-					}while(newX == tempPositionA.current2.x && newY == tempPositionA.current2.y);
+					}while(newX == tempPositionA.current2.x || newY == tempPositionA.current2.y);
 					
 					// printf("new x:%f\n", newX);
 					// printf("ort x:%f\n", auxPosMove.current2.x);
