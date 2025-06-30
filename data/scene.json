@@ -32,7 +32,7 @@
 		},
 		"systems": [0, 1, 2]
 	},{
-		"index": 3,
+		"index": 2,
 		"components":	{
 			"information":	{
 				"name": "fruit"
@@ -62,28 +62,16 @@
 		},
 		"systems": [0, 2, 4]
 	},{
-		"index": 2,
+		"index": 3,
 		"components":	{
 			"information":	{
-				"name": "square01"
+				"name": "player"
 			},
 			"position":	{
 				"x": 32,
 				"y": 32,
 				"oldX": 0,
 				"oldY": 0
-			},
-			"direction": {
-				"x": 0,
-				"y": 0
-			},
-			"velocity":	{
-				"x": 0,
-				"y": 0
-			},
-			"acceleration":	{
-				"x": 0,
-				"y": 0
 			},
 			"size": {
 				"width": 32,
@@ -101,10 +89,46 @@
 				"isStatic": "false"
 			},
 			"layer": {
-				"layer": 2
+				"layer": 3
 			},
 			"player": {
 				"id": 0
+			}
+		},
+		"systems": [0, 1, 2, 3]
+	},{
+		"index": 4,
+		"components":	{
+			"information":	{
+				"name": "tail"
+			},
+			"position":	{
+				"x": 32,
+				"y": 32,
+				"oldX": 0,
+				"oldY": 0
+			},
+			"size": {
+				"width": 32,
+				"height": 32
+			},
+			"color": {
+				"red": 0,
+				"green": 0,
+				"blue":	255,
+				"alpha": 255
+			},
+			"collider": {
+				"isItColliding": "false",
+				"direction": "NULL",
+				"isStatic": "false"
+			},
+			"layer": {
+				"layer": 2
+			},
+			"anchor":{
+				"idParent": -1,
+				"idChild": -1
 			}
 		},
 		"systems": [0, 1, 2, 3]

@@ -11,6 +11,7 @@
 #include "../architecture/systems/collision.h"
 #include "../architecture/systems/move.h"
 #include "../architecture/systems/scoreCalculator.h"
+#include "../architecture/systems/snake.h"
 #include "../constants.h"
 #include "input.h"
 
@@ -38,7 +39,7 @@ void update(int *game_is_running) {
 	
 	move();
 
-	scoreCalculator();
+	// iterationSnake();
 
 	/////// CLICK ////////
 	/////// JUMPER ///////

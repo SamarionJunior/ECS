@@ -27,6 +27,8 @@ int getArraySize(const cJSON *array);
 void printTypeAndLength(TemporaryComponent* temporaryComponents, int i);
 void setTypeAndLength(TemporaryComponent* temporaryComponents, int i, TypesOfComponents type);
 cJSON* getObject(const cJSON *const object, const char *const string);
+bool getObjectAndVerify(const cJSON *const parent, const char *const string, cJSON** child, typeOBjectJson type);
+bool getArrayAndVerify(const cJSON *const parent, int i, cJSON** child, typeOBjectJson type);
 
 void loadJSON(){
 
@@ -41,6 +43,155 @@ void loadJSON(){
 	// // // // printf("\n///////////////////////\n");
 	// // // // printf(  "/// END - LOAD JSON ///\n");
 	// // // // printf(  "///////////////////////\n\n");
+}
+
+void printJSONScene(){
+	initializeTemporaryComponent();
+	cJSON* ents = NULL;
+	cJSON* ent = NULL;
+	cJSON* ind = NULL;
+	cJSON* aux = NULL;
+	cJSON* aux2 = NULL;
+	if(!getObjectAndVerify(json, (char*){"entities"}, &ents, ARRAY)) return;
+	// printf("entities type: %p\n", ents->type);
+	for (size_t i = 0 ; i < getArraySize(ents) ; i++){
+		if(!getArrayAndVerify(ents, i, &ent, OBJECT)) continue;
+		// printf("item type: %p\n", ent->type);
+		if(getObjectAndVerify(ent, (char*){"index"}, &ind, NUMBER)){
+			// printf("index type: %p\n", aux->type);
+			temporaryComponents[i].index = ind->valueint;
+			printf("%d - %d\n", temporaryComponents[i].index, ind->valueint);
+		}
+		if(!getObjectAndVerify(ent, (char*){"components"}, &ind, OBJECT)) continue;
+		// printf("components type: %p\n", aux->type);
+		if(getObjectAndVerify(ind, (char*){"information"}, &aux, OBJECT)){
+			// printf("information type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, INFORMATION);
+			if(getObjectAndVerify(aux, (char*){"name"}, &aux2, STRING)){
+				strcpy(temporaryComponents[i].information.name, aux2->valuestring);
+			}
+			temporaryComponents[i].isThereInformation = true;
+		}
+		if(getObjectAndVerify(ind, (char*){"position"}, &aux, OBJECT)){
+			// printf("position type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, POSITION);
+			if(getObjectAndVerify(aux, (char*){"x"}, &aux2, NUMBER)){
+				temporaryComponents[i].position.current2.x = aux2->valuedouble;
+			}
+			if(getObjectAndVerify(aux, (char*){"y"}, &aux2, NUMBER)){
+				temporaryComponents[i].position.current2.y = aux2->valuedouble;
+			}
+			if(getObjectAndVerify(aux, (char*){"oldX"}, &aux2, NUMBER)){
+				temporaryComponents[i].position.old2.x = aux2->valuedouble;
+			}
+			if(getObjectAndVerify(aux, (char*){"oldY"}, &aux2, NUMBER)){
+				temporaryComponents[i].position.old2.y = aux2->valuedouble;
+			}
+			temporaryComponents[i].isTherePosition = true;
+		}
+		if(getObjectAndVerify(ind, (char*){"direction"}, &aux, OBJECT)){
+			// printf("direction type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, DIRECTION);
+			if(getObjectAndVerify(aux, (char*){"x"}, &aux2, NUMBER)){
+				temporaryComponents[i].direction.vector2.x = aux2->valuedouble;
+			}
+			if(getObjectAndVerify(aux, (char*){"y"}, &aux2, NUMBER)){
+				temporaryComponents[i].direction.vector2.y = aux2->valuedouble;
+			}
+			temporaryComponents[i].isThereDirection = true;
+		}
+		if(getObjectAndVerify(ind, (char*){"velocity"}, &aux, OBJECT)){
+			// printf("velocity type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, VELOCITY);
+			if(getObjectAndVerify(aux, (char*){"x"}, &aux2, NUMBER)){
+				temporaryComponents[i].velocity.vector2.x = aux2->valuedouble;
+			}
+			if(getObjectAndVerify(aux, (char*){"y"}, &aux2, NUMBER)){
+				temporaryComponents[i].velocity.vector2.y = aux2->valuedouble;
+			}
+			temporaryComponents[i].isThereVelocity = true;
+		}
+		if(getObjectAndVerify(ind, (char*){"acceleration"}, &aux, OBJECT)){
+			// printf("acceleration type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, ACCELERATION);
+			if(getObjectAndVerify(aux, (char*){"x"}, &aux2, NUMBER)){
+				temporaryComponents[i].acceleration.vector2.x = aux2->valuedouble;
+			}
+			if(getObjectAndVerify(aux, (char*){"y"}, &aux2, NUMBER)){
+				temporaryComponents[i].acceleration.vector2.y = aux2->valuedouble;
+			}
+			temporaryComponents[i].isThereAcceleration = true;
+		}	
+		if(getObjectAndVerify(ind, (char*){"size"}, &aux, OBJECT)){
+			// printf("size type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, SIZE);
+			if(getObjectAndVerify(aux, (char*){"width"}, &aux2, NUMBER)){
+				temporaryComponents[i].size.vector2.x = (aux2->valuedouble == -1.0) ? WINDOW_WIDTH : aux2->valuedouble;
+			}
+			if(getObjectAndVerify(aux, (char*){"height"}, &aux2, NUMBER)){
+				temporaryComponents[i].size.vector2.y = aux2->valuedouble;
+			}
+			temporaryComponents[i].isThereSize = true;
+		}
+		if(getObjectAndVerify(ind, (char*){"color"}, &aux, OBJECT)){
+			// printf("color type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, COLOR);
+			if(getObjectAndVerify(aux, (char*){"red"}, &aux2, NUMBER)){
+				temporaryComponents[i].color.vector4.x = aux2->valueint;
+			}
+			if(getObjectAndVerify(aux, (char*){"green"}, &aux2, NUMBER)){
+				temporaryComponents[i].color.vector4.y = aux2->valueint;
+			}
+			if(getObjectAndVerify(aux, (char*){"blue"}, &aux2, NUMBER)){
+				temporaryComponents[i].color.vector4.z = aux2->valueint;
+			}
+			if(getObjectAndVerify(aux, (char*){"alpha"}, &aux2, NUMBER)){
+				temporaryComponents[i].color.vector4.w = aux2->valueint;
+			}
+			temporaryComponents[i].isThereColor = true;
+		}
+		if(getObjectAndVerify(ind, (char*){"collider"}, &aux, OBJECT)){
+			// printf("collider type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, COLLIDER);
+			if(getObjectAndVerify(aux, (char*){"isItColliding"}, &aux2, NUMBER)){
+				temporaryComponents[i].collider.isItColliding = (strcmp(aux2->valuestring, "true") == 0) ? true : false;
+			}
+			if(getObjectAndVerify(aux, (char*){"collisionDirection"}, &aux2, NUMBER)){
+				temporaryComponents[i].collider.collisionDirection[0] = NULL;
+				temporaryComponents[i].collider.collisionDirection[0] = NULL;
+				temporaryComponents[i].collider.collisionDirection[0] = NULL;
+				temporaryComponents[i].collider.collisionDirection[0] = NULL;
+			}
+			if(getObjectAndVerify(aux, (char*){"isStatic"}, &aux2, NUMBER)){
+
+			}
+			temporaryComponents[i].isThereCollider = true;
+		}
+		if(getObjectAndVerify(ind, (char*){"layer"}, &aux, OBJECT)){
+			// printf("layer type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, LAYER);
+			if(getObjectAndVerify(aux, (char*){"layer"}, &aux2, NUMBER)){
+				temporaryComponents[i].layer.layer = aux2->valueint;
+			}
+			temporaryComponents[i].isThereLayer = true;
+		}
+		if(getObjectAndVerify(ind, (char*){"player"}, &aux, OBJECT)){
+			// printf("player type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, PLAYER);
+			temporaryComponents[i].isTherePlayer = true;
+		}	
+		if(getObjectAndVerify(ind, (char*){"collectible"}, &aux, OBJECT)){
+			// printf("collectible type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, COLLECTIBLE);
+			temporaryComponents[i].isThereCollectible= true;
+		}
+		if(getObjectAndVerify(ind, (char*){"anchor"}, &aux, OBJECT)){
+			// printf("collectible type: %p\n", aux->type);
+			setTypeAndLength(temporaryComponents, i, ANCHOR);
+			temporaryComponents[i].isThereAnchor= true;
+		}
+		lengthtemporaryComponents++;
+	}
 }
 
 cJSON* getItemArray(const cJSON *array, int index){
@@ -73,319 +224,32 @@ cJSON * getObject(const cJSON * const object, const char * const string){
 	return cJSON_GetObjectItemCaseSensitive(object, string);
 }
 
-// bool getObjectAndVerify(const cJSON *const parent, const char *const string, cJSON** child, typeOBjectJson type){
-// 	*child = getObject(parent, (char*){"entities"}); 
-// 	return verify(child, type);
-// }
-
-void printJSONScene(){
-
-	initializeTemporaryComponent();
-
-	cJSON *ents = getObject(json, (char*){"entities"}); 
-	if(!verify(ents, ARRAY)) return;
-
-	// cJSON *ents = NULL;
-	// if(!getObjectAndVerify(json, (char*){"entities"}, &ents, ARRAY)) return;
-
-	// printf("entities\n");
-
-	for (size_t i = 0 ; i < getArraySize(ents) ; i++){
-
-		// printf("i: %d\n", i);
-
-		// printf("type: %p\n", ents);
-
-		cJSON * ent = getItemArray(ents, i);
-
-		// printf("type: %p\n", ent);
-
-		if(!verify(ent, OBJECT)) continue;
-
-		printf("i: %d\n", i);
-		
-		cJSON * index = getObject(ent, (char*){"index"});
-		if(verify(index, NUMBER)){
-			temporaryComponents[i].index = index->valueint;
-		}
-		// // // // printf("index json: %d\n", index->valueint);
-		// // // // printf("temporaryComponents[i].index: %d\n", temporaryComponents[i].index);
-
-		cJSON * comps = getObject(ent, (char*){"components"});
-		if(!verify(comps, OBJECT)) continue;
-			
-		cJSON * infor = getObject(comps, (char*){"information"});
-		if(verify(infor, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, INFORMATION);
-			// printTypeAndLength(temporaryComponents, i);
-
-			cJSON * name = getObject(infor, (char*){"name"});
-			if(verify(name, STRING)){
-				// printf("\n%s\n", name->valuestring);
-				strcpy(temporaryComponents[i].information.name, name->valuestring);
-			}
-
-			temporaryComponents[i].isThereInformation = true;
-
-		}
-		
-		cJSON * pos = getObject(comps, (char*){"position"});
-		if(verify(pos, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, POSITION);
-			// printTypeAndLength(temporaryComponents, i);
-
-			cJSON * x = getObject(pos, (char*){"x"});
-			if(verify(x, NUMBER)){
-				// printf("\n%f\n", x->valuedouble);
-				temporaryComponents[i].position.current2.x = x->valuedouble;
-			}
-
-			cJSON * y = getObject(pos, (char*){"y"});
-			if(verify(y, NUMBER)){
-				// printf("\n%f\n", y->valuedouble);
-				temporaryComponents[i].position.current2.y = y->valuedouble;
-			}
-
-			cJSON * oldX = getObject(pos, (char*){"oldX"});
-			if(verify(oldX, NUMBER)){
-				// printf("\n%f\n", x->valuedouble);
-				temporaryComponents[i].position.old2.x = oldX->valuedouble;
-			}
-
-			cJSON * oldY = getObject(pos, (char*){"oldY"});
-			if(verify(oldY, NUMBER)){
-				// printf("\n%f\n", y->valuedouble);
-				temporaryComponents[i].position.old2.y = oldY->valuedouble;
-			}
-
-			temporaryComponents[i].isTherePosition = true;
-
-		}
-		
-		cJSON * dir = getObject(comps, (char*){"direction"});
-		if(verify(dir, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, DIRECTION);
-			// printTypeAndLength(temporaryComponents, i);
-
-			cJSON * x = getObject(dir, (char*){"x"});
-			if(verify(x, NUMBER)){
-				// printf("\n%f\n", x->valuedouble);
-				temporaryComponents[i].direction.vector2.x = x->valuedouble;
-			}
-
-			cJSON * y = getObject(dir, (char*){"y"});
-			if(verify(y, NUMBER)){
-				// printf("\n%f\n", y->valuedouble);
-				temporaryComponents[i].direction.vector2.y = y->valuedouble;
-			}
-
-			temporaryComponents[i].isThereDirection = true;
-
-		}
-		
-		cJSON * vel = getObject(comps, (char*){"velocity"});
-		if(verify(vel, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, VELOCITY);
-			// printTypeAndLength(temporaryComponents, i);
-
-			cJSON * x = getObject(vel, (char*){"x"});
-			if(verify(x, NUMBER)){
-				// printf("\n%f\n", x->valuedouble);
-				temporaryComponents[i].velocity.vector2.x = x->valuedouble;
-			}
-
-			cJSON * y = getObject(vel, (char*){"y"});
-			if(verify(y, NUMBER)){
-				// printf("\n%f\n", y->valuedouble);
-				temporaryComponents[i].velocity.vector2.y = y->valuedouble;
-			}
-
-			temporaryComponents[i].isThereVelocity = true;
-
-		}
-		
-		cJSON * acc = getObject(comps, (char*){"acceleration"});
-		if(verify(acc, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, ACCELERATION);
-			// printTypeAndLength(temporaryComponents, i);
-
-			cJSON * x = getObject(acc, (char*){"x"});
-			if(verify(x, NUMBER)){
-				// printf("\n%f\n", x->valuedouble);
-				temporaryComponents[i].acceleration.vector2.x = x->valuedouble;
-			}
-
-			cJSON * y = getObject(acc, (char*){"y"});
-			if(verify(y, NUMBER)){
-				// printf("\n%f\n", y->valuedouble);
-				temporaryComponents[i].acceleration.vector2.y = y->valuedouble;
-			}
-
-			temporaryComponents[i].isThereAcceleration = true;
-
-		}
-		
-		cJSON * siz = getObject(comps, (char*){"size"});
-		if(verify(siz, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, SIZE);
-			// printTypeAndLength(temporaryComponents, i);
-
-			cJSON * width = getObject(siz, (char*){"width"});
-			if(verify(width, NUMBER)){
-				// printf("\n%f\n", width->valuedouble);
-				temporaryComponents[i].size.vector2.x = (width->valuedouble == -1.0) ? WINDOW_WIDTH : width->valuedouble;
-				// printf("\nwidth: %f\n", temporaryComponents[i].size.width);
-			}
-
-			cJSON * height = getObject(siz, (char*){"height"});
-			if(verify(height, NUMBER)){
-				// printf("\n%f\n", height->valuedouble);
-				temporaryComponents[i].size.vector2.y = height->valuedouble;
-			}
-
-			temporaryComponents[i].isThereSize = true;
-
-		}
-		
-		cJSON * col = getObject(comps, (char*){"color"});
-		if(verify(col, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, COLOR);
-			// printTypeAndLength(temporaryComponents, i);
-
-			cJSON * red = getObject(col, (char*){"red"});
-			if(verify(red, NUMBER)){
-				// printf("\n%d\n", red->valueint);
-				temporaryComponents[i].color.vector4.x = red->valueint;
-			}
-
-			cJSON * green = getObject(col, (char*){"green"});
-			if(verify(green, NUMBER)){
-				// printf("\n%d\n", green->valueint);
-				temporaryComponents[i].color.vector4.y = green->valueint;
-			}
-
-			cJSON * blue = getObject(col, (char*){"blue"});
-			if(verify(blue, NUMBER)){
-				// printf("\n%d\n", blue->valueint);
-				temporaryComponents[i].color.vector4.z = blue->valueint;
-			}
-
-			cJSON * alpha = getObject(col, (char*){"alpha"});
-			if(verify(alpha, NUMBER)){
-				// printf("\n%d\n", alpha->valueint);
-				temporaryComponents[i].color.vector4.w = alpha->valueint;
-			}
-
-			temporaryComponents[i].isThereColor = true;
-
-		}
-		
-		cJSON * coll = getObject(comps, (char*){"collider"});
-		if(verify(coll, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, COLLIDER);
-			// printTypeAndLength(temporaryComponents, i);
-
-			cJSON * isItColliding = getObject(coll, (char*){"isItColliding"});
-			if(verify(isItColliding, STRING)){
-				// printf("\n%s\n", isItColliding->valuestring);
-				temporaryComponents[i].collider.isItColliding = (strcmp(isItColliding->valuestring, "true") == 0) ? true : false;
-			}
-
-			cJSON * collDir = getObject(coll, (char*){"collisionDirection"});
-			if(verify(collDir, STRING)){
-				// printf("\n%s\n", direc->valuestring);
-				// (direc->string == "NULL") ? NULL : NULL
-				temporaryComponents[i].collider.collisionDirection[0] = NULL;
-				temporaryComponents[i].collider.collisionDirection[0] = NULL;
-				temporaryComponents[i].collider.collisionDirection[0] = NULL;
-				temporaryComponents[i].collider.collisionDirection[0] = NULL;
-			}
-
-			cJSON * isStatic = getObject(coll, (char*){"isStatic"});
-			// if(verify(isStatic, STRING)){
-			// 	// // // // printf("\n%s\n", isStatic->valuestring);
-			// 	temporaryComponents[i].collider.isStatic = (strcmp(isStatic->valuestring, "true") == 0) ? true : false;
-			// 	// // // // printf("\n%d\n", temporaryComponents[i].collider.isStatic);
-			// }
-
-			temporaryComponents[i].isThereCollider = true;
-
-		}
-		
-		cJSON * laye = getObject(comps, (char*){"layer"});
-		if(verify(laye, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, LAYER);
-			// printTypeAndLength(temporaryComponents, i);
-
-			cJSON * lay = getObject(laye, (char*){"layer"});
-			if(verify(lay, NUMBER)){
-				// printf("\n%d\n", lay->valueint);
-				temporaryComponents[i].layer.layer = lay->valueint;
-			}
-
-			temporaryComponents[i].isThereLayer = true;
-
-		}
-		
-		cJSON * play = getObject(comps, (char*){"player"});
-		if(verify(play, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, PLAYER);
-
-			// printTypeAndLength(temporaryComponents, i);
-
-			// cJSON * lay = getObject(laye, "id");
-			// if(verify(lay, NUMBER)){
-			// 	// printf("\n%d\n", lay->valueint);
-			// 	temporaryComponents[i].layer.layer = lay->valueint;
-			// }
-
-			temporaryComponents[i].isTherePlayer = true;
-
-		}
-		
-		cJSON * collectib = getObject(comps, (char*){"collectible"});
-		if(verify(collectib, OBJECT)){
-
-			setTypeAndLength(temporaryComponents, i, COLLECTIBLE);
-
-			// printTypeAndLength(temporaryComponents, i);
-
-			// cJSON * lay = getObject(laye, "id");
-			// if(verify(lay, NUMBER)){
-			// 	// printf("\n%d\n", lay->valueint);
-			// 	temporaryComponents[i].layer.layer = lay->valueint;
-			// }
-
-			temporaryComponents[i].isThereCollectible= true;
-
-		}
-	
-		// cJSON * systs = getObject(ent, "systems");
-		// if(!verify(systs, ARRAY)) return;
-		// for (size_t j = 0 ; j < cJSON_GetArraySize(systs) ; j++){
-		// 	cJSON * syst = cJSON_GetArrayItem(systs, j);
-		// 	if(verify(syst, NUMBER)){
-		// 		// printf("\nSystem: %d\n", syst->valueint);
-		// 		temporaryComponents[i].arraySystems[j] = syst->valueint;
-		// 		temporaryComponents[i].lengthArraySystems++;
-		// 	}
-
-		// }
-
-		lengthtemporaryComponents++;
-
+bool getObjectAndVerify(const cJSON *const parent, const char *const string, cJSON** child, typeOBjectJson type){
+	// printf("//////////////////////////\n");
+	// printf("%st\n", string);
+	// printf("//////////////////////////\n");
+	*child = getObject(parent, string); 
+	if(*child != NULL){
+		// printf("%p\n", *child);
+		// printf("%s\n", cJSON_Print(*child));
+		return verify(*child, type);
 	}
+	// printf("NULL\n");
+	return false;
+}
 
+bool getArrayAndVerify(const cJSON *const parent, int i, cJSON** child, typeOBjectJson type){
+	// printf("//////////////////////////\n");
+	// printf("%d\n", i);
+	// printf("//////////////////////////\n");
+	*child = getItemArray(parent, i); 
+	if(*child != NULL){
+		// printf("%p\n", *child);
+		// printf("%s\n", cJSON_Print(*child));
+		return verify(*child, type);
+	}
+	// printf("NULL\n");
+	return false;
 }
 
 void initializeTemporaryComponent(){
@@ -458,6 +322,10 @@ void initializeTemporaryComponent(){
 
 		temporaryComponents[i].isThereCollectible = false;
 		temporaryComponents[i].collectible.id = -1;
+
+		temporaryComponents[i].isThereAnchor = false;
+		temporaryComponents[i].anchor.id = -1;
+		temporaryComponents[i].anchor.idParent = -1;
 
 	}
 

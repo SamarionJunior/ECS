@@ -58,6 +58,12 @@ typedef struct vectorCollectible{
     unsigned int maximumCollumn;
 } VectorCollectible;
 
+typedef struct vectorAnchor{
+    Anchor *data;
+    unsigned int columnLength;
+    unsigned int maximumCollumn;
+} VectorAnchor;
+
 //////////////////////////////////
 
 typedef struct vectorEntity{
@@ -75,6 +81,7 @@ extern VectorLayer vectorLayer;
 
 extern VectorPlayer vectorPlayer;
 extern VectorCollectible vectorCollectible;
+extern VectorAnchor vectorAnchor;
 
 ///////////////////////////////////////////
 

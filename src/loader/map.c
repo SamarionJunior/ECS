@@ -19,68 +19,105 @@ int **mapMatrix = NULL;
 
 void loadMap(){
 
-    mapMatrix = malloc(sizeof(int*)*ROW);
+  mapMatrix = malloc(sizeof(int*)*ROW);
 
-    for (size_t i = 0; i < ROW; i++){
-        mapMatrix[i] = malloc(sizeof(int)*COL);
-    }
+  for (size_t i = 0; i < ROW; i++){
+      mapMatrix[i] = malloc(sizeof(int)*COL);
+  }
     
 
 	// // // // printf("\n////////////////\n");
 	// // // // printf(  "/// LOAD MAP ///\n");
 	// // // // printf(  "////////////////\n\n");
     
-    FILE *mapTxt = fopen("./data/map.txt", "r");
-    
-    if(mapTxt == NULL){
-        free(mapTxt);
-        // printf("\nSucess\n");
+  FILE *mapTxt = fopen("./data/map.txt", "r");
+  
+  if(mapTxt == NULL){
+      free(mapTxt);
+      // printf("\nSucess\n");
+  }
+  
+  for (size_t i = 0; i < ROW; i++){
+      for (size_t j = 0; j < COL; j++){
+          mapMatrix[i][j] = 9;
+      }
+  }
+
+  int c = 0;
+
+  size_t i = 0, j = 0, count = 0;
+  while((c = fgetc(mapTxt)) != EOF){
+    if(c == '\n'){
+      // printf("%d\n", rand());
+      j = 0;
+      i++;
+      continue;
     }
 
-    char *buffer = NULL;
+    // printf("ROW - I - %d - COL - J- %d\n", i, j);
 
-    buffer = malloc(sizeof(char) * 1000);
-    
-    fread(buffer, sizeof(char), 1000, mapTxt);
-    
-    // for (size_t i = 0; i < 12; i++){
-    //     for (size_t j = 0; j < 13; j++){
-    //         if ((i*13)+j == ((12*13)-1)){
-    //             break;
-    //         }
-    //         printf("%c", buffer[(i*13)+j]);
-    //     }
-    // }
-    // printf("\n");
+    int conv = (int)(c - '0');
+    mapMatrix[i][j] = conv;
 
-    for(size_t i = 0; i < 12 ; i++){
-        for (size_t j = 0; j < 12 ; j++){
-            int conv = (int)(buffer[(i*13)+j] - '0');
-            mapMatrix[i][j] = conv;
-        }
-    }
+    count++;
+    j++;
+  }
 
-    fclose(mapTxt);
-    
-    // for (size_t i = 0; i < 12; i++){
-    //     for (size_t j = 0; j < 12; j++){
-    //         printf("%d", mapMatrix[i][j]);
-    //     }
-    //     printf("\n");
-    // }
+  fclose(mapTxt);
 
-    mapTxt = NULL;
-
-    free(buffer);
-
-    // printf("\n");
+  mapTxt = NULL;
 
 	// // // // printf("\n//////////////////////\n");
 	// // // // printf(  "/// END - LOAD MAP ///\n");
 	// // // // printf(  "//////////////////////\n\n");
 
-    // exit(1);
 }
+  
+    // printf("||||||\n");
+    // for (size_t a = 0; a < ROW; a++){
+    //   for (size_t b = 0; b < COL; b++){
+    //       printf("%d", mapMatrix[a][b]);
+    //   }
+    //   printf("\n");
+    // }
+    // printf("||||||\n");
+
+  // char *buffer = NULL;
+  // buffer = malloc(sizeof(char) * 1000);
+
+  // fread(buffer, sizeof(char), 1000, mapTxt);
+  
+  // for (size_t i = 0; i < 12; i++){
+  //     for (size_t j = 0; j < 13; j++){
+  //         if ((i*13)+j == ((12*13)-1)){
+  //             break;
+  //         }
+  //         printf("%c", buffer[(i*13)+j]);
+  //     }
+  // }
+  // printf("\n");
+
+  // for(size_t i = 0; i < ROW ; i++){
+  //     for (size_t j = 0; j < COL ; j++){
+  //         int conv = (int)(buffer[(i*(COL+1))+j] - '0');
+  //         mapMatrix[i][j] = conv;
+  //     }
+  // }
+
+  // int dsd = 0;
+
+  
+  // for (size_t i = 0; i < 12; i++){
+  //     for (size_t j = 0; j < 12; j++){
+  //         printf("%d", mapMatrix[i][j]);
+  //     }
+  //     printf("\n");
+  // }
+  // free(buffer);
+
+  // printf("\n");
+
+    // exit(1);
 
 // for(size_t count = 0, i = 0, j = 0; 1 ;count++){
     

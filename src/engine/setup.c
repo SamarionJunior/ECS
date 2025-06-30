@@ -38,45 +38,33 @@
 void setup(void){
 
 	score = 0;
-	
-	int id = 0;
+	setId(0);
+	// int id = 0;
 	
 	initializeComponents();
-
 	initializeEntities();
 	
-	// createScene();
-	
-	for (size_t i = 0; i < 12; i++){
-		for (size_t j = 0; j < 12; j++){
+	for (size_t i = 0; i < ROW; i++){
+		for (size_t j = 0; j < COL; j++){
 			for (size_t k = 0; k < lengthtemporaryComponents; k++){
-
 				if(mapMatrix[i][j] != temporaryComponents[k].index){
 					continue;
 				}
-
-				// addEntity(&vectorEntity, lengthCollumnEntity(&vectorEntity), &id);
 				addCellEntity(
 					&vectorEntity,
 					lengthCollumnEntity(&vectorEntity),
 					(Entity){
-						.index = id
+						.index = getId()
 					}
 				);
-
-				// printVectorEntity(&vectorEntity);
-		
 				for (size_t l = 0; l < temporaryComponents[k].lengtharrayComponentTypes; l++){
-					
-					// Data auxData;
-
 					switch (temporaryComponents[k].arrayComponentTypes[l]){
 						case INFORMATION:
 							addCellInformation(
 								&vectorInformation, 
 								lengthCollumnInformation(&vectorInformation), 
 								createInformation(
-									id,
+									getId(),
 									temporaryComponents[k].information.name,
 									(strlen(temporaryComponents[k].information.name) + 1)
 								)
@@ -87,7 +75,7 @@ void setup(void){
 								&vectorPosition, 
 								lengthCollumnInformation(&vectorPosition), 
 								createPosition(
-									id, 
+									getId(), 
 									(j*SPRITE) + (SPRITE * 1), 
 									(i*SPRITE) + (SPRITE * 1), 
 									temporaryComponents[k].position.old2.x,
@@ -100,7 +88,7 @@ void setup(void){
 								&vectorSize, 
 								lengthCollumnSize(&vectorSize), 
 								createSize(
-									id, 
+									getId(), 
 									temporaryComponents[k].size.vector2.x,
 									temporaryComponents[k].size.vector2.y
 								)
@@ -111,7 +99,7 @@ void setup(void){
 								&vectorColor, 
 								lengthCollumnColor(&vectorColor), 
 								createColor(
-									id, 
+									getId(), 
 									temporaryComponents[k].color.vector4.x,
 									temporaryComponents[k].color.vector4.y,
 									temporaryComponents[k].color.vector4.z,
@@ -124,7 +112,7 @@ void setup(void){
 								&vectorCollider, 
 								lengthCollumnCollider(&vectorCollider), 
 								createCollider(
-									id, 
+									getId(), 
 									temporaryComponents[k].collider.isItColliding,
 									temporaryComponents[k].collider.collisionDirection,
 									temporaryComponents[k].collider.isStatic
@@ -136,7 +124,7 @@ void setup(void){
 								&vectorLayer, 
 								lengthCollumnLayer(&vectorLayer), 
 								createLayer(
-									id, 
+									getId(), 
 									temporaryComponents[k].layer.layer
 								)
 							);
@@ -147,7 +135,7 @@ void setup(void){
 								&vectorPlayer, 
 								lengthCollumnPlayer(&vectorPlayer), 
 								createPlayer(
-									id
+									getId()
 								)
 							);
 							break;
@@ -157,18 +145,25 @@ void setup(void){
 								&vectorCollectible, 
 								lengthCollumnCollectible(&vectorCollectible), 
 								createCollectible(
-									id
+									getId()
+								)
+							);
+							break;
+						case ANCHOR:
+							// printf("\noi\n");
+							addCellAnchor(
+								&vectorAnchor, 
+								lengthCollumnAnchor(&vectorAnchor), 
+								createAnchor(
+									getId(),
+									-1
 								)
 							);
 							break;
 					}
-				
 				}
-				
-				id++;
-
+				setId(getId() + 1);
 			}
-			
 		}
 	}
 

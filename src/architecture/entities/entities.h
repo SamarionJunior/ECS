@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define MAX_ENTITIES 100
+#define MAX_ENTITIES 2000
 
 typedef struct entity{
     int index;

@@ -15,6 +15,7 @@ VectorLayer vectorLayer;
 
 VectorPlayer vectorPlayer;
 VectorCollectible vectorCollectible;
+VectorAnchor vectorAnchor;
 
 ///////////////////////////////////////////
 

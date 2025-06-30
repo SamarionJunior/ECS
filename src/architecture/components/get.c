@@ -14,6 +14,7 @@
 #include "../../../dependencies/my/dynamicvectors/components/layer.h"
 #include "../../../dependencies/my/dynamicvectors/components/player.h"
 #include "../../../dependencies/my/dynamicvectors/components/collectible.h"
+#include "../../../dependencies/my/dynamicvectors/components/anchor.h"
 
 Information* getInformationById(int id, int* count){
 	Information* tempInformation = NULL;
@@ -114,6 +115,18 @@ Collectible* getCollectibleById(int id, int* count){
 	}
 }
 
+Anchor* getAnchor(int id, int* count){
+	Anchor* tempAnchor = NULL;
+	for (size_t j = 0; j < lengthCollumnAnchor(&vectorAnchor); j++){
+		tempAnchor = getCellAnchor(&vectorAnchor, j);
+		if(tempAnchor != NULL){
+			if(tempAnchor->id == id){
+				(*count)++;
+				return tempAnchor;
+			}
+		}
+	}
+}
 /// TEMPLATE ///
 
 	// ¨* temp¨ = NULL;

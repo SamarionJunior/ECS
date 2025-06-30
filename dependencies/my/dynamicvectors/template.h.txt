@@ -1,5 +1,5 @@
-#ifndef VECTOR"¨¨¨¨¨"_H_
-#define VECTOR"¨¨¨¨¨"_H_
+#ifndef VECTOR#¨¨¨¨¨#_H_
+#define VECTOR#¨¨¨¨¨#_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,16 +8,16 @@
 #include "../vector.h"
 #include "../../../../src/architecture/components/components.h"
 
-bool verifyParams"¨¨¨"("¨"* "¨¨", size_t collum);
-bool addCell"¨¨¨"("¨"* "¨¨", size_t collum, "¨¨¨" data);
-bool removeCell"¨¨¨"("¨"* "¨¨", size_t collum);
-bool setCell"¨¨¨"("¨"* "¨¨", size_t collum, "¨¨¨" data);
-"¨¨¨"* getCell"¨¨¨"("¨"* "¨¨", size_t collum);
-bool fullCollumn"¨¨¨"("¨"* "¨¨");
-bool emptyCollumn"¨¨¨"("¨"* "¨¨");
-int lengthCollumn"¨¨¨"("¨"* "¨¨");
-bool print"¨"("¨"* "¨¨");
-void initialize"¨"("¨"* "¨¨", unsigned int maximumCollumn);
-bool destroy"¨"("¨"* "¨¨");
+bool verifyParams#¨¨¨#(#¨#* #¨¨#, size_t collum);
+bool addCell#¨¨¨#(#¨#* #¨¨#, size_t collum, #¨¨¨# data);
+bool removeCell#¨¨¨#(#¨#* #¨¨#, size_t collum);
+bool setCell#¨¨¨#(#¨#* #¨¨#, size_t collum, #¨¨¨# data);
+#¨¨¨#* getCell#¨¨¨#(#¨#* #¨¨#, size_t collum);
+bool fullCollumn#¨¨¨#(#¨#* #¨¨#);
+bool emptyCollumn#¨¨¨#(#¨#* #¨¨#);
+int lengthCollumn#¨¨¨#(#¨#* #¨¨#);
+bool print#¨#(#¨#* #¨¨#);
+void initialize#¨#(#¨#* #¨¨#, unsigned int maximumCollumn);
+bool destroy#¨#(#¨#* #¨¨#);
 
 #endif

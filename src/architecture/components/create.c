@@ -16,6 +16,7 @@ Collider createCollider(int id, int isItColliding, int *direction, int isStatic)
 
 Layer createLayer(int id, int number);
 Collectible createCollectible(int id);
+Anchor createAnchor(int id, int idParent);
 
 Information createInformation(int id, char *name, unsigned int lengthName){
 	Information information;
@@ -108,4 +109,11 @@ Collectible createCollectible(int id){
 	Collectible collectible;
 	collectible.id = id;
 	return collectible;
+}
+
+Anchor createAnchor(int id, int idParent){
+	Anchor anchor;
+	anchor.id = id;
+	anchor.idParent = idParent;
+	return anchor;
 }

@@ -7,6 +7,10 @@
 
 //#pragma once
 
+typedef enum{
+  Q
+} Config;
+
 #define ID_INIT -1
 
 #define RUN     0
@@ -22,9 +26,14 @@
 
 #define SPRITE 32
 
-#define COL 12
-#define ROW 12
+// #define COL 12
+// #define ROW 12
+#define COL 6
+#define ROW 6
 #define SPACE 2
+#define COLD (COL - SPACE)
+#define ROWD (ROW - SPACE)
+#define CRD ((COLD * ROWD) - 1)
 
 // #define WINDOW_WIDTH 480
 // #define WINDOW_HEIGHT 480

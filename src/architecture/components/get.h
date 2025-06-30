@@ -18,7 +18,9 @@ Player* getPlayerById(int id, int* count);
 
 Collectible* getCollectibleById(int id, int* count);
 
-// "¨"* get"¨"(int id, int* count);
+Anchor* getAnchorById(int id, int* count);
+
+// "¨"* get"¨"ById(int id, int* count);
 
 #endif
 

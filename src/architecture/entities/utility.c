@@ -8,14 +8,25 @@
 #include "../../../dependencies/my/dynamicvectors/vector.h"
 #include "../../../dependencies/my/dynamicvectors/entities/entity.h"
 
-int idcount = 0;
+static int id = 0;
 
+int getId();
+int setId(int idnew);
 void initializeEntities();
 bool addEntity(VectorEntity* vectorEntity, size_t row, int *id);
+void destroyEntities();
 // bool existEntities(size_t scene, size_t index);
 // void printEntity(size_t scene, size_t index);
 // void printEntities(size_t scene);
-void destroyEntities();
+
+int getId(){
+	return id;
+}
+
+int setId(int idnew){
+	id = idnew;
+	return id;
+}
 
 void initializeEntities(){
 	initializeVectorEntity(&vectorEntity, MAX_ENTITIES);
@@ -28,8 +39,8 @@ bool addEntity(VectorEntity* vectorEntity, size_t row, int *id){
 		return false;
 	}
 
-	*id = idcount;
-	idcount++;
+	// *id = idcount;
+	// idcount++;
 
 	Entity auxEntity = (Entity){
 		.index = id
@@ -43,6 +54,10 @@ bool addEntity(VectorEntity* vectorEntity, size_t row, int *id){
 
 	addCellEntity(&vectorEntity, lengthCollumnEntity(&vectorEntity), auxEntity);
 	return true;
+}
+
+void destroyEntities(){
+	destroyVectorEntity(&vectorEntity);
 }
 
 // bool existEntities(size_t scene, size_t index){
@@ -72,10 +87,6 @@ bool addEntity(VectorEntity* vectorEntity, size_t row, int *id){
 // 	}
 // 	// // // // printf("\n////////////////\n");
 // }
-
-void destroyEntities(){
-	destroyVectorEntity(&vectorEntity);
-}
 
 // int printAllComponentByEntity(int id){
 // 	if(!existEntities(id)){

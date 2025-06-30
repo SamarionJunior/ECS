@@ -3,36 +3,36 @@
 #include <stdbool.h>
 
 #include "../vector.h"
-#include ""¨¨¨¨".h"
+#include "#¨¨¨¨#.h"
 #include "../../../../src/architecture/components/components.h"
 
-bool verifyParams"¨¨¨"("¨"* "¨¨", size_t collum){
+bool verifyParams#¨¨¨#(#¨#* #¨¨#, size_t collum){
 
-    if("¨¨" == NULL){
+    if(#¨¨# == NULL){
         printf("\n");
-        printf(""¨¨" == NULL\n");
-        printf(""¨¨" - Address: %p\n", "¨¨");
-        printf("\n");
-        return false;
-    }
-    if("¨¨"->data == NULL){
-        printf("\n");
-        printf(""¨¨"->data\n");
-        printf(""¨¨" - Address: %p\n", "¨¨"->data);
+        printf("#¨¨# == NULL\n");
+        printf("#¨¨# - Address: %p\n", #¨¨#);
         printf("\n");
         return false;
     }
-    if("¨¨"->columnLength < 0){
+    if(#¨¨#->data == NULL){
         printf("\n");
-        printf(""¨¨"->columnLength < 0\n");
-        printf(""¨¨"->columnLength = %d\n", "¨¨"->columnLength);
+        printf("#¨¨#->data\n");
+        printf("#¨¨# - Address: %p\n", #¨¨#->data);
         printf("\n");
         return false;
     }
-    if("¨¨"->maximumCollumn < 0){
+    if(#¨¨#->columnLength < 0){
         printf("\n");
-        printf(""¨¨"->maximumCollumn < 0\n");
-        printf(""¨¨"->maximumCollumn = %d\n", "¨¨"->maximumCollumn);
+        printf("#¨¨#->columnLength < 0\n");
+        printf("#¨¨#->columnLength = %d\n", #¨¨#->columnLength);
+        printf("\n");
+        return false;
+    }
+    if(#¨¨#->maximumCollumn < 0){
+        printf("\n");
+        printf("#¨¨#->maximumCollumn < 0\n");
+        printf("#¨¨#->maximumCollumn = %d\n", #¨¨#->maximumCollumn);
         printf("\n");
         return false;
     }
@@ -43,19 +43,19 @@ bool verifyParams"¨¨¨"("¨"* "¨¨", size_t collum){
         printf("\n");
         return false;
     }
-    if(collum > "¨¨"->columnLength){
+    if(collum > #¨¨#->columnLength){
         printf("\n");
-        printf("collum > "¨¨"->columnLength\n");
+        printf("collum > #¨¨#->columnLength\n");
         printf("collum = %d\n", collum);
-        printf(""¨¨"->columnLength = %d\n", "¨¨"->columnLength);
+        printf("#¨¨#->columnLength = %d\n", #¨¨#->columnLength);
         printf("\n");
         return false;
     }
-    if(collum == "¨¨"->maximumCollumn){
+    if(collum == #¨¨#->maximumCollumn){
         printf("\n");
-        printf("collum == "¨¨"->maximumCollumn\n");
+        printf("collum == #¨¨#->maximumCollumn\n");
         printf("collum = %d\n", collum);
-        printf(""¨¨"->maximumCollumn = %d\n", "¨¨"->maximumCollumn);
+        printf("#¨¨#->maximumCollumn = %d\n", #¨¨#->maximumCollumn);
         printf("\n");
         return false;
     }
@@ -63,141 +63,141 @@ bool verifyParams"¨¨¨"("¨"* "¨¨", size_t collum){
     return true;
 }
 
-bool addCell"¨¨¨"("¨"* "¨¨", size_t collum, "¨¨¨" data){
+bool addCell#¨¨¨#(#¨#* #¨¨#, size_t collum, #¨¨¨# data){
 
-    if(!verifyParams"¨¨¨"("¨¨", collum)){
+    if(!verifyParams#¨¨¨#(#¨¨#, collum)){
         return false;
     }
 
-    if("¨¨"->columnLength == "¨¨"->maximumCollumn){
+    if(#¨¨#->columnLength == #¨¨#->maximumCollumn){
         printf("\n");
-        printf(""¨¨"->columnLength == "¨¨"->maximumCollumn\n");
-        printf("maximumCollumn - value: %d\n", "¨¨"->maximumCollumn);
-        printf("matrix->collum[row] - value: %d\n", "¨¨"->columnLength);
+        printf("#¨¨#->columnLength == #¨¨#->maximumCollumn\n");
+        printf("maximumCollumn - value: %d\n", #¨¨#->maximumCollumn);
+        printf("matrix->collum[row] - value: %d\n", #¨¨#->columnLength);
         printf("\n");
         return false;
     }
 
     // printf("collum = %d\n", collum);
 
-    "¨¨"->columnLength++;
-    "¨¨¨" *tempColumn = 
-        ("¨¨"->data == NULL) ?
-            malloc(sizeof("¨¨¨") * "¨¨"->columnLength) :
-            realloc("¨¨"->data, sizeof("¨¨¨") * "¨¨"->columnLength); // verify
+    #¨¨#->columnLength++;
+    #¨¨¨# *tempColumn = 
+        (#¨¨#->data == NULL) ?
+            malloc(sizeof(#¨¨¨#) * #¨¨#->columnLength) :
+            realloc(#¨¨#->data, sizeof(#¨¨¨#) * #¨¨#->columnLength); // verify
 
     // frre(DATA)
     if(tempColumn == NULL){
-        "¨¨"->columnLength--;
+        #¨¨#->columnLength--;
         return false;
     }
 
-    "¨¨"->data = tempColumn;
+    #¨¨#->data = tempColumn;
 
-    for (size_t i = ("¨¨"->columnLength - 1); i > collum; i--){
-        "¨¨"->data[i] = "¨¨"->data[i - 1];
+    for (size_t i = (#¨¨#->columnLength - 1); i > collum; i--){
+        #¨¨#->data[i] = #¨¨#->data[i - 1];
     }
 
-    "¨¨"->data[collum] = data;
+    #¨¨#->data[collum] = data;
 
     // printf("\nmatrix->collum[row] %d\n", matrix->collum[row]);
     return true;
 
 }
 
-bool removeCell"¨¨¨"("¨"* "¨¨", size_t collum){
+bool removeCell#¨¨¨#(#¨#* #¨¨#, size_t collum){
 
-    if(!verifyParams"¨¨¨"("¨¨", collum)){
+    if(!verifyParams#¨¨¨#(#¨¨#, collum)){
         return false;
     }
 
-    for (size_t j = collum; j < ("¨¨"->columnLength - 1); j++){
-        "¨¨"->data[j] = "¨¨"->data[j + 1];
+    for (size_t j = collum; j < (#¨¨#->columnLength - 1); j++){
+        #¨¨#->data[j] = #¨¨#->data[j + 1];
     }
 
     // matrix->matrix[row][matrix->collum[row] - 1].data = NULL;
-    // free("¨¨"->data["¨¨"->columnLength - 1]);
+    // free(#¨¨#->data[#¨¨#->columnLength - 1]);
 
-    "¨¨"->columnLength--;
-    "¨¨"->data = realloc("¨¨"->data, sizeof("¨¨¨") * "¨¨"->columnLength); // verify
+    #¨¨#->columnLength--;
+    #¨¨#->data = realloc(#¨¨#->data, sizeof(#¨¨¨#) * #¨¨#->columnLength); // verify
 
     return true;
 }
 
-bool setCell"¨¨¨"("¨"* "¨¨", size_t collum, "¨¨¨" data){
+bool setCell#¨¨¨#(#¨#* #¨¨#, size_t collum, #¨¨¨# data){
 
-    if(!verifyParams"¨¨¨"("¨¨", collum)){
+    if(!verifyParams#¨¨¨#(#¨¨#, collum)){
         return false;
     }
 
-	// free("¨¨"->data[collum]);
+	// free(#¨¨#->data[collum]);
 
-	"¨¨"->data[collum] = data;
+	#¨¨#->data[collum] = data;
 
     return true;
 
 }
 
-"¨¨¨"* getCell"¨¨¨"("¨"* "¨¨", size_t collum){
+#¨¨¨#* getCell#¨¨¨#(#¨#* #¨¨#, size_t collum){
 
-    if(!verifyParams"¨¨¨"("¨¨", collum)){
+    if(!verifyParams#¨¨¨#(#¨¨#, collum)){
         return NULL;
     }
 
-	return &("¨¨"->data[collum]);
+	return &(#¨¨#->data[collum]);
 
 }
 
-bool fullCollumn"¨¨¨"("¨"* "¨¨"){
+bool fullCollumn#¨¨¨#(#¨#* #¨¨#){
     
-    if(!verifyParams"¨¨¨"("¨¨", 0)){
+    if(!verifyParams#¨¨¨#(#¨¨#, 0)){
         return false;
     }
 
-	return "¨¨"->columnLength == "¨¨"->maximumCollumn ? true : false;
+	return #¨¨#->columnLength == #¨¨#->maximumCollumn ? true : false;
 
 }
 
-bool emptyCollumn"¨¨¨"("¨"* "¨¨"){
+bool emptyCollumn#¨¨¨#(#¨#* #¨¨#){
     
-    if(!verifyParams"¨¨¨"("¨¨", 0)){
+    if(!verifyParams#¨¨¨#(#¨¨#, 0)){
         return false;
     }
 
-	return "¨¨"->columnLength == 0 ? true : false;
+	return #¨¨#->columnLength == 0 ? true : false;
 
 }
 
-int lengthCollumn"¨¨¨"("¨"* "¨¨"){
+int lengthCollumn#¨¨¨#(#¨#* #¨¨#){
 
-    if(!verifyParams"¨¨¨"("¨¨", 0)){
+    if(!verifyParams#¨¨¨#(#¨¨#, 0)){
         return false;
     }
     
-	return "¨¨"->columnLength;
+	return #¨¨#->columnLength;
 
 }
 
-bool print"¨"("¨"* "¨¨"){
+bool print#¨#(#¨#* #¨¨#){
 
-    if(!verifyParams"¨¨¨"("¨¨", 0)){
+    if(!verifyParams#¨¨¨#(#¨¨#, 0)){
         return false;
     }
 
-    for (size_t j = 0; j < "¨¨"->columnLength; j++){
-        printf("%p - [%d]: %d\n", &"¨¨"->data[j], j, "¨¨"->data[j]);
+    for (size_t j = 0; j < #¨¨#->columnLength; j++){
+        printf("%p - [%d]: %d\n", &#¨¨#->data[j], j, #¨¨#->data[j]);
     }
     printf("\n");
 
     return true;
 }
 
-void initialize"¨"("¨"* "¨¨", unsigned int maximumCollumn){
+void initialize#¨#(#¨#* #¨¨#, unsigned int maximumCollumn){
 
-    if("¨¨" == NULL){
+    if(#¨¨# == NULL){
         printf("maximumCollumn < 0\n");
         printf("initializeMatrix: Invalide Argument\n");
-        printf("vector - address: %p\n", *"¨¨");
+        printf("vector - address: %p\n", *#¨¨#);
         return NULL;
     }
 
@@ -208,24 +208,24 @@ void initialize"¨"("¨"* "¨¨", unsigned int maximumCollumn){
         return NULL;
     }
 
-    *"¨¨" = ("¨"){
+    *#¨¨# = (#¨#){
         .maximumCollumn = maximumCollumn,
         .columnLength = 0,
-        .data = malloc(sizeof("¨¨¨")),
+        .data = malloc(sizeof(#¨¨¨#)),
     };
 
 }
 
-bool destroy"¨"("¨"* "¨¨"){
+bool destroy#¨#(#¨#* #¨¨#){
 
-    if("¨¨" == NULL){
+    if(#¨¨# == NULL){
         return false;
     }
 
-    if("¨¨"->data != NULL){
-        printf(""¨¨"->data == %p\n", "¨¨"->data);
-        printf(""¨¨"->data[0] == %i\n", "¨¨"->data[0]);
-        free("¨¨"->data);
-        "¨¨"->data = NULL;
+    if(#¨¨#->data != NULL){
+        printf("#¨¨#->data == %p\n", #¨¨#->data);
+        printf("#¨¨#->data[0] == %i\n", #¨¨#->data[0]);
+        free(#¨¨#->data);
+        #¨¨#->data = NULL;
     }
 }

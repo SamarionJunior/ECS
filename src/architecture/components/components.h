@@ -34,6 +34,7 @@ typedef enum{
 	LAYER,
 	PLAYER,
 	COLLECTIBLE,
+	ANCHOR,
 	TOTALCOMPONENTS
 } TypesOfComponents;
 
@@ -107,7 +108,7 @@ typedef struct Collider {
 
 extern Color black;
 
-#define MAX_LAYER 5
+#define MAX_LAYER 6
 
 typedef struct Layer {
 	int id;
@@ -122,11 +123,16 @@ typedef struct Collectible {
 	int id;
 } Collectible;
 
+typedef struct anchor {
+	int id;
+	int idParent;
+} Anchor;
+
 #define QTD_TYPE_COMPONENTS TOTALCOMPONENTS
 
 extern char *namesOfCompenents[QTD_TYPE_COMPONENTS];
 
-#define MAX_COMPONENTS 1000
+#define MAX_COMPONENTS 20000
 
 #define SUBCOMPONENTS 2
 
@@ -157,6 +163,8 @@ typedef struct TemporaryComponent{
 	bool isTherePlayer;
 	Collectible collectible;
 	bool isThereCollectible;
+	Anchor anchor;
+	bool isThereAnchor;
 	int arrayComponentTypes[QTD_TYPE_COMPONENTS];
 	int lengtharrayComponentTypes;
 } TemporaryComponent;

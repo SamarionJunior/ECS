@@ -5,6 +5,8 @@
 #include "move.h"
 #include "collision.h"
 #include "systems.h"
+#include "scoreCalculator.h"
+#include "snake.h"
 #include "../entities/entities.h"
 
 #include "../components/components.h"
@@ -68,7 +70,20 @@ void move(){
 			bool result = collisionBetween(&tempPosition, &tempSize);
 			if(result == false){
 				auxPosition->old2.y = auxPosition->current2.y;
-				auxPosition->current2.y -= 32;
+				auxPosition->current2.y = tempPosition.current2.y;
+				auxPosition->old2.x = auxPosition->current2.x;
+				auxPosition->current2.x = tempPosition.current2.x;
+				printf(
+					"X: %f - Y: %f - OldX: %f - OldY: %f\n",
+					auxPosition->current2.x,
+					auxPosition->current2.y,
+					auxPosition->current2.x,
+					auxPosition->old2.y
+				);
+				scoreCalculator();
+				// iterationSnake();
+				// auxPosition->old2.y = auxPosition->current2.y;
+				// auxPosition->current2.y -= 32;
 				// globalCount++;
 			}
 			arrayKey[MY_CLIKER_TOP] = true;
@@ -80,7 +95,20 @@ void move(){
 			bool result = collisionBetween(&tempPosition, &tempSize);
 			if(result == false){
 				auxPosition->old2.y = auxPosition->current2.y;
-				auxPosition->current2.y += 32;
+				auxPosition->current2.y = tempPosition.current2.y;
+				auxPosition->old2.x = auxPosition->current2.x;
+				auxPosition->current2.x = tempPosition.current2.x;
+				printf(
+					"X: %f - Y: %f - OldX: %f - OldY: %f\n",
+					auxPosition->current2.x,
+					auxPosition->current2.y,
+					auxPosition->current2.x,
+					auxPosition->old2.y
+				);
+				scoreCalculator();
+				// iterationSnake();
+				// auxPosition->old2.y = auxPosition->current2.y;
+				// auxPosition->current2.y += 32;
 				// globalCount++;
 			}
 			arrayKey[MY_CLIKER_BOTTOM] = true;
@@ -91,8 +119,21 @@ void move(){
 			tempPosition.current2.x += 32;
 			bool result = collisionBetween(&tempPosition, &tempSize);
 			if(result == false){
+				auxPosition->old2.y = auxPosition->current2.y;
+				auxPosition->current2.y = tempPosition.current2.y;
 				auxPosition->old2.x = auxPosition->current2.x;
-				auxPosition->current2.x += 32;
+				auxPosition->current2.x = tempPosition.current2.x;
+				printf(
+					"X: %f - Y: %f - OldX: %f - OldY: %f\n",
+					auxPosition->current2.x,
+					auxPosition->current2.y,
+					auxPosition->current2.x,
+					auxPosition->old2.y
+				);
+				scoreCalculator();
+				// iterationSnake();
+				// auxPosition->old2.x = auxPosition->current2.x;
+				// auxPosition->current2.x += 32;
 				// globalCount++;
 			}
 			arrayKey[MY_CLIKER_RIGHT] = true;
@@ -103,8 +144,21 @@ void move(){
 			tempPosition.current2.x -= 32;
 			bool result = collisionBetween(&tempPosition, &tempSize);
 			if(result == false){
+				auxPosition->old2.y = auxPosition->current2.y;
+				auxPosition->current2.y = tempPosition.current2.y;
 				auxPosition->old2.x = auxPosition->current2.x;
-				auxPosition->current2.x -= 32;
+				auxPosition->current2.x = tempPosition.current2.x;
+				printf(
+					"X: %f - Y: %f - OldX: %f - OldY: %f\n",
+					auxPosition->current2.x,
+					auxPosition->current2.y,
+					auxPosition->current2.x,
+					auxPosition->old2.y
+				);
+				scoreCalculator();
+				// iterationSnake();
+				// auxPosition->old2.x = auxPosition->current2.x;
+				// auxPosition->current2.x -= 32;
 				// globalCount++;
 			}
 			arrayKey[MY_CLIKER_LEFT] = true;

@@ -19,6 +19,7 @@ Layer createLayer(int id, int number);
 
 Player createPlayer(int id);
 Collectible createCollectible(int id);
+Anchor createAnchor(int id, int idParent);
 
 #endif
 

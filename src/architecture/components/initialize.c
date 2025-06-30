@@ -18,6 +18,7 @@
 #include "../../../dependencies/my/dynamicvectors/components/layer.h"
 #include "../../../dependencies/my/dynamicvectors/components/player.h"
 #include "../../../dependencies/my/dynamicvectors/components/collectible.h"
+#include "../../../dependencies/my/dynamicvectors/components/anchor.h"
 
 Information defualtInformation = (Information){
 	.id = ID_INIT,
@@ -74,6 +75,10 @@ Player defualtPlayer = (Player){
 Collectible defualtCollectible = (Collectible){
 	.id = ID_INIT
 };
+Anchor defualtAnchor = (Anchor){
+	.id = ID_INIT,
+	.idParent = ID_INIT
+};
 
 void initializeComponents();
 
@@ -88,4 +93,5 @@ void initializeComponents(){
 
 	initializeVectorPlayer(&vectorPlayer, MAX_COMPONENTS);
 	initializeVectorCollectible(&vectorCollectible, MAX_COMPONENTS);
+	initializeVectorAnchor(&vectorAnchor, MAX_COMPONENTS);
 }
