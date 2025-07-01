@@ -36,6 +36,8 @@
 #include "../utilities/space.h"
 
 void setup(void){
+	
+	setIsEmpty(true);
 
 	score = 0;
 	setId(0);
@@ -44,8 +46,8 @@ void setup(void){
 	initializeComponents();
 	initializeEntities();
 	
-	for (size_t i = 0; i < ROW; i++){
-		for (size_t j = 0; j < COL; j++){
+	for (size_t i = 0; i < getROW(); i++){
+		for (size_t j = 0; j < getCOL(); j++){
 			for (size_t k = 0; k < lengthtemporaryComponents; k++){
 				if(mapMatrix[i][j] != temporaryComponents[k].index){
 					continue;

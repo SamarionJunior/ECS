@@ -9,176 +9,119 @@
 
 #include "../constants.h"
 
-#include "../../dependencies/mycustom/myjson.h"
-
-#include "json.h"
+// #include "../../dependencies/mycustom/myjson.h"
 
 #include "map.h"
 
 int **mapMatrix = NULL;
+FILE *mapTxt = NULL;
+
+int** initilizeMatrix(int row, int col);
+FILE* openMap(char* path);
+void setMapDimension(char* file);
+void parseMapToMatrix(char* file, int **matrix);
+void closeMap(FILE* file);
 
 void loadMap(){
-
-  mapMatrix = malloc(sizeof(int*)*ROW);
-
-  for (size_t i = 0; i < ROW; i++){
-      mapMatrix[i] = malloc(sizeof(int)*COL);
-  }
-    
 
 	// // // // printf("\n////////////////\n");
 	// // // // printf(  "/// LOAD MAP ///\n");
 	// // // // printf(  "////////////////\n\n");
-    
-  FILE *mapTxt = fopen("./data/map.txt", "r");
+
+  mapTxt = openMap(pathMap);
+  setMapDimension(mapTxt);
   
-  if(mapTxt == NULL){
-      free(mapTxt);
-      // printf("\nSucess\n");
-  }
-  
-  for (size_t i = 0; i < ROW; i++){
-      for (size_t j = 0; j < COL; j++){
-          mapMatrix[i][j] = 9;
-      }
-  }
+  mapMatrix = initilizeMatrix(getROW(), getCOL());
+  parseMapToMatrix(mapTxt, mapMatrix);
 
-  int c = 0;
-
-  size_t i = 0, j = 0, count = 0;
-  while((c = fgetc(mapTxt)) != EOF){
-    if(c == '\n'){
-      // printf("%d\n", rand());
-      j = 0;
-      i++;
-      continue;
-    }
-
-    // printf("ROW - I - %d - COL - J- %d\n", i, j);
-
-    int conv = (int)(c - '0');
-    mapMatrix[i][j] = conv;
-
-    count++;
-    j++;
-  }
-
-  fclose(mapTxt);
-
-  mapTxt = NULL;
+  closeMap(mapTxt);
 
 	// // // // printf("\n//////////////////////\n");
 	// // // // printf(  "/// END - LOAD MAP ///\n");
 	// // // // printf(  "//////////////////////\n\n");
 
 }
+
+int** initilizeMatrix(int row, int col){
+  int** auxMatrix = malloc(sizeof(int*) * row);
+  for (size_t i = 0; i < row; i++){
+    auxMatrix[i] = malloc(sizeof(int) * col);
+  }
+  return auxMatrix;
+}
+
+FILE* openMap(char* path){
+  FILE* file = fopen(path, "r");
+  if(file == NULL){
+    free(file);
+    printf("Erro ao abrir o Arquivo: %s\n", path);
+    return NULL;
+  }
+  return file;
+}
+
+void setMapDimension(char* file){
+  int row = 0, collumn = 0, c = 0, greater = 0;
+  while((c = fgetc(file)) != EOF){
+    if(c == '\n'){
+		  printf("\n");
+      if(greater < collumn){
+        greater = collumn;
+      }
+      collumn = 0;
+      row++;
+      continue;
+    }
+    collumn++;
+    printf("[%d][%d]:%c", row, collumn, c);
+  }
+	printf("\n");
+  printf("rows: %d - collumns: %d\n", row + 1, greater);
+  setROW(row + 1);
+  setCOL(greater);
+  printf("rows: %d - collumns: %d\n", getROW(), getCOL());
+  fseek(file, 0, SEEK_SET);
+}
+
+void parseMapToMatrix(char* file, int **matrix){
+  int i = 0, j = 0, c = 0, CodeANSIConvertedInInteger = 0;
+  while((c = fgetc(file)) != EOF){
+    if(c == '\n'){
+		  printf("\n");
+      j = 0;
+      i++;
+      continue;
+    }
+    CodeANSIConvertedInInteger = (int)(c - '0');
+		printf("[%d][%d]", i, j);
+    matrix[i][j] = CodeANSIConvertedInInteger;
+    j++;
+  }
+	printf("\n");
+  fseek(file, 0, SEEK_SET);
+}
   
-    // printf("||||||\n");
-    // for (size_t a = 0; a < ROW; a++){
-    //   for (size_t b = 0; b < COL; b++){
-    //       printf("%d", mapMatrix[a][b]);
-    //   }
-    //   printf("\n");
-    // }
-    // printf("||||||\n");
+void closeMap(FILE* file){
+  fclose(file);
+  file = NULL;
+}
 
-  // char *buffer = NULL;
-  // buffer = malloc(sizeof(char) * 1000);
-
-  // fread(buffer, sizeof(char), 1000, mapTxt);
-  
-  // for (size_t i = 0; i < 12; i++){
-  //     for (size_t j = 0; j < 13; j++){
-  //         if ((i*13)+j == ((12*13)-1)){
-  //             break;
-  //         }
-  //         printf("%c", buffer[(i*13)+j]);
+  // char buffer[(COL + 1)];
+  // for(int j = 0; true; j++){
+  //   fgets(buffer, (COL + 1), mapTxt);
+  //   printf("%d-", buffer);
+  //   char b = NULL;
+  //   for (int i = 0; true; i++){
+  //     if(b == EOF){
+  //       break;
   //     }
-  // }
-  // printf("\n");
-
-  // for(size_t i = 0; i < ROW ; i++){
-  //     for (size_t j = 0; j < COL ; j++){
-  //         int conv = (int)(buffer[(i*(COL+1))+j] - '0');
-  //         mapMatrix[i][j] = conv;
+  //     if(b == '\n'){
+  //       printf("-oi\n");
+  //       continue;
   //     }
-  // }
-
-  // int dsd = 0;
-
-  
-  // for (size_t i = 0; i < 12; i++){
-  //     for (size_t j = 0; j < 12; j++){
-  //         printf("%d", mapMatrix[i][j]);
-  //     }
-  //     printf("\n");
+  //     // convertedInteger = (int)(convertedInteger - '0');
+  //     mapMatrix[i][j] = (int)(b - '0');
+  //   }
   // }
   // free(buffer);
-
-  // printf("\n");
-
-    // exit(1);
-
-// for(size_t count = 0, i = 0, j = 0; 1 ;count++){
-    
-//     if(buffer[count] == '\0'){
-//         break;
-//     }
-
-//     if(buffer[count] == '\n'){
-//         // printf("\n");
-//         i++;
-//         j = 0;
-//         continue;
-//     }
-
-//     // printf("|%d|", buffer[count]);
-//     if(i < ROW && j < COL && count < 1000){
-//         int conv = (int)(buffer[count] - '0');
-//         mapMatrix[i][j] = conv;
-//     }else{
-//         printf("i: %d\n", i);
-//         printf("j: %d\n", j);
-//         printf("count: %d\n", count);
-//     }
-
-//     j++;
-    
-// }
-// printf("\n");
-
-// void loadMapOld(){
-
-//     char buffer[10000];
-    
-//     FILE *mapTxt = fopen("data/map.txt", "r");
-//     if(mapTxt == NULL){
-//         printf("\nSucess\n");
-//     }
-    
-//     fread(buffer, 1, sizeof(buffer), mapTxt);
-//     printf("\n%s\n", buffer);
-//     printf("\n");
-
-//     for (size_t i = 0; i < 12; i++){
-//         for (size_t j = 0, k = 0; j < 12; j++, k++){
-//             // if(buffer[j] == '\n')
-//             printf("|%d|", buffer[((i*(12)) + i)+j]);
-//             mapMatrix[i][k] = buffer[((i*(12)) + i)+j] - '0';
-//         }
-//         printf("\n");
-//     }
-
-//     fclose(mapTxt);
-
-//     printf("\n");
-    
-//     for (size_t i = 0; i < 12; i++){
-//         for (size_t j = 0; j < 12; j++){
-//             printf("%d", mapMatrix[i][j]);
-//         }
-//         printf("\n");
-//     }
-
-//     printf("\n");
-// }
+  // buffer = NULL;

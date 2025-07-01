@@ -25,6 +25,7 @@
 
 #include "../../../dependencies/my/dynamicvectors/components/position.h"
 #include "../../../dependencies/my/dynamicvectors/components/size.h"
+#include "../../../dependencies/my/dynamicvectors/components/collider.h"
 #include "../../../dependencies/my/dynamicvectors/components/player.h"
 #include "../../../dependencies/my/dynamicvectors/components/collectible.h"
 
@@ -82,7 +83,7 @@ void  scoreCalculator(){
 			initializeCollisionVariables(positionB, sizeB, &xB, &yB, &wB, &hB);
 
 			if(isItColliding(xA, yA, wA, hA, xB, yB, wB, hB)){
-        printf("\n%d\n", rand());
+        // printf("\n%d\n", rand());
 				if(arrayKey[MY_SCORE] == true){
 					arrayKey[MY_SCORE] = false;
 					// system("clear");
@@ -104,7 +105,7 @@ void  scoreCalculator(){
 						if(temporaryComponents[k].index != 4){
 							continue;
 						}
-						printf("%d\n", temporaryComponents[k].index);
+						// printf("%d\n", temporaryComponents[k].index);
 						setId(getId() + 1);
 						addCellEntity(
 							&vectorEntity,
@@ -114,7 +115,7 @@ void  scoreCalculator(){
 							}
 						);
 						for (size_t l = 0; l < temporaryComponents[k].lengtharrayComponentTypes; l++){
-							printf("%d\n", temporaryComponents[k].arrayComponentTypes[l]);
+							// printf("%d\n", temporaryComponents[k].arrayComponentTypes[l]);
 							switch (temporaryComponents[k].arrayComponentTypes[l]){
 								case INFORMATION:
 									addCellInformation(
@@ -249,7 +250,7 @@ void  scoreCalculator(){
 
 	iterationSnake();
 
-	if(score < CRD){
+	// if(score < getCRD()){
 
 		for(int i = 0 ; i < lengthCollumnCollectible(&vectorCollectible); i++){
 
@@ -273,17 +274,84 @@ void  scoreCalculator(){
 			Position positionB = *auxPositionB;
 			Size sizeB = *auxSizeB;
 
+			int count = 0, randX = 0, randY = 0, row = getROW(), col = getCOL(), utilR = getUTILR(), utilC = getUTILC();
+			// int total = utilR * utilC;
+			bool attemptMatrix[row][col];
+			for (size_t a = 0; a < row; a++){
+				for (size_t b = 0; b < col; b++){
+					attemptMatrix[a][b] = false;
+				}
+			}
+					
+			for(int k = 0 ; k < lengthCollumnCollider(&vectorCollider); k++){
+
+				Collider* id = getCellCollider(&vectorCollider, k);
+
+				if(id == NULL){continue;}
+
+				int index = id->id;
+
+				int count = 0;
+
+				Position* auxPosition = getPositionById(index, &count);
+
+				if(count != 1){continue;}
+				
+				int j = ((((int) auxPosition->current2.y) / 32) - (SPACE / 2)), i = ((((int) auxPosition->current2.x) / 32 )- (SPACE / 2));
+
+				printf("j: %d - i: %d\n", j, i);
+
+				attemptMatrix[j][i] = true;
+
+			}
+
+			printf("%d\n", rand());
+			printf("||||||\n");
+			for (size_t a = 0; a < row; a++){
+				for (size_t b = 0; b < col; b++){
+					printf("%d", attemptMatrix[a][b]);
+				}
+				printf("\n");
+			}
+			printf("||||||\n");
+
+			int isEmpty = 0;
+			for (size_t a = 0; a < row; a++){
+				for (size_t b = 0; b < col; b++){
+					if(attemptMatrix[a][b] == false){
+						isEmpty++;
+					}
+				}
+			}
+			printf("%d\n", isEmpty);
+
+			if(isEmpty == 0){
+				setIsEmpty(false);
+				break;
+			}
+			
 			do{
-				positionB.current2.x = ((rand() % ((COL - SPACE - 1) - 0 + 1) + 0)*SPRITE) + (SPRITE * 2);
-				positionB.current2.y = ((rand() % ((ROW - SPACE - 1) - 0 + 1) + 0)*SPRITE) + (SPRITE * 2);
+				randX = (rand() % ((utilC - 1) - 0 + 1) + 0);
+				randY = (rand() % ((utilR - 1) - 0 + 1) + 0);
+				positionB.current2.x = (randX * SPRITE) + (SPRITE * 2);
+				positionB.current2.y = (randY * SPRITE) + (SPRITE * 2);
+				// if(attemptMatrix[randY][randX] == true){
+				// 	count++;
+				// }else{
+				// 	attemptMatrix[randY][randX] = true;
+				// }
+				// if(count == total){
+				// 	break;
+				// }
 			}while(collisionBetween(&positionB, &sizeB));
 
-			auxPositionB->old2.x = auxPositionB->current2.y;
+			auxPositionB->old2.x = auxPositionB->current2.x;
 			auxPositionB->old2.y = auxPositionB->current2.y;
 			auxPositionB->current2.x = positionB.current2.x;
 			auxPositionB->current2.y = positionB.current2.y;
 
 		}
 
-	}
+	// }
+
 }

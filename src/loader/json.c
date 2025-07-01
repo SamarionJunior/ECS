@@ -60,7 +60,7 @@ void printJSONScene(){
 		if(getObjectAndVerify(ent, (char*){"index"}, &ind, NUMBER)){
 			// printf("index type: %p\n", aux->type);
 			temporaryComponents[i].index = ind->valueint;
-			printf("%d - %d\n", temporaryComponents[i].index, ind->valueint);
+			// printf("%d - %d\n", temporaryComponents[i].index, ind->valueint);
 		}
 		if(!getObjectAndVerify(ent, (char*){"components"}, &ind, OBJECT)) continue;
 		// printf("components type: %p\n", aux->type);

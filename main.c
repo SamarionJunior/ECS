@@ -74,9 +74,10 @@ void loop(){
 			game_is_running = RUN;
 		}
 		if(game_is_running == RUN){
-			if(score < CRD){
+			if(getIsEmpty() == true){
 				update(&game_is_running);
 			}else{
+				printf("dsdsds\n");
 				game_is_running = RESTART;
 			}
 		}
@@ -188,9 +189,9 @@ int main(int argc, char* args[]) {
 	// destroySystem();
 	destroy_window();
 
-    for (size_t i = 0; i < ROW; i++){
+	for (size_t i = 0; i < getROW(); i++){
 		free(mapMatrix[i]);
-    }
+	}
 
 	free(mapMatrix);
 

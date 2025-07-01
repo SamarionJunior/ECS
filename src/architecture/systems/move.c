@@ -73,13 +73,13 @@ void move(){
 				auxPosition->current2.y = tempPosition.current2.y;
 				auxPosition->old2.x = auxPosition->current2.x;
 				auxPosition->current2.x = tempPosition.current2.x;
-				printf(
-					"X: %f - Y: %f - OldX: %f - OldY: %f\n",
-					auxPosition->current2.x,
-					auxPosition->current2.y,
-					auxPosition->current2.x,
-					auxPosition->old2.y
-				);
+				// printf(
+				// 	"X: %f - Y: %f - OldX: %f - OldY: %f\n",
+				// 	auxPosition->current2.x,
+				// 	auxPosition->current2.y,
+				// 	auxPosition->current2.x,
+				// 	auxPosition->old2.y
+				// );
 				scoreCalculator();
 				// iterationSnake();
 				// auxPosition->old2.y = auxPosition->current2.y;
@@ -98,13 +98,13 @@ void move(){
 				auxPosition->current2.y = tempPosition.current2.y;
 				auxPosition->old2.x = auxPosition->current2.x;
 				auxPosition->current2.x = tempPosition.current2.x;
-				printf(
-					"X: %f - Y: %f - OldX: %f - OldY: %f\n",
-					auxPosition->current2.x,
-					auxPosition->current2.y,
-					auxPosition->current2.x,
-					auxPosition->old2.y
-				);
+				// printf(
+				// 	"X: %f - Y: %f - OldX: %f - OldY: %f\n",
+				// 	auxPosition->current2.x,
+				// 	auxPosition->current2.y,
+				// 	auxPosition->current2.x,
+				// 	auxPosition->old2.y
+				// );
 				scoreCalculator();
 				// iterationSnake();
 				// auxPosition->old2.y = auxPosition->current2.y;
@@ -123,13 +123,13 @@ void move(){
 				auxPosition->current2.y = tempPosition.current2.y;
 				auxPosition->old2.x = auxPosition->current2.x;
 				auxPosition->current2.x = tempPosition.current2.x;
-				printf(
-					"X: %f - Y: %f - OldX: %f - OldY: %f\n",
-					auxPosition->current2.x,
-					auxPosition->current2.y,
-					auxPosition->current2.x,
-					auxPosition->old2.y
-				);
+				// printf(
+				// 	"X: %f - Y: %f - OldX: %f - OldY: %f\n",
+				// 	auxPosition->current2.x,
+				// 	auxPosition->current2.y,
+				// 	auxPosition->current2.x,
+				// 	auxPosition->old2.y
+				// );
 				scoreCalculator();
 				// iterationSnake();
 				// auxPosition->old2.x = auxPosition->current2.x;
@@ -148,13 +148,13 @@ void move(){
 				auxPosition->current2.y = tempPosition.current2.y;
 				auxPosition->old2.x = auxPosition->current2.x;
 				auxPosition->current2.x = tempPosition.current2.x;
-				printf(
-					"X: %f - Y: %f - OldX: %f - OldY: %f\n",
-					auxPosition->current2.x,
-					auxPosition->current2.y,
-					auxPosition->current2.x,
-					auxPosition->old2.y
-				);
+				// printf(
+				// 	"X: %f - Y: %f - OldX: %f - OldY: %f\n",
+				// 	auxPosition->current2.x,
+				// 	auxPosition->current2.y,
+				// 	auxPosition->current2.x,
+				// 	auxPosition->old2.y
+				// );
 				scoreCalculator();
 				// iterationSnake();
 				// auxPosition->old2.x = auxPosition->current2.x;
