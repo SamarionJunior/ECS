@@ -64,7 +64,7 @@ void setMapDimension(char* file){
   int row = 0, collumn = 0, c = 0, greater = 0;
   while((c = fgetc(file)) != EOF){
     if(c == '\n'){
-		  printf("\n");
+		  // printf("\n");
       if(greater < collumn){
         greater = collumn;
       }
@@ -73,13 +73,13 @@ void setMapDimension(char* file){
       continue;
     }
     collumn++;
-    printf("[%d][%d]:%c", row, collumn, c);
+    // printf("[%d][%d]:%c", row, collumn, c);
   }
-	printf("\n");
-  printf("rows: %d - collumns: %d\n", row + 1, greater);
+	// printf("\n");
+  // printf("rows: %d - collumns: %d\n", row + 1, greater);
   setROW(row + 1);
   setCOL(greater);
-  printf("rows: %d - collumns: %d\n", getROW(), getCOL());
+  // printf("rows: %d - collumns: %d\n", getROW(), getCOL());
   fseek(file, 0, SEEK_SET);
 }
 
@@ -87,17 +87,17 @@ void parseMapToMatrix(char* file, int **matrix){
   int i = 0, j = 0, c = 0, CodeANSIConvertedInInteger = 0;
   while((c = fgetc(file)) != EOF){
     if(c == '\n'){
-		  printf("\n");
+		  // printf("\n");
       j = 0;
       i++;
       continue;
     }
     CodeANSIConvertedInInteger = (int)(c - '0');
-		printf("[%d][%d]", i, j);
+		// printf("[%d][%d]", i, j);
     matrix[i][j] = CodeANSIConvertedInInteger;
     j++;
   }
-	printf("\n");
+	// printf("\n");
   fseek(file, 0, SEEK_SET);
 }
   

@@ -59,7 +59,7 @@ void loop(){
 
 	while (true) {
 
-		// gettimeofday(&start, NULL);
+		gettimeofday(&start, NULL);
 
 		// printf("\n////////////////////\n");
 		// printf(  "/// LOOP - WHILE ///\n");
@@ -93,30 +93,30 @@ void loop(){
 		}
 		render();
 
-		// gettimeofday(&stop, NULL);
+		gettimeofday(&stop, NULL);
 
-		// if(stop.tv_usec < start.tv_usec){
-		// 	long int q = 999999 - start.tv_usec;
-		// 	long int w = stop.tv_usec + q;
-		// 	countSecunds += w;
-		// }else{
-		// 	countSecunds += (stop.tv_usec - start.tv_usec);
-		// }
+		if(stop.tv_usec < start.tv_usec){
+			long int q = 999999 - start.tv_usec;
+			long int w = stop.tv_usec + q;
+			countSecunds += w;
+		}else{
+			countSecunds += (stop.tv_usec - start.tv_usec);
+		}
 
-		// count++;
+		count++;
 
-		// if (countSecunds > 999999){
+		if (countSecunds > 999999){
 			
-		// 	secunds++;
+			secunds++;
 
-		// 	media += count;
+			media += count;
 
-		// 	printf("secunds: %lu | microsecunds: %lu | FPS: %lu | media: %lu\n", secunds, countSecunds, count, (media / secunds));
-		// 	// printf("start\t %lu us\n", start.tv_usec);
-		// 	// printf("stop\t %lu us\n", stop.tv_usec);
-		// 	countSecunds = 0.0;
-		// 	count = 0;
-		// }
+			printf("secunds: %lu | microsecunds: %lu | FPS: %lu | media: %lu\n", secunds, countSecunds, count, (media / secunds));
+			// printf("start\t %lu us\n", start.tv_usec);
+			// printf("stop\t %lu us\n", stop.tv_usec);
+			countSecunds = 0.0;
+			count = 0;
+		}
 
 	}
 

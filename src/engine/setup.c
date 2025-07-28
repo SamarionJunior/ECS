@@ -35,12 +35,166 @@
 
 #include "../utilities/space.h"
 
+void addInformationinEntity(size_t k){
+	addCellInformation(
+		&vectorInformation, 
+		lengthCollumnInformation(&vectorInformation), 
+		createInformation(
+			getId(),
+			temporaryComponents[k].information.name,
+			(strlen(temporaryComponents[k].information.name) + 1)
+		)
+	);
+}
+
+void addPositioninEntity(float x, float y, size_t k){
+	addCellPosition(
+		&vectorPosition, 
+		lengthCollumnInformation(&vectorPosition), 
+		createPosition(
+			getId(), 
+			x, 
+			y, 
+			temporaryComponents[k].position.old2.x,
+			temporaryComponents[k].position.old2.y
+		)
+	);
+}
+
+void addSizeinEntity(size_t k){
+	addCellSize(
+		&vectorSize, 
+		lengthCollumnSize(&vectorSize), 
+		createSize(
+			getId(), 
+			temporaryComponents[k].size.vector2.x,
+			temporaryComponents[k].size.vector2.y
+		)
+	);
+}
+
+void addColorinEntity(size_t k){
+	addCellColor(
+		&vectorColor, 
+		lengthCollumnColor(&vectorColor), 
+		createColor(
+			getId(), 
+			temporaryComponents[k].color.vector4.x,
+			temporaryComponents[k].color.vector4.y,
+			temporaryComponents[k].color.vector4.z,
+			temporaryComponents[k].color.vector4.y
+		)
+	);
+}
+
+void addColliderinEntity(size_t k){
+	addCellCollider(
+		&vectorCollider, 
+		lengthCollumnCollider(&vectorCollider), 
+		createCollider(
+			getId(), 
+			temporaryComponents[k].collider.isItColliding,
+			temporaryComponents[k].collider.collisionDirection,
+			temporaryComponents[k].collider.isStatic
+		)
+	);
+}
+
+void addLayerinEntity(size_t k){
+	addCellLayer(
+		&vectorLayer, 
+		lengthCollumnLayer(&vectorLayer), 
+		createLayer(
+			getId(), 
+			temporaryComponents[k].layer.layer
+		)
+	);
+}
+
+void addPlayerinEntity(size_t k){
+	addCellPlayer(
+		&vectorPlayer, 
+		lengthCollumnPlayer(&vectorPlayer), 
+		createPlayer(
+			getId()
+		)
+	);
+}
+
+void addCollectibleinEntity(size_t k){
+	addCellCollectible(
+		&vectorCollectible, 
+		lengthCollumnCollectible(&vectorCollectible), 
+		createCollectible(
+			getId()
+		)
+	);
+}
+
+void addAnchorinEntity(size_t k){
+	addCellAnchor(
+		&vectorAnchor, 
+		lengthCollumnAnchor(&vectorAnchor), 
+		createAnchor(
+			getId(),
+			-1
+		)
+	);
+}
+
+void addComponetsinEntity(float x, float y,  size_t k){
+	for (size_t l = 0; l < temporaryComponents[k].lengtharrayComponentTypes; l++){
+		switch (temporaryComponents[k].arrayComponentTypes[l]){
+			case INFORMATION:
+				addInformationinEntity(k);
+				break;
+			case POSITION:
+				addPositioninEntity(x, y, k);
+				break;
+			case SIZE:
+				addSizeinEntity(k);
+				break;
+			case COLOR:
+				addColorinEntity(k);
+				break;
+			case COLLIDER:
+				addColliderinEntity(k);
+				break;
+			case LAYER:
+				addLayerinEntity(k);
+				break;
+			case PLAYER:
+				addPlayerinEntity(k);
+				break;
+			case COLLECTIBLE:
+				addCollectibleinEntity(k);
+				break;
+			case ANCHOR:
+				addAnchorinEntity(k);
+				break;
+		}
+	}
+}
+
+void createKindComponents(float x, float y, size_t k){
+	setId(getId() + 1);
+	addCellEntity(
+		&vectorEntity,
+		lengthCollumnEntity(&vectorEntity),
+		(Entity){
+			.index = getId()
+		}
+	);
+	addComponetsinEntity(x, y, k);
+	setId(getId() + 1);
+}
+
 void setup(void){
 	
 	setIsEmpty(true);
 
 	score = 0;
-	setId(0);
+	setId(-1);
 	// int id = 0;
 	
 	initializeComponents();
@@ -52,119 +206,7 @@ void setup(void){
 				if(mapMatrix[i][j] != temporaryComponents[k].index){
 					continue;
 				}
-				addCellEntity(
-					&vectorEntity,
-					lengthCollumnEntity(&vectorEntity),
-					(Entity){
-						.index = getId()
-					}
-				);
-				for (size_t l = 0; l < temporaryComponents[k].lengtharrayComponentTypes; l++){
-					switch (temporaryComponents[k].arrayComponentTypes[l]){
-						case INFORMATION:
-							addCellInformation(
-								&vectorInformation, 
-								lengthCollumnInformation(&vectorInformation), 
-								createInformation(
-									getId(),
-									temporaryComponents[k].information.name,
-									(strlen(temporaryComponents[k].information.name) + 1)
-								)
-							);
-							break;
-						case POSITION:
-							addCellPosition(
-								&vectorPosition, 
-								lengthCollumnInformation(&vectorPosition), 
-								createPosition(
-									getId(), 
-									(j*SPRITE) + (SPRITE * 1), 
-									(i*SPRITE) + (SPRITE * 1), 
-									temporaryComponents[k].position.old2.x,
-									temporaryComponents[k].position.old2.y
-								)
-							);
-							break;
-						case SIZE:
-							addCellSize(
-								&vectorSize, 
-								lengthCollumnSize(&vectorSize), 
-								createSize(
-									getId(), 
-									temporaryComponents[k].size.vector2.x,
-									temporaryComponents[k].size.vector2.y
-								)
-							);
-							break;
-						case COLOR:
-							addCellColor(
-								&vectorColor, 
-								lengthCollumnColor(&vectorColor), 
-								createColor(
-									getId(), 
-									temporaryComponents[k].color.vector4.x,
-									temporaryComponents[k].color.vector4.y,
-									temporaryComponents[k].color.vector4.z,
-									temporaryComponents[k].color.vector4.y
-								)
-							);
-							break;
-						case COLLIDER:
-							addCellCollider(
-								&vectorCollider, 
-								lengthCollumnCollider(&vectorCollider), 
-								createCollider(
-									getId(), 
-									temporaryComponents[k].collider.isItColliding,
-									temporaryComponents[k].collider.collisionDirection,
-									temporaryComponents[k].collider.isStatic
-								)
-							);
-							break;
-						case LAYER:
-							addCellLayer(
-								&vectorLayer, 
-								lengthCollumnLayer(&vectorLayer), 
-								createLayer(
-									getId(), 
-									temporaryComponents[k].layer.layer
-								)
-							);
-							break;
-						case PLAYER:
-							// printf("\noi\n");
-							addCellPlayer(
-								&vectorPlayer, 
-								lengthCollumnPlayer(&vectorPlayer), 
-								createPlayer(
-									getId()
-								)
-							);
-							break;
-						case COLLECTIBLE:
-							// printf("\noi\n");
-							addCellCollectible(
-								&vectorCollectible, 
-								lengthCollumnCollectible(&vectorCollectible), 
-								createCollectible(
-									getId()
-								)
-							);
-							break;
-						case ANCHOR:
-							// printf("\noi\n");
-							addCellAnchor(
-								&vectorAnchor, 
-								lengthCollumnAnchor(&vectorAnchor), 
-								createAnchor(
-									getId(),
-									-1
-								)
-							);
-							break;
-					}
-				}
-				setId(getId() + 1);
+				createKindComponents((j*SPRITE) + (SPRITE * 1), (i*SPRITE) + (SPRITE * 1), k);
 			}
 		}
 	}

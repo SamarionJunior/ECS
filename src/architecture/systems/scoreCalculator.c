@@ -29,56 +29,86 @@
 #include "../../../dependencies/my/dynamicvectors/components/player.h"
 #include "../../../dependencies/my/dynamicvectors/components/collectible.h"
 
+#include "../../engine/setup.h"
+
 #include "../../loader/json.h"
 
-void  scoreCalculator();
+float xA = 0, yA = 0, wA = 0, hA = 0;
+float xB = 0, yB = 0, wB = 0, hB = 0;
+int indexCollectible = -1;
 
-void  scoreCalculator(){
-		
-	float xA = 0, yA = 0, wA = 0, hA = 0;
-	float xB = 0, yB = 0, wB = 0, hB = 0;
+// int i = 0;
 
-	int indexCollectible = -1;
+int indexA = 0, countA = 0;
 
-	for(int i = 0 ; i < lengthCollumnPlayer(&vectorPlayer); i++){
+Player* idA = NULL;
 
-		Player* idA = getCellPlayer(&vectorPlayer, i);
+Position* auxPositionA = NULL;
+Size* auxSizeA = NULL;
+
+Position tempPositionA;
+Size tempSizeA;
+
+// int j = 0;
+
+Collectible* idB = NULL;
+
+int indexB = 0;
+int countB = 0;
+
+Position* auxPositionB = NULL;
+Size* auxSizeB = NULL;
+
+Position positionB;
+Size sizeB;
+
+size_t k = 0;
+// int count = 0;
+Position* pos = NULL;
+
+void chekcCollisionBetwenHeadAndFruit_UnloackKey_IncrementScore_SetId_CreateTail(){
+
+	int count = 0;
+	
+	for(size_t i = 0; i < lengthCollumnPlayer(&vectorPlayer); i++){
+
+		idA = getCellPlayer(&vectorPlayer, i);
 
 		if(idA == NULL){continue;}
 
-		int indexA = idA->id, countA = 0;
+		indexA = idA->id;
+		countA = 0;
 
-		Position* auxPositionA = getPositionById(indexA, &countA);
-		Size* auxSizeA = getSizeById(indexA, &countA);
-		// Player* auxPlayerA = getPlayerById(indexA, &countA);
+		auxPositionA = getPositionById(indexA, &countA);
+		auxSizeA = getSizeById(indexA, &countA);
 
 		if(countA != 2){continue;}
 
-		Position tempPositionA = *auxPositionA;
-		Size tempSizeA = *auxSizeA;
+		tempPositionA = *auxPositionA;
+		tempSizeA = *auxSizeA;
 
 		initializeCollisionVariables(tempPositionA, tempSizeA, &xA, &yA, &wA, &hA);
 
-		for(int i = 0 ; i < lengthCollumnCollectible(&vectorCollectible); i++){
+		for(size_t j = 0 ; j < lengthCollumnCollectible(&vectorCollectible); j++){
 
-			Collectible* idB = getCellCollectible(&vectorCollectible, i);
+			idB = getCellCollectible(&vectorCollectible, j);
 
 			if(idB == NULL){continue;}
 
-			int indexB = idB->id;
+			indexB = idB->id;
 
 			if(indexB == indexA){continue;}
 
-			int countB = 0;
+			countB = 0;
 
-			Position* auxPositionB = getPositionById(indexB, &countB);
-			Size* auxSizeB = getSizeById(indexB, &countB);
+			auxPositionB = getPositionById(indexB, &countB);
+			auxSizeB = getSizeById(indexB, &countB);
 			// Collectible* auxCollectibleB = getCollectibleById(indexB, &countB);
 
 			if(countB != 2){continue;}
 			
-			Position positionB = *auxPositionB;
-			Size sizeB = *auxSizeB;
+			positionB = *auxPositionB;
+			sizeB = *auxSizeB;
 		
 			initializeCollisionVariables(positionB, sizeB, &xB, &yB, &wB, &hB);
 
@@ -89,6 +119,8 @@ void  scoreCalculator(){
 					// system("clear");
 
 					score++;
+
+					printf("score: %d\n", score);
 
 					indexCollectible = indexB;
 
@@ -101,131 +133,14 @@ void  scoreCalculator(){
 					// printf("new y:%f\n", newY);
 					// printf("ort y:%f\n", auxPosMove.current2.y);
 
-					for (size_t k = 0; k < lengthtemporaryComponents; k++){
+					for (k = 0; k < lengthtemporaryComponents; k++){
 						if(temporaryComponents[k].index != 4){
 							continue;
 						}
 						// printf("%d\n", temporaryComponents[k].index);
-						setId(getId() + 1);
-						addCellEntity(
-							&vectorEntity,
-							lengthCollumnEntity(&vectorEntity),
-							(Entity){
-								.index = getId()
-							}
-						);
-						for (size_t l = 0; l < temporaryComponents[k].lengtharrayComponentTypes; l++){
-							// printf("%d\n", temporaryComponents[k].arrayComponentTypes[l]);
-							switch (temporaryComponents[k].arrayComponentTypes[l]){
-								case INFORMATION:
-									addCellInformation(
-										&vectorInformation, 
-										lengthCollumnInformation(&vectorInformation), 
-										createInformation(
-											getId(),
-											temporaryComponents[k].information.name,
-											(strlen(temporaryComponents[k].information.name) + 1)
-										)
-									);
-									break;
-								case POSITION:
-									// printf("%f - %f\n", tempPositionA.old2.y, tempPositionA.old2.x);
-									int count = 0;
-									Position* pos = getPositionById(getSnakeTail(), &count);
-									addCellPosition(
-										&vectorPosition, 
-										lengthCollumnInformation(&vectorPosition), 
-										createPosition(
-											getId(), 
-											(pos->old2.x), 
-											(pos->old2.y), 
-											// (1*SPRITE) + (SPRITE * 1), 
-											// (1*SPRITE) + (SPRITE * 1), 
-											temporaryComponents[k].position.old2.x,
-											temporaryComponents[k].position.old2.y
-										)
-									);
-									break;
-								case SIZE:
-									addCellSize(
-										&vectorSize, 
-										lengthCollumnSize(&vectorSize), 
-										createSize(
-											getId(), 
-											temporaryComponents[k].size.vector2.x,
-											temporaryComponents[k].size.vector2.y
-										)
-									);
-									break;
-								case COLOR:
-									addCellColor(
-										&vectorColor, 
-										lengthCollumnColor(&vectorColor), 
-										createColor(
-											getId(), 
-											temporaryComponents[k].color.vector4.x,
-											temporaryComponents[k].color.vector4.y,
-											temporaryComponents[k].color.vector4.z,
-											temporaryComponents[k].color.vector4.y
-										)
-									);
-									break;
-								case COLLIDER:
-									addCellCollider(
-										&vectorCollider, 
-										lengthCollumnCollider(&vectorCollider), 
-										createCollider(
-											getId(), 
-											temporaryComponents[k].collider.isItColliding,
-											temporaryComponents[k].collider.collisionDirection,
-											temporaryComponents[k].collider.isStatic
-										)
-									);
-									break;
-								case LAYER:
-									addCellLayer(
-										&vectorLayer, 
-										lengthCollumnLayer(&vectorLayer), 
-										createLayer(
-											getId(), 
-											temporaryComponents[k].layer.layer
-										)
-									);
-									break;
-								case PLAYER:
-									// printf("\noi\n");
-									addCellPlayer(
-										&vectorPlayer, 
-										lengthCollumnPlayer(&vectorPlayer), 
-										createPlayer(
-											getId()
-										)
-									);
-									break;
-								case COLLECTIBLE:
-									// printf("\noi\n");
-									addCellCollectible(
-										&vectorCollectible, 
-										lengthCollumnCollectible(&vectorCollectible), 
-										createCollectible(
-											getId()
-										)
-									);
-									break;
-								case ANCHOR:
-									// printf("\noi\n");
-									addCellAnchor(
-										&vectorAnchor, 
-										lengthCollumnAnchor(&vectorAnchor), 
-										createAnchor(
-											getId(),
-											getSnakeTail()
-											// -1
-										)
-									);
-									break;
-							}
-						}
+						count = 0;
+						pos = getPositionById(getSnakeTail(), &count);
+						createKindComponents((pos->old2.x), (pos->old2.y), k);
 					}
 
 					// do{
@@ -248,110 +163,125 @@ void  scoreCalculator(){
 
 	}
 
-	iterationSnake();
+}
 
-	// if(score < getCRD()){
+void createNewFruit(){
+	int count = 0;
 
-		for(int i = 0 ; i < lengthCollumnCollectible(&vectorCollectible); i++){
+	for(size_t i = 0 ; i < lengthCollumnCollectible(&vectorCollectible); i++){
 
-			Collectible* idB = getCellCollectible(&vectorCollectible, i);
+		Collectible* idB = getCellCollectible(&vectorCollectible, i);
 
-			if(idB == NULL){continue;}
+		if(idB == NULL){continue;}
 
-			int indexB = idB->id;
+		indexB = idB->id;
 
-			if(indexB != indexCollectible){continue;}
+		if(indexB != indexCollectible){continue;}
 
-			if(arrayKey[MY_SCORE] != false){continue;}
+		if(arrayKey[MY_SCORE] != false){continue;}
 
-			int countB = 0;
+		countB = 0;
 
-			Position* auxPositionB = getPositionById(indexB, &countB);
-			Size* auxSizeB = getSizeById(indexB, &countB);
+		auxPositionB = getPositionById(indexB, &countB);
+		auxSizeB = getSizeById(indexB, &countB);
 
-			if(countB != 2){continue;}
-			
-			Position positionB = *auxPositionB;
-			Size sizeB = *auxSizeB;
+		if(countB != 2){continue;}
+		
+		positionB = *auxPositionB;
+		sizeB = *auxSizeB;
 
-			int count = 0, randX = 0, randY = 0, row = getROW(), col = getCOL(), utilR = getUTILR(), utilC = getUTILC();
-			// int total = utilR * utilC;
-			bool attemptMatrix[row][col];
-			for (size_t a = 0; a < row; a++){
-				for (size_t b = 0; b < col; b++){
-					attemptMatrix[a][b] = false;
-				}
+		count = 0;
+		int randX = 0, randY = 0, row = getROW(), col = getCOL(), utilR = getUTILR(), utilC = getUTILC();
+		// int total = utilR * utilC;
+		bool attemptMatrix[row][col];
+		for (size_t a = 0; a < row; a++){
+			for (size_t b = 0; b < col; b++){
+				attemptMatrix[a][b] = false;
 			}
-					
-			for(int k = 0 ; k < lengthCollumnCollider(&vectorCollider); k++){
-
-				Collider* id = getCellCollider(&vectorCollider, k);
-
-				if(id == NULL){continue;}
-
-				int index = id->id;
-
-				int count = 0;
-
-				Position* auxPosition = getPositionById(index, &count);
-
-				if(count != 1){continue;}
+		}
 				
-				int j = ((((int) auxPosition->current2.y) / 32) - (SPACE / 2)), i = ((((int) auxPosition->current2.x) / 32 )- (SPACE / 2));
+		for(int k = 0 ; k < lengthCollumnCollider(&vectorCollider); k++){
 
-				printf("j: %d - i: %d\n", j, i);
+			Collider* id = getCellCollider(&vectorCollider, k);
 
-				attemptMatrix[j][i] = true;
+			if(id == NULL){continue;}
 
-			}
+			int index = id->id;
 
-			printf("%d\n", rand());
-			printf("||||||\n");
-			for (size_t a = 0; a < row; a++){
-				for (size_t b = 0; b < col; b++){
-					printf("%d", attemptMatrix[a][b]);
-				}
-				printf("\n");
-			}
-			printf("||||||\n");
+			int count = 0;
 
-			int isEmpty = 0;
-			for (size_t a = 0; a < row; a++){
-				for (size_t b = 0; b < col; b++){
-					if(attemptMatrix[a][b] == false){
-						isEmpty++;
-					}
-				}
-			}
-			printf("%d\n", isEmpty);
+			Position* auxPosition = getPositionById(index, &count);
 
-			if(isEmpty == 0){
-				setIsEmpty(false);
-				break;
-			}
+			if(count != 1){continue;}
 			
-			do{
-				randX = (rand() % ((utilC - 1) - 0 + 1) + 0);
-				randY = (rand() % ((utilR - 1) - 0 + 1) + 0);
-				positionB.current2.x = (randX * SPRITE) + (SPRITE * 2);
-				positionB.current2.y = (randY * SPRITE) + (SPRITE * 2);
-				// if(attemptMatrix[randY][randX] == true){
-				// 	count++;
-				// }else{
-				// 	attemptMatrix[randY][randX] = true;
-				// }
-				// if(count == total){
-				// 	break;
-				// }
-			}while(collisionBetween(&positionB, &sizeB));
+			int j = ((((int) auxPosition->current2.y) / 32) - (SPACE / 2)), i = ((((int) auxPosition->current2.x) / 32 )- (SPACE / 2));
 
-			auxPositionB->old2.x = auxPositionB->current2.x;
-			auxPositionB->old2.y = auxPositionB->current2.y;
-			auxPositionB->current2.x = positionB.current2.x;
-			auxPositionB->current2.y = positionB.current2.y;
+			// printf("j: %d - i: %d\n", auxPosition->current2.y, auxPosition->current2.x);
+
+			attemptMatrix[j][i] = true;
 
 		}
 
-	// }
+		// printf("%d\n", rand());
+		// printf("||||||\n");
+		// for (size_t a = 0; a < row; a++){
+		// 	for (size_t b = 0; b < col; b++){
+		// 		printf("%d", attemptMatrix[a][b]);
+		// 	}
+		// 	printf("\n");
+		// }
+		// printf("||||||\n");
 
+		int isEmpty = 0;
+		for (size_t a = 0; a < row; a++){
+			for (size_t b = 0; b < col; b++){
+				if(attemptMatrix[a][b] == false){
+					isEmpty++;
+				}
+			}
+		}
+		// printf("%d\n", isEmpty);
+
+		if(isEmpty == 0){
+			setIsEmpty(false);
+			break;
+		}
+		
+		do{
+			randX = (rand() % ((utilC - 1) - 0 + 1) + 0);
+			randY = (rand() % ((utilR - 1) - 0 + 1) + 0);
+			positionB.current2.x = (randX * SPRITE) + (SPRITE * 2);
+			positionB.current2.y = (randY * SPRITE) + (SPRITE * 2);
+			// if(attemptMatrix[randY][randX] == true){
+			// 	count++;
+			// }else{
+			// 	attemptMatrix[randY][randX] = true;
+			// }
+			// if(count == total){
+			// 	break;
+			// }
+		}while(collisionBetween(&positionB, &sizeB));
+
+		auxPositionB->old2.x = auxPositionB->current2.x;
+		auxPositionB->old2.y = auxPositionB->current2.y;
+		auxPositionB->current2.x = positionB.current2.x;
+		auxPositionB->current2.y = positionB.current2.y;
+
+	}
+
+}
+
+void  scoreCalculator();
+
+void  scoreCalculator(){
+		
+	xA = 0; yA = 0; wA = 0; hA = 0;	xB = 0; yB = 0; wB = 0; hB = 0;
+
+	indexCollectible = -1;
+
+	chekcCollisionBetwenHeadAndFruit_UnloackKey_IncrementScore_SetId_CreateTail();
+	
+	iterationSnake();
+
+	createNewFruit();
 }

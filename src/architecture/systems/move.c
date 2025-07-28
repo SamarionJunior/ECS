@@ -27,31 +27,63 @@
 #include "../../../dependencies/my/dynamicvectors/components/player.h"
 
 double kmH = 70.7106781187;
+double moveDefualt = (double)300;
+double moveKMH = 0.0f;
+
+// int i = 0;
+
+Entity* id = NULL;
+
+int idindex = 0;
+// int count = 0;
+
+Position* auxPosition = NULL;
+Size* auxSize = NULL;
+Player* auxPlayer = NULL;
+
+Position tempPosition;
+Size tempSize;
+
+void updateOldPosition(Position *aux, Position temp){
+	aux->old2.y = aux->current2.y;
+	aux->current2.y = temp.current2.y;
+	aux->old2.x = aux->current2.x;
+	aux->current2.x = temp.current2.x;
+}
+
+void printPosition(Position *aux){
+	printf(
+		"X: %f - Y: %f - OldX: %f - OldY: %f\n",
+		aux->current2.x,
+		aux->current2.y,
+		aux->old2.x,
+		aux->old2.y
+	);
+}
 
 void move(){
+	
+	int count = 0;
 
 	if(lengthCollumnPlayer(&vectorPlayer) == 0){return;}	
-	
-	double moveDefualt = (double)300;
 
-	double moveKMH = (((moveDefualt * (double)delta_time)/100)*kmH);
+	moveKMH = (((moveDefualt * (double)delta_time)/100)*kmH);
 
-	for(int i = 0 ; i < lengthCollumnEntity(&vectorEntity); i++){
+	for(size_t i = 0 ; i < lengthCollumnEntity(&vectorEntity); i++){
 
-		Entity* id = getCellEntity(&vectorEntity, i);
+		id = getCellEntity(&vectorEntity, i);
 
 		if(id == NULL){continue;}
 
 		// printf("\n%d\n", id);
 		// printf("\n%d\n", id->index);
 
-		int index = id->index;
+		idindex = id->index;
+		count = 0;
 
-		int count = 0;
-
-		Position* auxPosition = getPositionById(index, &count);
-		Size* auxSize = getSizeById(index, &count);
-		Player* auxPlayer = getPlayerById(index, &count);
+		auxPosition = getPositionById(idindex, &count);
+		auxSize = getSizeById(idindex, &count);
+		auxPlayer = getPlayerById(idindex, &count);
 
 		// printf("\n%d\n", index);
 		// printf("\n%d\n", lengthCollumnPosition(&vectorPosition));
@@ -62,24 +94,15 @@ void move(){
 
 		// printf("\n%d\n", count);
 
-		Position tempPosition = *auxPosition;
-		Size tempSize = *auxSize;
+		tempPosition = *auxPosition;
+		tempSize = *auxSize;
 
 		if(arrayKey[MY_TOP] && arrayKey[MY_CLIKER_TOP] == false){
 			tempPosition.current2.y -= 32;
 			bool result = collisionBetween(&tempPosition, &tempSize);
 			if(result == false){
-				auxPosition->old2.y = auxPosition->current2.y;
-				auxPosition->current2.y = tempPosition.current2.y;
-				auxPosition->old2.x = auxPosition->current2.x;
-				auxPosition->current2.x = tempPosition.current2.x;
-				// printf(
-				// 	"X: %f - Y: %f - OldX: %f - OldY: %f\n",
-				// 	auxPosition->current2.x,
-				// 	auxPosition->current2.y,
-				// 	auxPosition->current2.x,
-				// 	auxPosition->old2.y
-				// );
+				updateOldPosition(auxPosition, tempPosition);
+				// printPosition(auxPosition);
 				scoreCalculator();
 				// iterationSnake();
 				// auxPosition->old2.y = auxPosition->current2.y;
@@ -94,17 +117,8 @@ void move(){
 			tempPosition.current2.y += 32;
 			bool result = collisionBetween(&tempPosition, &tempSize);
 			if(result == false){
-				auxPosition->old2.y = auxPosition->current2.y;
-				auxPosition->current2.y = tempPosition.current2.y;
-				auxPosition->old2.x = auxPosition->current2.x;
-				auxPosition->current2.x = tempPosition.current2.x;
-				// printf(
-				// 	"X: %f - Y: %f - OldX: %f - OldY: %f\n",
-				// 	auxPosition->current2.x,
-				// 	auxPosition->current2.y,
-				// 	auxPosition->current2.x,
-				// 	auxPosition->old2.y
-				// );
+				updateOldPosition(auxPosition, tempPosition);
+				// printPosition(auxPosition);
 				scoreCalculator();
 				// iterationSnake();
 				// auxPosition->old2.y = auxPosition->current2.y;
@@ -119,17 +133,8 @@ void move(){
 			tempPosition.current2.x += 32;
 			bool result = collisionBetween(&tempPosition, &tempSize);
 			if(result == false){
-				auxPosition->old2.y = auxPosition->current2.y;
-				auxPosition->current2.y = tempPosition.current2.y;
-				auxPosition->old2.x = auxPosition->current2.x;
-				auxPosition->current2.x = tempPosition.current2.x;
-				// printf(
-				// 	"X: %f - Y: %f - OldX: %f - OldY: %f\n",
-				// 	auxPosition->current2.x,
-				// 	auxPosition->current2.y,
-				// 	auxPosition->current2.x,
-				// 	auxPosition->old2.y
-				// );
+				updateOldPosition(auxPosition, tempPosition);
+				// printPosition(auxPosition);
 				scoreCalculator();
 				// iterationSnake();
 				// auxPosition->old2.x = auxPosition->current2.x;
@@ -144,17 +149,8 @@ void move(){
 			tempPosition.current2.x -= 32;
 			bool result = collisionBetween(&tempPosition, &tempSize);
 			if(result == false){
-				auxPosition->old2.y = auxPosition->current2.y;
-				auxPosition->current2.y = tempPosition.current2.y;
-				auxPosition->old2.x = auxPosition->current2.x;
-				auxPosition->current2.x = tempPosition.current2.x;
-				// printf(
-				// 	"X: %f - Y: %f - OldX: %f - OldY: %f\n",
-				// 	auxPosition->current2.x,
-				// 	auxPosition->current2.y,
-				// 	auxPosition->current2.x,
-				// 	auxPosition->old2.y
-				// );
+				updateOldPosition(auxPosition, tempPosition);
+				// printPosition(auxPosition);
 				scoreCalculator();
 				// iterationSnake();
 				// auxPosition->old2.x = auxPosition->current2.x;
