@@ -27,6 +27,9 @@
 #include "src/loader/json.h"
 #include "src/loader/map.h"
 
+#include "dependencies/my/dynamicvectors/vector.h"
+#include "dependencies/my/dynamicvectors/components/position.h"
+
 float acerelacion = 1;
 
 // int game_is_running = PAUSE;
@@ -55,7 +58,7 @@ void loop(){
 
 	long int countSecunds = 0.0;
 
-	struct timeval stop, start;
+	struct timeval stop, start, a1, a2, a3;
 
 	while (true) {
 
@@ -77,7 +80,6 @@ void loop(){
 			if(getIsEmpty() == true){
 				update(&game_is_running);
 			}else{
-				printf("dsdsds\n");
 				game_is_running = RESTART;
 			}
 		}
@@ -111,7 +113,11 @@ void loop(){
 
 			media += count;
 
-			printf("secunds: %lu | microsecunds: %lu | FPS: %lu | media: %lu\n", secunds, countSecunds, count, (media / secunds));
+			// printf("secunds: %lu | microsecunds: %lu | FPS: %lu | media: %lu\n", secunds, countSecunds, count, (media / secunds));
+			printf("FPS: %lu | media: %lu\n", count, (media / secunds));
+			if(vectorPosition.data != NULL){
+				// printf("\n--> lengthCollumnPosition: %d\n", vectorPosition.columnLength);
+			}
 			// printf("start\t %lu us\n", start.tv_usec);
 			// printf("stop\t %lu us\n", stop.tv_usec);
 			countSecunds = 0.0;

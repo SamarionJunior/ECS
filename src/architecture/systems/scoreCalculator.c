@@ -120,7 +120,7 @@ void chekcCollisionBetwenHeadAndFruit_UnloackKey_IncrementScore_SetId_CreateTail
 
 					score++;
 
-					printf("score: %d\n", score);
+					// printf("score: %d\n", score);
 
 					indexCollectible = indexB;
 
@@ -165,6 +165,13 @@ void chekcCollisionBetwenHeadAndFruit_UnloackKey_IncrementScore_SetId_CreateTail
 
 }
 
+typedef struct positionAux{
+	bool active;
+	float x;
+	float y;
+} PositionAux;
+
+
 void createNewFruit(){
 	int count = 0;
 
@@ -192,35 +199,115 @@ void createNewFruit(){
 
 		count = 0;
 		int randX = 0, randY = 0, row = getROW(), col = getCOL(), utilR = getUTILR(), utilC = getUTILC();
-		// int total = utilR * utilC;
-		bool attemptMatrix[row][col];
-		for (size_t a = 0; a < row; a++){
-			for (size_t b = 0; b < col; b++){
-				attemptMatrix[a][b] = false;
-			}
-		}
+
+		// int total = (row*col);
+		// bool voids[total];
+		// PositionAux pa[total];
+
+		// for (size_t c = 0; c < total; c++){
+		// 	voids[c] = false;
+		// }
+
+		// for (size_t f = 0; f < row; f++){
+		// 	for (size_t g = 0; g < col; g++){
+		// 		pa[(f * row) + g].active = true;
+		// 		pa[(f * row) + g].x = (g * SPRITE) + (SPRITE * 2);
+		// 		pa[(f * row) + g].y = (f * SPRITE) + (SPRITE * 2);
+		// 	}
+		// }
+
+		// int countC = 0;
 				
-		for(int k = 0 ; k < lengthCollumnCollider(&vectorCollider); k++){
+		// for(int d = 0 ; d < lengthCollumnCollider(&vectorCollider); d++){
 
-			Collider* id = getCellCollider(&vectorCollider, k);
+		// 	Collider* id = getCellCollider(&vectorCollider, d);
 
-			if(id == NULL){continue;}
+		// 	if(id == NULL){continue;}
 
-			int index = id->id;
+		// 	int index = id->id;
 
-			int count = 0;
+		// 	int count = 0;
 
-			Position* auxPosition = getPositionById(index, &count);
+		// 	Position* auxPosition = getPositionById(index, &count);
 
-			if(count != 1){continue;}
+		// 	if(count != 1){continue;}
 			
-			int j = ((((int) auxPosition->current2.y) / 32) - (SPACE / 2)), i = ((((int) auxPosition->current2.x) / 32 )- (SPACE / 2));
+		// 	int j = ((((int) auxPosition->current2.y) / 32) - (SPACE / 2)), i = ((((int) auxPosition->current2.x) / 32 )- (SPACE / 2));
 
-			// printf("j: %d - i: %d\n", auxPosition->current2.y, auxPosition->current2.x);
+		// 	// printf("j: %d - i: %d\n", auxPosition->current2.y, auxPosition->current2.x);
 
-			attemptMatrix[j][i] = true;
+		// 	voids[d] = true;
 
-		}
+		// 	for (size_t f = 0; f < row; f++){
+		// 		for (size_t g = 0; g < col; g++){
+		// 			if(auxPosition->current2.y == pa[(f * row) + g].y && auxPosition->current2.x == pa[(f * row) + g].x){
+		// 				countC++;
+		// 				pa[(f * row) + g].active = false;
+		// 			}
+		// 			// pa[(f * row) + g].x = (g * SPRITE) + (SPRITE * 2);
+		// 			// pa[(f * row) + g].y = (f * SPRITE) + (SPRITE * 2);
+		// 		}
+		// 	}
+
+		// }
+
+		// for (size_t f = 0; f < total; f++){
+		// 	for (size_t g = 0; g < total; g++){
+		// 		if(pa[f].active == false && pa[g].active == true){
+		// 			PositionAux temp;
+		// 			temp = pa[f];
+		// 			pa[f] = pa[g];
+		// 			pa[g] = temp;
+		// 		}
+		// 	}
+		// }
+
+		// int newTotal = total - countC;
+		
+		// randX = (rand() % ((newTotal - 1) - 0 + 1) + 0);
+
+		// positionB.current2.x = pa[randX].x;
+		// positionB.current2.y = pa[randX].y;
+
+			randX = (rand() % (((utilC + 50) - 1) - 0 + 1) + (0 + utilC));
+			randY = (rand() % (((utilC + 50) - 1) - 0 + 1) + (0 + utilC));
+			positionB.current2.x = (randX * SPRITE) + (SPRITE * 2);
+			positionB.current2.y = (randY * SPRITE) + (SPRITE * 2);
+
+		auxPositionB->old2.x = auxPositionB->current2.x;
+		auxPositionB->old2.y = auxPositionB->current2.y;
+		auxPositionB->current2.x = positionB.current2.x;
+		auxPositionB->current2.y = positionB.current2.y;
+
+		// int total = utilR * utilC;
+			// bool attemptMatrix[row][col];
+			// for (size_t a = 0; a < row; a++){
+			// 	for (size_t b = 0; b < col; b++){
+			// 		attemptMatrix[a][b] = false;
+			// 	}
+			// }
+				
+			// for(int k = 0 ; k < lengthCollumnCollider(&vectorCollider); k++){
+
+			// 	Collider* id = getCellCollider(&vectorCollider, k);
+
+			// 	if(id == NULL){continue;}
+
+			// 	int index = id->id;
+
+			// 	int count = 0;
+
+			// 	Position* auxPosition = getPositionById(index, &count);
+
+			// 	if(count != 1){continue;}
+				
+			// 	int j = ((((int) auxPosition->current2.y) / 32) - (SPACE / 2)), i = ((((int) auxPosition->current2.x) / 32 )- (SPACE / 2));
+
+			// 	// printf("j: %d - i: %d\n", auxPosition->current2.y, auxPosition->current2.x);
+
+			// 	attemptMatrix[j][i] = true;
+
+			// }
 
 		// printf("%d\n", rand());
 		// printf("||||||\n");
@@ -232,40 +319,35 @@ void createNewFruit(){
 		// }
 		// printf("||||||\n");
 
-		int isEmpty = 0;
-		for (size_t a = 0; a < row; a++){
-			for (size_t b = 0; b < col; b++){
-				if(attemptMatrix[a][b] == false){
-					isEmpty++;
-				}
-			}
-		}
+			// int isEmpty = 0;
+			// for (size_t a = 0; a < row; a++){
+			// 	for (size_t b = 0; b < col; b++){
+			// 		if(attemptMatrix[a][b] == false){
+			// 			isEmpty++;
+			// 		}
+			// 	}
+			// }
 		// printf("%d\n", isEmpty);
 
-		if(isEmpty == 0){
-			setIsEmpty(false);
-			break;
-		}
-		
-		do{
-			randX = (rand() % ((utilC - 1) - 0 + 1) + 0);
-			randY = (rand() % ((utilR - 1) - 0 + 1) + 0);
-			positionB.current2.x = (randX * SPRITE) + (SPRITE * 2);
-			positionB.current2.y = (randY * SPRITE) + (SPRITE * 2);
-			// if(attemptMatrix[randY][randX] == true){
-			// 	count++;
-			// }else{
-			// 	attemptMatrix[randY][randX] = true;
-			// }
-			// if(count == total){
+			// if(isEmpty == 0){
+			// 	setIsEmpty(false);
 			// 	break;
 			// }
-		}while(collisionBetween(&positionB, &sizeB));
-
-		auxPositionB->old2.x = auxPositionB->current2.x;
-		auxPositionB->old2.y = auxPositionB->current2.y;
-		auxPositionB->current2.x = positionB.current2.x;
-		auxPositionB->current2.y = positionB.current2.y;
+		
+		// do{
+		// 	randX = (rand() % ((utilC - 1) - 0 + 1) + 0);
+		// 	randY = (rand() % ((utilR - 1) - 0 + 1) + 0);
+		// 	positionB.current2.x = (randX * SPRITE) + (SPRITE * 2);
+		// 	positionB.current2.y = (randY * SPRITE) + (SPRITE * 2);
+		// 	// if(attemptMatrix[randY][randX] == true){
+		// 	// 	count++;
+		// 	// }else{
+		// 	// 	attemptMatrix[randY][randX] = true;
+		// 	// }
+		// 	// if(count == total){
+		// 	// 	break;
+		// 	// }
+		// }while(collisionBetween(&positionB, &sizeB));
 
 	}
 

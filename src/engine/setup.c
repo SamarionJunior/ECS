@@ -149,7 +149,9 @@ void addComponetsinEntity(float x, float y,  size_t k){
 				addInformationinEntity(k);
 				break;
 			case POSITION:
+				// printf("\n-AFTER-> lengthCollumnPosition: %ls\n", lengthCollumnPosition);
 				addPositioninEntity(x, y, k);
+				// printf("\n-BEFOR-> lengthCollumnPosition: %ls\n", lengthCollumnPosition);
 				break;
 			case SIZE:
 				addSizeinEntity(k);

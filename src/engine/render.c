@@ -68,10 +68,10 @@ void render() {
 				break;
 			}
 
-			if(auxLayer->layer == layerOrder){
+			// if(auxLayer->layer == layerOrder){
 				// printf("\n%d - draw 0\n", rand()%100);
 				draw(&auxRect, *auxPosition, *auxSize, *auxColor);
-			}
+			// }
 
 		}
 
