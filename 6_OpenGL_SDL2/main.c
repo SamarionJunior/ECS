@@ -402,23 +402,27 @@ void PreDraw(){
     gGraphicsPipelineShaderProgram
   );
 
-  mat4 m = {1.0f};
-  vec3 pivot = {0.0f, 1.0f, 0.0f};
+  GLfloat translate = 1.0f;
 
-  glm_translate(m, pivot);
+  // mat4 translate = {1.0f};
+  // vec3 pivot = {0.0f, 1.0f, 0.0f};
+
+  // glm_translate(translate, pivot);
   
-  GLint ModelMatrixLocation = glGetUniformLocation(
+  GLint u_ModelMatrixLocation = glGetUniformLocation(
     gGraphicsPipelineShaderProgram,
     "u_ModelMatrix"
   );
 
-  if(ModelMatrixLocation < 0){
+  if(u_ModelMatrixLocation < 0){
     printf("Could not find u_ModelMatrix\n");
   }
 
-  glUniform1f(
-    ModelMatrixLocation,
-    u_ModelMatrix
+  glUniformMatrix4fv(
+    u_ModelMatrixLocation,
+    1,
+    GL_FALSE,
+    &translate
   );
 
   // GLint location = glGetUniformLocation(

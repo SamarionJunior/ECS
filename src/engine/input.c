@@ -10,7 +10,9 @@
 #include "../constants.h"
 #include "../manager/WindowManage.h"
 
-int arrayKey[TOTAL_MY_KEYS] = {false};
+// int arrayKey[TOTAL_MY_KEYS] = {false};
+
+bool keys[KEY_LENGHT] = {true};
 
 void process_input(int *game_is_running) {
 
@@ -27,55 +29,56 @@ void process_input(int *game_is_running) {
 		case SDL_EVENT_KEY_UP:
 
 			if (event.key.key == SDLK_W) {
-				arrayKey[MY_TOP] = false;
-				arrayKey[MY_CLIKER_TOP] = false;
+				keys[UP_TOP] = true;
+				keys[DOWN_TOP] = false;
 			}
 
 			if (event.key.key == SDLK_D) {
-				arrayKey[MY_RIGHT] = false;
-				arrayKey[MY_CLIKER_RIGHT] = false;
+				keys[UP_LEFT] = true;
+				keys[DOWN_LEFT] = false;
+				// printf("up = %d - %d\n", keys[DOWN_LEFT], keys[UP_LEFT]);
 			}
 
 			if (event.key.key == SDLK_S) {
-				arrayKey[MY_BOTTOM] = false;
-				arrayKey[MY_CLIKER_BOTTOM] = false;
+				keys[UP_BOTTOM] = true;
+				keys[DOWN_BOTTOM] = false;
 			}
 
 			if (event.key.key == SDLK_A) {
-				arrayKey[MY_LEFT] = false;
-				arrayKey[MY_CLIKER_LEFT] = false;
+				keys[UP_RIGHT] = true;
+				keys[DOWN_RIGHT] = false;
 			}
 
 			break;
 
 		case SDL_EVENT_KEY_DOWN:
 
-			if (event.key.key == SDLK_W && arrayKey[MY_CLIKER_TOP] == false) {
+			if (event.key.key == SDLK_W) {
 				// globalCount++;
 				// printf("%d\n",globalCount);
-				arrayKey[MY_TOP] = true;
-				arrayKey[MY_SCORE] = true;
+				keys[DOWN_TOP] = true;
+				keys[UP_TOP] = false;
 			}
 
-			if (event.key.key == SDLK_D && arrayKey[MY_CLIKER_RIGHT] == false) {
+			if (event.key.key == SDLK_D) {
 				// globalCount++;
-				// printf("%d\n",globalCount);
-				arrayKey[MY_RIGHT] = true;
-				arrayKey[MY_SCORE] = true;
+				keys[DOWN_LEFT] = true;
+				keys[UP_LEFT] = false;
+				// printf("down = %d - %d\n", keys[DOWN_LEFT], keys[UP_LEFT]);
 			}
 
-			if (event.key.key == SDLK_S && arrayKey[MY_CLIKER_BOTTOM] == false) {
+			if (event.key.key == SDLK_S) {
 				// globalCount++;
 				// printf("%d\n",globalCount);
-				arrayKey[MY_BOTTOM] = true;
-				arrayKey[MY_SCORE] = true;
+				keys[DOWN_BOTTOM] = true;
+				keys[UP_BOTTOM] = false;
 			}
 
-			if (event.key.key == SDLK_A && arrayKey[MY_CLIKER_LEFT] == false) {
+			if (event.key.key == SDLK_A) {
 				// globalCount++;
 				// printf("%d\n",globalCount);
-				arrayKey[MY_LEFT] = true;
-				arrayKey[MY_SCORE] = true;
+				keys[DOWN_RIGHT] = true;
+				keys[UP_RIGHT] = false;
 			}
 
 			if (event.key.key == SDLK_ESCAPE) {
@@ -110,3 +113,92 @@ void process_input(int *game_is_running) {
 	// printf(  "///////////////////////////\n\n");
 
 }
+
+
+	// SDL_Event event;
+	// SDL_PollEvent(&event);
+	// switch (event.type) {
+	// 	case SDL_EVENT_QUIT:
+	// 		*game_is_running = CLOSE;
+	// 		break;
+	// 	case SDL_EVENT_KEY_UP:
+
+	// 		if (event.key.key == SDLK_W) {
+	// 			arrayKey[MY_TOP] = false;
+	// 			arrayKey[MY_CLIKER_TOP] = false;
+	// 		}
+
+	// 		if (event.key.key == SDLK_D) {
+	// 			arrayKey[MY_RIGHT] = false;
+	// 			arrayKey[MY_CLIKER_RIGHT] = false;
+	// 		}
+
+	// 		if (event.key.key == SDLK_S) {
+	// 			arrayKey[MY_BOTTOM] = false;
+	// 			arrayKey[MY_CLIKER_BOTTOM] = false;
+	// 		}
+
+	// 		if (event.key.key == SDLK_A) {
+	// 			arrayKey[MY_LEFT] = false;
+	// 			arrayKey[MY_CLIKER_LEFT] = false;
+	// 		}
+
+	// 		break;
+
+	// 	case SDL_EVENT_KEY_DOWN:
+
+	// 		if (event.key.key == SDLK_W && arrayKey[MY_CLIKER_TOP] == false) {
+	// 			// globalCount++;
+	// 			// printf("%d\n",globalCount);
+	// 			arrayKey[MY_TOP] = true;
+	// 			arrayKey[MY_SCORE] = true;
+	// 		}
+
+	// 		if (event.key.key == SDLK_D && arrayKey[MY_CLIKER_RIGHT] == false) {
+	// 			// globalCount++;
+	// 			// printf("%d\n",globalCount);
+	// 			arrayKey[MY_RIGHT] = true;
+	// 			arrayKey[MY_SCORE] = true;
+	// 		}
+
+	// 		if (event.key.key == SDLK_S && arrayKey[MY_CLIKER_BOTTOM] == false) {
+	// 			// globalCount++;
+	// 			// printf("%d\n",globalCount);
+	// 			arrayKey[MY_BOTTOM] = true;
+	// 			arrayKey[MY_SCORE] = true;
+	// 		}
+
+	// 		if (event.key.key == SDLK_A && arrayKey[MY_CLIKER_LEFT] == false) {
+	// 			// globalCount++;
+	// 			// printf("%d\n",globalCount);
+	// 			arrayKey[MY_LEFT] = true;
+	// 			arrayKey[MY_SCORE] = true;
+	// 		}
+
+	// 		if (event.key.key == SDLK_ESCAPE) {
+	// 			*game_is_running = CLOSE;
+	// 		}
+
+	// 		if(event.key.key == SDLK_1){
+	// 			// // // // printf("\nQ\n");
+	// 			*game_is_running = RESUME;
+	// 		}
+
+	// 		if(event.key.key == SDLK_2){
+	// 			// // // // printf("\nW\n");
+	// 			*game_is_running = PAUSE;
+	// 		}
+
+	// 		if(event.key.key == SDLK_3){
+	// 			// // // // printf("\nE\n");
+	// 			*game_is_running = RESTART;
+	// 		}
+
+	// 		if(event.key.key == SDLK_4){
+	// 			// // // // printf("\nR\n");
+	// 			*game_is_running = CLOSE;
+	// 		}
+
+	// 		break;
+	// }
+	

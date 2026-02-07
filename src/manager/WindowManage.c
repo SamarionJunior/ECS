@@ -16,7 +16,7 @@ sint32 SDL_TICKS_PASSED(sint32 a, sint32 b) {
 	return ((sint32)((b)-(a)) <= 0);
 }
 
-int initialize_window() {
+bool initialize_window() {
 
 	// // // // printf("\n/////////////////////////\n");
 	// // // // printf(  "/// INITIALIZE WINDOW ///\n");

@@ -7,18 +7,36 @@
 
 #include "components.h"
 
-Information* getInformationById(int id, int* count);
-Position* getPositionById(int id, int* count);
-Size* getSizeById(int id, int* count);
-Color* getColorById(int id, int* count);
-Collider* getColliderById(int id, int* count);
-Layer* getLayerById(int id, int* count);
+typedef struct occurrence{
+	void* component;
+	int index;
+} Occurrence;
 
-Player* getPlayerById(int id, int* count);
+typedef struct occurrences{
+	int size; // 1 ... N
+	Occurrence* array;
+} Occurrences;
 
-Collectible* getCollectibleById(int id, int* count);
+// Occurrence getComponentsById(Array *array, int id);
 
-Anchor* getAnchorById(int id, int* count);
+bool getOccurrenceById(Array *array, int id, Occurrence* temporaryOccurrence);
+
+void freeComponent(Occurrences* Occurrences);
+
+void freeComponents(int size, ...);
+
+// Information* getInformationById(int id, int* count);
+// Position* getPositionById(int id, int* count);
+// Size* getSizeById(int id, int* count);
+// Color* getColorById(int id, int* count);
+// Collider* getColliderById(int id, int* count);
+// Layer* getLayerById(int id, int* count);
+
+// Player* getPlayerById(int id, int* count);
+
+// Collectible* getCollectibleById(int id, int* count);
+
+// Anchor* getAnchorById(int id, int* count);
 
 // "¨"* get"¨"ById(int id, int* count);
 

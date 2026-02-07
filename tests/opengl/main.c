@@ -1,81 +1,61 @@
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_opengl.h> // Or use GLAD/GLEW for modern OpenGL
+#include <SDL2/SDL.h>
+// #include <SDL2/SDL_opengl.h>
+#include "glad.h"
 
-// ... (Shader source code, vertex data) ...
+int gScreenHeight = 640;
+int gScreenWidth = 480;
+SDL_Window*   gGraphicsApplicationWindow = NULL;
+SDL_GLContext gOpenGLContext = NULL;
 
-int main(int argc, char* argv[]) {
-  // 1. Initialize SDL and create window/context
-  SDL_Init(0);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-  SDL_Window* window = SDL_CreateWindow("OpenGL Square", 800, 600, SDL_WINDOW_OPENGL);
-  SDL_GLContext context = SDL_GL_CreateContext(window);
-  SDL_GL_MakeCurrent(window, context);
+void InitializeProgram(){
 
-  // ... (Initialize GLAD/GLEW if used) ...
-
-  // 2. Define Vertex Data and VBO
-  float vertices[] = {
-    // Position         // Color (optional)
-    -0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f, // Top-left
-     0.5f,  0.5f, 0.0f,  0.0f, 1.0f, 0.0f, // Top-right
-     0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f, // Bottom-right
-    -0.5f, -0.5f, 0.0f,  1.0f, 1.0f, 0.0f  // Bottom-left
-  };
-  unsigned int indices[] = {
-    0, 1, 2, // First triangle
-    2, 3, 0  // Second triangle
-  };
-  // ... (Create VBO, EBO, VAO, buffer data) ...
-
-  // 3. Create Shaders and Shader Program
-  // ... (Compile and link shaders) ...
-
-  // Rendering loop
-  bool quit = false;
-  SDL_Event e;
-  while(!quit) {
-    while(SDL_PollEvent(&e)) {
-      if (e.type == SDL_EVENT_QUIT) {
-        quit = true;
-      }
-    }
-   
-
-    // 5. Rendering
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-   
-    unsigned int VBO, VAO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // Configure vertex attributes (position and optional texture coordinates)
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0); // Unbind VBO
-    glBindVertexArray(0); // Unbind VAO
-
-    SDL_GL_SwapWindow(window);
+  if(SDL_Init(SDL_INIT_VIDEO) < 0){
+    printf("SDL2 could not initialize video subsystem\n");
+    exit(1);
   }
 
-  printf("dsdsd\n");
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+  SDL_GL_SetAttribute(
+    SDL_GL_CONTEXT_PROFILE_MASK,
+    SDL_GL_CONTEXT_PROFILE_CORE
+  );
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-  // 6. Cleanup
-  // ... (Delete OpenGL objects, destroy window/context, quit SDL) ...
+  gGraphicsApplicationWindow = (
+    "OpenGL Window",
+    gScreenWidth,
+    gScreenHeight,
+    SDL_WINDOW_OPENGL
+  );
 
+  if(gGraphicsApplicationWindow == NULL){
+    printf("SDL Window was not able to be created\n");
+    printf("%s\n", SDL_GetError());
+    printf("%u\n", glGetError());
+    exit(1);
+  }
+
+  gOpenGLContext = SDL_GL_CreateContext(gGraphicsApplicationWindow);
+
+  if(gOpenGLContext == NULL){
+    printf("OpenGL context not available\n");
+    exit(1);
+  }
+
+}
+void MainLoop(){
+
+}
+void CleanUp(){
+  SDL_DestroyWindow(gGraphicsApplicationWindow);
+  SDL_Quit();
+}
+
+int main(int argc, char* argv[]) {
+  InitializeProgram();
+  MainLoop();
+  CleanUp();
   return 0;
 }

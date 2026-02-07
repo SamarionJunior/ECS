@@ -9,9 +9,9 @@ out vec3 v_vertexColors;
 void main(){
   v_vertexColors = vertexColors;
   gl_Position = vec4(
-    position.x + u_OffsetX, 
-    position.y + u_OffsetY, 
-    position.z + u_OffsetZ, 
+    position.x, 
+    position.y, 
+    position., 
     // position.x + u_OffsetX, 
     // position.y + u_OffsetY, 
     // position.z + u_OffsetZ, 

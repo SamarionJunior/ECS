@@ -12,23 +12,23 @@
 #include "../../constants.h"
 #include "../../engine/update.h"
 
-#include "../../../dependencies/my/dynamicvectors/vector.h"
+// #include "../../../dependencies/my/dynamicvectors/vector.h"
 
-#include "../../../dependencies/my/dynamicvectors/entities/entity.h"
+// #include "../../../dependencies/my/dynamicvectors/entities/entity.h"
 
-#include "../../../dependencies/my/dynamicvectors/components/position.h"
-#include "../../../dependencies/my/dynamicvectors/components/size.h"
-#include "../../../dependencies/my/dynamicvectors/components/collider.h"
-#include "../../../dependencies/my/dynamicvectors/components/player.h"
-#include "../../../dependencies/my/dynamicvectors/components/anchor.h"
+// #include "../../../dependencies/my/dynamicvectors/components/position.h"
+// #include "../../../dependencies/my/dynamicvectors/components/size.h"
+// #include "../../../dependencies/my/dynamicvectors/components/collider.h"
+// #include "../../../dependencies/my/dynamicvectors/components/player.h"
+// #include "../../../dependencies/my/dynamicvectors/components/anchor.h"
 
 int getSnakeTail();
 void iterationSnake();
 
 Anchor* getAnchorByParent(int idParent, int* count){
 	Anchor* tempAnchor = NULL;
-	for (size_t j = 0; j < lengthCollumnAnchor(&vectorAnchor); j++){
-		tempAnchor = getCellAnchor(&vectorAnchor, j);
+	for (size_t j = 0; j < lengthArray(anchorArray); j++){
+		tempAnchor = (Anchor*)getArray(anchorArray, j);
 		if(tempAnchor != NULL){
 			if(tempAnchor->idParent == idParent){
 				(*count)++;
@@ -41,81 +41,114 @@ Anchor* getAnchorByParent(int idParent, int* count){
 
 int getSnakeTail(){
 
-	int index = -1;
+	int id = -1;
+
+	Player* player;
+	Anchor* tail;
+	int count;
 		
-	for(int i = 0 ; i < lengthCollumnPlayer(&vectorPlayer); i++){
+	for(int i = 0 ; i < lengthArray(playerArray); i++){
 
-		Player* player = getCellPlayer(&vectorPlayer, i);
+		if((player = (Player*)getArray(playerArray, i)) == NULL){
+			continue;
+		}
 
-		if(player == NULL){continue;}
-
-		int idA = player->id;
-
-		index = idA;
+		id = player->id;
 		
-		Anchor* tail = NULL;
+		tail = NULL;
 		
 		while(true){
-			int count = 0;
 
-			tail = getAnchorByParent(idA, &count);
+			count = 0;
 
-			if(tail == NULL){
+			if((tail = getAnchorByParent(id, &count)) == NULL){
 				break;
 			}
 
-			idA = tail->id;
-
-			index = tail->id;
+			id = tail->id;
 
 		}
 
 	}
 
-	return index;
+	return id;
 
 }
 
 void iterationSnake(){
 
-	for(int i = 0 ; i < lengthCollumnPlayer(&vectorPlayer); i++){
+	Player* player;
+	int idA;
+	int idB;
+	Occurrence auxPositionA;
+	Occurrence auxPositionB;
+	float oldX;
+	float oldY;
+	Anchor* tail;
+	float tempX;
+	float tempY;
+	int countB;
 
-		Player* player = getCellPlayer(&vectorPlayer, i);
+	for(int i = 0 ; i < lengthArray(playerArray); i++){
 
-		if(player == NULL){continue;}
+		// printf("%d\n", countB);
 
-		int idA = player->id, countA = 0;
+		if((player = (Player*)getArray(playerArray, i)) == NULL){
+			continue;
+		}
 
-		Position* auxPositionA = getPositionById(idA, &countA);
+		idA = player->id;
 
-		float oldX = auxPositionA->old2.x, oldY = auxPositionA->old2.y;
+		if(getOccurrenceById(positionArray, idA, &auxPositionA) == false){
+			continue;
+		}
+
+		oldX = (*((Position*)auxPositionA.component)).old2.x;
+		oldY = (*((Position*)auxPositionA.component)).old2.y;
 
 		// printf("%f - %f\n", oldX, oldY);
 
-		Anchor* tail = NULL;
+		tail = NULL;
 		
 		while(true){
-			int countB = 0;
+			countB = 0;
 
-			tail = getAnchorByParent(idA, &countB);
+			// printf("%d\n", countB);
 
-			if(tail == NULL){
+			if((tail = (Anchor*)getAnchorByParent(idA, &countB)) == NULL){
+				// printf("%p\n", tail);
 				break;
 			}
 
-			Position* auxPositionB = getPositionById(tail->id, &countB);
+			// printf("%d\n", countB);
+
+			idA = tail->id;
+
+			// printf("%d\n", idA);
+
+			if(getOccurrenceById(positionArray, idA, &auxPositionB) == false){
+				continue;
+			}
 
 			// printf("%f - %f\n", oldX, oldY);
 
-			float tempX = auxPositionB->current2.x, tempY = auxPositionB->current2.y;
+			if(
+				(*((Position*)auxPositionB.component)).current2.x == oldX &&
+				(*((Position*)auxPositionB.component)).current2.y == oldY 
+			){
+				break;
+			}
 
-			auxPositionB->current2.x = oldX;
-			auxPositionB->current2.y = oldY;
+			tempX = (*((Position*)auxPositionB.component)).current2.x;
+			tempY = (*((Position*)auxPositionB.component)).current2.y;
+
+			(*((Position*)auxPositionB.component)).current2.x = oldX;
+			(*((Position*)auxPositionB.component)).current2.y = oldY;
 
 			oldX = tempX;
 			oldY = tempY;
 
-			idA = tail->id;
+			// idA = tail->id;
 
 		}
 

@@ -5,13 +5,23 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define MAX_ENTITIES 2000
+#include "../../../dependencies/my/dynamicarray/array.h"
+
+enum entities_config {
+    MAX_ENTITIES = 2000
+};
 
 typedef struct entity{
     int index;
 } Entity;
 
+extern Array* entityArray;
+
 #endif
+
+// typedef struct entity{
+//     int index;
+// } Entity;
 
 // extern int lengthEntities;
 

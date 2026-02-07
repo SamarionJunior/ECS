@@ -15,12 +15,6 @@
 #include "../constants.h"
 #include "input.h"
 
-int last_frame_time = 0;
-
-float delta_time = 0;
-
-void resetDelay(void);
-void delay(int *isPaused);
 // void move();
 // void point();
 
@@ -39,7 +33,6 @@ void update(int *game_is_running) {
 	
 	move();
 
-	// iterationSnake();
 
 	/////// CLICK ////////
 	/////// JUMPER ///////
@@ -48,37 +41,4 @@ void update(int *game_is_running) {
 	// printf(  "/// END - UPDATE ///\n");
 	// printf(  "////////////////////\n\n");
 
-}
-
-
-void resetDelay(void){
-
-	// // // // printf("\n///////////////////\n");
-	// // // // printf(  "/// RESET DELAY ///\n");
-	// // // // printf(  "///////////////////\n\n");
-	
-	last_frame_time = SDL_GetTicks();
-
-	// // // // printf("\n/////////////////////////\n");
-	// // // // printf(  "/// END - RESET DELAY ///\n");
-	// // // // printf(  "/////////////////////////\n\n");
-}
-
-void delay(int *isPaused){
-
-	if(*isPaused == RESUME){
-		resetDelay();
-		*isPaused = RUN;
-	}
-
-	int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - last_frame_time);
-
-	if (time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME) {
-		SDL_Delay(time_to_wait);
-	}
-
-	delta_time = (SDL_GetTicks() - last_frame_time) / 1000.0f;
-
-	last_frame_time = SDL_GetTicks();
-	
 }

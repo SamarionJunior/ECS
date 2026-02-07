@@ -14,35 +14,100 @@
 
 #include "../../constants.h"
 #include "../../engine/update.h"
-#include <stdlib.h>
 
 #include "../../engine/input.h"
 
-#include "../../../dependencies/my/dynamicvectors/vector.h"
+#include "../../manager/delay.h"
 
-#include "../../../dependencies/my/dynamicvectors/entities/entity.h"
+// #include "../../../dependencies/my/dynamicvectors/vector.h"
 
-#include "../../../dependencies/my/dynamicvectors/components/position.h"
-#include "../../../dependencies/my/dynamicvectors/components/size.h"
-#include "../../../dependencies/my/dynamicvectors/components/player.h"
+// #include "../../../dependencies/my/dynamicvectors/entities/entity.h"
 
-double kmH = 70.7106781187;
-double moveDefualt = (double)300;
-double moveKMH = 0.0f;
+// #include "../../../dependencies/my/dynamicvectors/components/position.h"
+// #include "../../../dependencies/my/dynamicvectors/components/size.h"
+// #include "../../../dependencies/my/dynamicvectors/components/player.h"
 
-// int i = 0;
+typedef enum keyblock{
+	KEY_BLOCK_TOP,
+	KEY_BLOCK_BOTTOM,
+	KEY_BLOCK_RIGHT,
+	KEY_BLOCK_LEFT,
+	KEY_BLOCK_LENGHT
+} KeyBlock;
 
-Entity* id = NULL;
+static bool keyBlocks[KEY_BLOCK_LENGHT] = {false};
 
-int idindex = 0;
-// int count = 0;
+static double kmH = 70.7106781187;
+static double moveDefualt = (double)300;
+static double moveKMH = 0.0f;
 
-Position* auxPosition = NULL;
-Size* auxSize = NULL;
-Player* auxPlayer = NULL;
+static const float moveTop 		= -32.f;
+static const float moveBottom 	= 32.f;
+static const float moveRight 	= -32.f;
+static const float moveLeft 		= 32.f;
 
-Position tempPosition;
-Size tempSize;
+// static int i = 0;
+
+static Id* id = NULL;
+
+static int count = 0;
+
+int temporaryIndex = 0;
+
+static Occurrence occurrencePosition;
+static Occurrence occurrenceSize;
+// static Occurrence occurrencesPlayer;
+
+static Position* temporaryPointerPosition;
+
+static Position temporaryPosition;
+static Size temporarySize;
+
+typedef enum way{
+	VERTICAL,
+	HORIZONTAL
+} Way;
+
+typedef struct moveconfig{
+	bool* down;
+	bool* up;
+	Way way;
+	float difference;
+	bool* keyBlock
+} MoveConfig;
+
+static const int lenghtMoveConfig = 4;
+
+static MoveConfig moveconfig[] = {
+	(MoveConfig){
+		.down = &keys[DOWN_TOP],
+		.up = &keys[UP_TOP],
+		.way = VERTICAL,
+		.difference = moveTop,
+		.keyBlock = &keyBlocks[KEY_BLOCK_TOP]
+	},
+	(MoveConfig){
+		.down = &keys[DOWN_BOTTOM],
+		.up = &keys[UP_BOTTOM],
+		.way = VERTICAL,
+		.difference = moveBottom,
+		.keyBlock = &keyBlocks[KEY_BLOCK_BOTTOM]
+	},
+	(MoveConfig){
+		.down = &keys[DOWN_RIGHT],
+		.up = &keys[UP_RIGHT],
+		.way = HORIZONTAL,
+		.difference = moveRight,
+		.keyBlock = &keyBlocks[KEY_BLOCK_RIGHT]
+	},
+	(MoveConfig){
+		.down = &keys[DOWN_LEFT],
+		.up = &keys[UP_LEFT],
+		.way = HORIZONTAL,
+		.difference = moveLeft,
+		.keyBlock = &keyBlocks[KEY_BLOCK_LEFT]
+	}
+};
 
 void updateOldPosition(Position *aux, Position temp){
 	aux->old2.y = aux->current2.y;
@@ -61,308 +126,102 @@ void printPosition(Position *aux){
 	);
 }
 
-void move(){
-	
-	int count = 0;
+bool isClickDown(MoveConfig moveconfig){
+	return (
+		*(moveconfig.down) == true && 
+		*(moveconfig.up) == false &&
+		*(moveconfig.keyBlock) == false
+	);
+}
 
-	if(lengthCollumnPlayer(&vectorPlayer) == 0){return;}	
+void click(MoveConfig moveconfig){
+
+	switch(moveconfig.way){
+		case VERTICAL:
+			temporaryPosition.current2.y += moveconfig.difference;
+			break;
+		case HORIZONTAL:
+			temporaryPosition.current2.x += moveconfig.difference;
+			break;
+	}
+
+	if(collisionBetween(temporaryPosition, temporarySize) == true){
+		// printf("%d\n", rand());
+		return;
+	}
+
+	updateOldPosition(
+		temporaryPointerPosition, 
+		temporaryPosition
+	);
+	
+	*(moveconfig.keyBlock) = true;
+
+}
+
+void move(){
+
+	if(lengthArray(playerArray) == 0){
+		return;
+	}
 
 	moveKMH = (((moveDefualt * (double)delta_time)/100)*kmH);
 
-	for(size_t i = 0 ; i < lengthCollumnEntity(&vectorEntity); i++){
+	for(size_t i = 0 ; i < lengthArray(playerArray); i++){
 
-		id = getCellEntity(&vectorEntity, i);
-
-		if(id == NULL){continue;}
-
-		// printf("\n%d\n", id);
-		// printf("\n%d\n", id->index);
-
-		idindex = id->index;
-		count = 0;
-
-		auxPosition = getPositionById(idindex, &count);
-		auxSize = getSizeById(idindex, &count);
-		auxPlayer = getPlayerById(idindex, &count);
-
-		// printf("\n%d\n", index);
-		// printf("\n%d\n", lengthCollumnPosition(&vectorPosition));
-		// printf("\n%d\n", lengthCollumnSize(&vectorSize));
-		// printf("\n%d\n", lengthCollumnPlayer(&vectorPlayer));
-
-		if(count != 3){continue;}
-
-		// printf("\n%d\n", count);
-
-		tempPosition = *auxPosition;
-		tempSize = *auxSize;
-
-		if(arrayKey[MY_TOP] && arrayKey[MY_CLIKER_TOP] == false){
-			tempPosition.current2.y -= 32;
-			bool result = collisionBetween(&tempPosition, &tempSize);
-			if(result == false){
-				updateOldPosition(auxPosition, tempPosition);
-				// printPosition(auxPosition);
-				scoreCalculator();
-				// iterationSnake();
-				// auxPosition->old2.y = auxPosition->current2.y;
-				// auxPosition->current2.y -= 32;
-				// globalCount++;
-			}
-			arrayKey[MY_CLIKER_TOP] = true;
+		if((id = (Id*)getArray(playerArray, i)) == NULL){
 			continue;
 		}
 
-		if(arrayKey[MY_BOTTOM] && arrayKey[MY_CLIKER_BOTTOM] == false){
-			tempPosition.current2.y += 32;
-			bool result = collisionBetween(&tempPosition, &tempSize);
-			if(result == false){
-				updateOldPosition(auxPosition, tempPosition);
-				// printPosition(auxPosition);
-				scoreCalculator();
-				// iterationSnake();
-				// auxPosition->old2.y = auxPosition->current2.y;
-				// auxPosition->current2.y += 32;
-				// globalCount++;
-			}
-			arrayKey[MY_CLIKER_BOTTOM] = true;
+		temporaryIndex = id->id;
+
+		if(getOccurrenceById(positionArray, temporaryIndex, &occurrencePosition) == false){
+			continue;
+		}
+		if(getOccurrenceById(sizeArray, temporaryIndex, &occurrenceSize) == false){
 			continue;
 		}
 
-		if(arrayKey[MY_RIGHT] && arrayKey[MY_CLIKER_RIGHT] == false){
-			tempPosition.current2.x += 32;
-			bool result = collisionBetween(&tempPosition, &tempSize);
-			if(result == false){
-				updateOldPosition(auxPosition, tempPosition);
-				// printPosition(auxPosition);
-				scoreCalculator();
-				// iterationSnake();
-				// auxPosition->old2.x = auxPosition->current2.x;
-				// auxPosition->current2.x += 32;
-				// globalCount++;
-			}
-			arrayKey[MY_CLIKER_RIGHT] = true;
-			continue;
-		}
+		temporaryPosition = (*((Position*)occurrencePosition.component));
+		temporarySize = (*((Size*)occurrenceSize.component));
 
-		if(arrayKey[MY_LEFT] && arrayKey[MY_CLIKER_LEFT] == false){
-			tempPosition.current2.x -= 32;
-			bool result = collisionBetween(&tempPosition, &tempSize);
-			if(result == false){
-				updateOldPosition(auxPosition, tempPosition);
-				// printPosition(auxPosition);
-				scoreCalculator();
-				// iterationSnake();
-				// auxPosition->old2.x = auxPosition->current2.x;
-				// auxPosition->current2.x -= 32;
-				// globalCount++;
-			}
-			arrayKey[MY_CLIKER_LEFT] = true;
-			continue;
-		}
+		temporaryPointerPosition = (Position*)occurrencePosition.component;
 
+		for (size_t j = 0; j < lenghtMoveConfig; j++){
+
+			MoveConfig currentMoveConfig = moveconfig[j];
+			
+			bool result;
+
+			if((result = isClickDown(currentMoveConfig)) == false){
+
+				if(
+					*(currentMoveConfig.down) == false && 
+					*(currentMoveConfig.up) == true
+				){
+					*(currentMoveConfig.keyBlock) = false;
+				}
+
+				continue;
+			}
+
+			// printf(
+			// 	"%d: down = %d - %d\n", 
+			// 	rand(),
+			// 	*(currentMoveConfig.down), 
+			// 	*(currentMoveConfig.up)
+			// );
+
+			// printf("%d\n", result);
+
+			click(currentMoveConfig);
+
+			// printf("%d\n", rand());
+
+			scoreCalculator();
+
+			iterationSnake();
+
+		}
 	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// if(arrayKey[MY_TOP] && arrayKey[MY_LEFT]){
-
-	// 	comp->position->old2.y = comp->position->current2.y;
-	// 	comp->position->old2.x = comp->position->current2.x;
-
-	// 	comp->position->current2.y -= 32;
-	// 	comp->position->current2.y -= 32;
-
-	// 	continue;
-	// }
-
-	// if(arrayKey[MY_TOP] && arrayKey[MY_RIGHT]){
-
-	// 	comp->position->old2.y = comp->position->current2.y;
-	// 	comp->position->old2.x = comp->position->current2.x;
-
-	// 	comp->position->current2.y -= 32;
-	// 	comp->position->current2.y += 32;
-
-	// 	continue;
-	// }
-
-	// if(arrayKey[MY_BOTTOM] && arrayKey[MY_LEFT]){
-
-	// 	comp->position->old2.y = comp->position->current2.y;
-	// 	comp->position->old2.x = comp->position->current2.x;
-
-	// 	comp->position->current2.y += 32;
-	// 	comp->position->current2.x -= 32;
-
-	// 	continue;
-	// }
-
-	// if(arrayKey[MY_BOTTOM] && arrayKey[MY_RIGHT]){
-
-	// 	comp->position->old2.y = comp->position->current2.y;
-	// 	comp->position->old2.x = comp->position->current2.x;
-
-	// 	comp->position->current2.y += 32;
-	// 	comp->position->current2.y += 32;
-
-	// 	continue;
-	// }
-
-	// int* entity;
-
-	// // printf("\n%d\n", getLengthSystem(MOVE));
-
-	// for (size_t i = 0; i < getLengthSystem(MOVE); i++){
-
-	// 	// printf("\n%d\n", *(int *)getIdInSystem(MOVE, i));
-
-
-	// 	// printf("\noi-2\n");
-
-	// 	if(!existEntities(*(int *)getIdInSystem(MOVE, i))){
-	// 		continue;
-	// 	}
-		
-	// 	entity = (int *)getIdInSystem(MOVE, i);
-
-	// 	double moveDefualt = (double)300;
-
-	// 	double moveKMH = (((moveDefualt * (double)delta_time)/100)*kmH);
-		
-	// 	// printf("\n%d\n", getDirectionCollision(0, *entity, BOTTOM));
-
-	// 	if(arrayKey[MY_TOP] && arrayKey[MY_LEFT]){
-	// 		if(getDirectionCollision(0, *entity, TOP) == 0 && getDirectionCollision(0, *entity, LEFT) == 0){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y -= (float)moveKMH;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x -= (float)moveKMH;
-	// 			continue;
-	// 		}else if(getDirectionCollision(0, *entity, TOP) == 0 && getDirectionCollision(0, *entity, LEFT) == 1){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y -= (float)(moveDefualt * (double)delta_time);
-	// 			continue;
-	// 		}else if(getDirectionCollision(0, *entity, TOP) == 1 && getDirectionCollision(0, *entity, LEFT) == 0){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x -= (float)(moveDefualt * (double)delta_time);
-	// 			continue;
-	// 		}
-	// 	}
-
-	// 	if(arrayKey[MY_TOP] && arrayKey[MY_RIGHT]){
-	// 		if(getDirectionCollision(0, *entity, TOP) == 0 && getDirectionCollision(0, *entity, RIGHT) == 0){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y -= (float)moveKMH;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x += (float)moveKMH;
-	// 			continue;
-	// 		}else if(getDirectionCollision(0, *entity, TOP) == 0 && getDirectionCollision(0, *entity, RIGHT) == 1){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y -= (float)(moveDefualt * (double)delta_time);
-	// 			continue;
-	// 		}else if(getDirectionCollision(0, *entity, TOP) == 1 && getDirectionCollision(0, *entity, RIGHT) == 0){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x += (float)(moveDefualt * (double)delta_time);
-	// 			continue;
-	// 		}
-	// 	}
-
-	// 	if(arrayKey[MY_BOTTOM] && arrayKey[MY_LEFT]){
-	// 		if(getDirectionCollision(0, *entity, BOTTOM) == 0 && getDirectionCollision(0, *entity, LEFT) == 0){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y += (float)moveKMH;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x -= (float)moveKMH;
-	// 			continue;
-	// 		}else if(getDirectionCollision(0, *entity, BOTTOM) == 0 && getDirectionCollision(0, *entity, LEFT) == 1){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y += (float)(moveDefualt * (double)delta_time);
-	// 			continue;
-	// 		}else if(getDirectionCollision(0, *entity, BOTTOM) == 1 && getDirectionCollision(0, *entity, LEFT) == 0){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x -= (float)(moveDefualt * (double)delta_time);
-	// 			continue;
-	// 		}
-	// 	}
-
-	// 	if(arrayKey[MY_BOTTOM] && arrayKey[MY_RIGHT]){
-	// 		if(getDirectionCollision(0, *entity, BOTTOM) == 0 && getDirectionCollision(0, *entity, RIGHT) == 0){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y += (float)moveKMH;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x += (float)moveKMH;
-	// 			continue;
-	// 		}else if(getDirectionCollision(0, *entity, BOTTOM) == 0 && getDirectionCollision(0, *entity, RIGHT) == 1){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y += (float)(moveDefualt * (double)delta_time);
-	// 			continue;
-	// 		}else if(getDirectionCollision(0, *entity, BOTTOM) == 1 && getDirectionCollision(0, *entity, RIGHT) == 0){
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 			((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x += (float)(moveDefualt * (double)delta_time);
-	// 			continue;
-	// 		}
-	// 		continue;
-	// 	}
-
-	// 	if(arrayKey[MY_TOP] && getDirectionCollision(0, *entity, TOP) == 0){
-	// 		// printf("arrow top\n");
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y -= (float)(moveDefualt * (double)delta_time);
-	// 		continue;
-	// 	}
-
-	// 	if(arrayKey[MY_BOTTOM] && getDirectionCollision(0, *entity, BOTTOM) == 0){
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y += (float)(moveDefualt * (double)delta_time);
-	// 		continue;
-	// 	}
-
-	// 	if(arrayKey[MY_RIGHT] && getDirectionCollision(0, *entity, RIGHT) == 0){
-	// 		// printf("\n%d\n", getDirectionCollision(0, *entity, RIGHT));
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x += (float)(moveDefualt * (double)delta_time);
-	// 		continue;
-	// 	}
-
-	// 	if(arrayKey[MY_LEFT] && getDirectionCollision(0, *entity, LEFT) == 0){
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldY = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->y;
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->oldX = ((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x;
-	// 		((Position *)readComponentByIdAndReturnReferenc(POSITION, *entity))->x -= (float)(moveDefualt * (double)delta_time);
-	// 		continue;
-	// 	}
-
-	// }

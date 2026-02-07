@@ -17,5 +17,6 @@
 extern int **mapMatrix;
 
 void loadMap();
+void destroyMap(int **auxiliaryMapMatrix);
 
 #endif

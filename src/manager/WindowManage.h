@@ -12,7 +12,7 @@ typedef signed long sint32;
 
 sint32 SDL_TICKS_PASSED(sint32 a, sint32 b);
 
-int initialize_window();
+bool initialize_window();
 
 void destroy_window();
 

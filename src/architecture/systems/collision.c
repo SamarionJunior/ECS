@@ -12,32 +12,35 @@
 #include "../../constants.h"
 #include "../../engine/update.h"
 
-#include "../../../dependencies/my/dynamicvectors/vector.h"
-
-#include "../../../dependencies/my/dynamicvectors/entities/entity.h"
-
-#include "../../../dependencies/my/dynamicvectors/components/position.h"
-#include "../../../dependencies/my/dynamicvectors/components/size.h"
-#include "../../../dependencies/my/dynamicvectors/components/collider.h"
-
-int isItColliding(float xA, float yA, float wA, float hA, float xB, float yB, float wB, float hB);
+bool isItColliding(float xA, float yA, float wA, float hA, float xB, float yB, float wB, float hB);
 int isTheSameIndex(Position entityA, Position entityB);
 void initializeCollisionVariables(Position entity, Size size, float* x, float* y, float* w, float* h);
-bool *collisionBetween(Position *positionA, Size *sizeA);
+void resetVariables();
+bool collisionBetween(Position positionA, Size sizeA);
 
-int isItColliding(
-	float xA, float yA, float wA, float hA,
-	float xB, float yB, float wB, float hB
-){
+static float xA = 0, yA = 0, wA = 0, hA = 0,
+			xB = 0, yB = 0, wB = 0, hB = 0;
+
+static Position temporaryPositionB;
+static Size temporarySizeB;
+
+static Id* temporaryId = NULL;
+
+static int temporaryIndex;
+
+static Occurrence occurrencesPosition;
+static Occurrence occurrencesSize;
+
+bool isItColliding(float XA, float YA, float WA, float HA, float XB, float YB, float WB, float HB){
 	if(
 		// xA + wA >= xB &&
 		// xA <= xB + wB &&
 		// yA + hA >= yB &&
 		// yA <= yB + hB
-		xA + (wA - 1) >= xB &&
-		xA <= xB + (wB - 1) &&
-		yA + (hA - 1) >= yB &&
-		yA <= yB + (hB - 1)
+		XA + (WA - 1) >= XB &&
+		XA <= XB + (WB - 1) &&
+		YA + (HA - 1) >= YB &&
+		YA <= YB + (HB - 1)
 	){
 		return true;
 	}
@@ -58,117 +61,48 @@ void initializeCollisionVariables(Position entity, Size size, float* x, float* y
 	*h = size.vector2.y;
 }
 
-bool *collisionBetween(Position *positionA, Size *sizeA){
+void resetVariables(){
+	xA = 0; yA = 0; wA = 0; hA = 0;
+	xB = 0; yB = 0; wB = 0; hB = 0;
+}
 
-	Position positionB;
-	Size sizeB;
+bool collisionBetween(Position temporaryPositionA, Size temporarySizeA){
 
-	float xA = 0, yA = 0, wA = 0, hA = 0;
-	float xB = 0, yB = 0, wB = 0, hB = 0;
+	resetVariables();
 
-	initializeCollisionVariables(*positionA, *sizeA, &xA, &yA, &wA, &hA);
+	initializeCollisionVariables(temporaryPositionA, temporarySizeA, &xA, &yA, &wA, &hA);
 		
-	for(int i = 0 ; i < lengthCollumnEntity(&vectorEntity); i++){
+	for(size_t i = 0 ; i < lengthArray(colliderArray); i++){
 
-		Entity* id = getCellEntity(&vectorEntity, i);
-
-		if(id == NULL){continue;}
-
-		int index = id->index;
-
-        if(index == positionA->id){continue;}
-
-		int count = 0;
-
-		Position* auxPosition = getPositionById(index, &count);
-		Size* auxSize = getSizeById(index, &count);
-		Collider* auxCollider = getColliderById(index, &count);
-
-		if(count != 3){continue;}
-		
-		Position positionB = *auxPosition;
-		Size sizeB = *auxSize;
-
-		initializeCollisionVariables(positionB, sizeB, &xB, &yB, &wB, &hB);
-
-		if(isItColliding(xA, yA, wA, hA, xB, yB, wB, hB)){
-
-			// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, xB, yB);
-
-			return true;
+		if((temporaryId = (Id*)getArray(colliderArray, i)) == NULL){
+			continue;
 		}
-	}
 
-	return false;
+    if((temporaryIndex = temporaryId->id) == temporaryPositionA.id){
+			continue;
+		}
 
-}
+		if(getOccurrenceById(positionArray, temporaryIndex, &occurrencesPosition) == false){
+			continue;
+		}
+		if(getOccurrenceById(sizeArray, temporaryIndex, &occurrencesSize) == false){
+			continue;
+		}
+		
+		temporaryPositionB = (*((Position*)occurrencesPosition.component));
+		temporarySizeB = (*((Size*)occurrencesSize.component));
 
-void setIsItColliding(int entity, int count, int future){
-	// if(count > 0){
-	// 	components[0].collision[entity].isItColliding = true;
-	// }else if (count == 0 && future == 0){
-	// 	components[0].collision[entity].isItColliding = false;
-	// 	components[0].collision[entity].direction[TOP] = false;
-	// 	components[0].collision[entity].direction[BOTTOM] = false;
-	// 	components[0].collision[entity].direction[RIGHT] = false;
-	// 	components[0].collision[entity].direction[LEFT] = false;
-	// }else if (count == 0 && future > 0){
-	// 	components[0].collision[entity].isItColliding = false;
-	// }
-}
+		initializeCollisionVariables(temporaryPositionB, temporarySizeB, &xB, &yB, &wB, &hB);
 
-int isItCollidingBottom(
-	float yA, float hA,
-	float yB, float hB,
-	float size
-){
-	if(
-		(yA + hA) + size >= yB &&
-		(yA + hA) <= yB + hB
-	){
+		if(isItColliding(xA, yA, wA, hA, xB, yB, wB, hB) == false){
+			continue;
+		}
+
+		// // // // printf("%d >> %s - x: %f - y: %f\n", rand() % (999 - 100 + 1) + 100, comp->information->name, xB, yB);
 		return true;
 	}
-	return false;
-}
 
-int isItCollidingTop(
-	float yA,
-	float yB, float hB,
-	float size
-){
-	if(
-		yA - size >= yB &&
-		yA <= yB + hB
-	){
-		return true;
-	}
-	return false;
-}
+		printf("oi\n");
 
-int isItCollidingRight(
-	float xA, float wA,
-	float xB, float wB,
-	float size
-){
-	if(
-		(xA + wA) + size >= xB &&
-		xA + wA <= xB + wB
-	){
-		return true;
-	}
-	return false;
-}
-
-int isItCollidingLeft(
-	float xA,
-	float xB, float wB,
-	float size
-){
-	if(
-		xA - size <= xB + wB &&
-		xA >= xB
-	){
-		return true;
-	}
 	return false;
 }

@@ -1,0 +1,1 @@
+dependencies/my/dynamicarray/** , dependencies/pure/**, dependencies/z_old/**, dependencies/my/dynamicarray/old/**, 6_OpenGL_SDL2/**, tests/**, *.old, *.txt, *0ld*, *Old*, *OLD*

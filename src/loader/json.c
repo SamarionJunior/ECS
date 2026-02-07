@@ -31,18 +31,9 @@ bool getObjectAndVerify(const cJSON *const parent, const char *const string, cJS
 bool getArrayAndVerify(const cJSON *const parent, int i, cJSON** child, typeOBjectJson type);
 
 void loadJSON(){
-
-	// // // // printf("\n/////////////////\n");
-	// // // // printf(  "/// LOAD JSON ///\n");
-	// // // // printf(  "/////////////////\n\n");
-
 	nameFileJson = "data/scene.json";
 	readJSON(&printJSONScene);
 	printComponetTemporary();
-
-	// // // // printf("\n///////////////////////\n");
-	// // // // printf(  "/// END - LOAD JSON ///\n");
-	// // // // printf(  "///////////////////////\n\n");
 }
 
 void printJSONScene(){

@@ -8,162 +8,71 @@
 #include "snake.h"
 
 #include "../entities/entities.h"
+#include "../entities/utility.h"
 
 #include "../components/components.h"
 #include "../components/create.h"
 #include "../components/get.h"
 
 #include "../../constants.h"
+
 #include "../../engine/update.h"
-#include <stdlib.h>
-
 #include "../../engine/input.h"
+#include "../../engine/setupUtility.h"
 
-#include "../../../dependencies/my/dynamicvectors/vector.h"
+#include "../../../dependencies/my/dynamicarray/array.h"
 
-#include "../../../dependencies/my/dynamicvectors/entities/entity.h"
+// #include "../../../dependencies/my/dynamicvectors/vector.h"
 
-#include "../../../dependencies/my/dynamicvectors/components/position.h"
-#include "../../../dependencies/my/dynamicvectors/components/size.h"
-#include "../../../dependencies/my/dynamicvectors/components/collider.h"
-#include "../../../dependencies/my/dynamicvectors/components/player.h"
-#include "../../../dependencies/my/dynamicvectors/components/collectible.h"
+// #include "../../../dependencies/my/dynamicvectors/entities/entity.h"
+
+// #include "../../../dependencies/my/dynamicvectors/components/position.h"
+// #include "../../../dependencies/my/dynamicvectors/components/size.h"
+// #include "../../../dependencies/my/dynamicvectors/components/collider.h"
+// #include "../../../dependencies/my/dynamicvectors/components/player.h"
+// #include "../../../dependencies/my/dynamicvectors/components/collectible.h"
 
 #include "../../engine/setup.h"
 
 #include "../../loader/json.h"
+#include "setupCollision.h"
 
-float xA = 0, yA = 0, wA = 0, hA = 0;
-float xB = 0, yB = 0, wB = 0, hB = 0;
-int indexCollectible = -1;
+void  scoreCalculator();
+
+static float xA = 0, yA = 0, wA = 0, hA = 0;
+static float xB = 0, yB = 0, wB = 0, hB = 0;
+static int indexPlayer = -1;
+static int indexCollectible = -1;
 
 // int i = 0;
 
-int indexA = 0, countA = 0;
+// int indexA = 0;
+static int countA = 0;
 
-Player* idA = NULL;
+static Id* idA = NULL;
 
-Position* auxPositionA = NULL;
-Size* auxSizeA = NULL;
+static Occurrence auxPositionA;
+static Occurrence auxSizeA;
 
-Position tempPositionA;
-Size tempSizeA;
+static Position tempPositionA;
+static Size tempSizeA;
 
 // int j = 0;
 
-Collectible* idB = NULL;
+static Id* idB = NULL;
 
-int indexB = 0;
-int countB = 0;
+// int indexB = 0;
+static int countB = 0;
 
-Position* auxPositionB = NULL;
-Size* auxSizeB = NULL;
+static Occurrence auxPositionB;
+static Occurrence auxSizeB;
 
-Position positionB;
-Size sizeB;
+static Position positionB;
+static Size sizeB;
 
-size_t k = 0;
+static size_t k = 0;
 // int count = 0;
-Position* pos = NULL;
-
-void chekcCollisionBetwenHeadAndFruit_UnloackKey_IncrementScore_SetId_CreateTail(){
-
-	int count = 0;
-	
-	for(size_t i = 0; i < lengthCollumnPlayer(&vectorPlayer); i++){
-
-		idA = getCellPlayer(&vectorPlayer, i);
-
-		if(idA == NULL){continue;}
-
-		indexA = idA->id;
-		countA = 0;
-
-		auxPositionA = getPositionById(indexA, &countA);
-		auxSizeA = getSizeById(indexA, &countA);
-
-		if(countA != 2){continue;}
-
-		tempPositionA = *auxPositionA;
-		tempSizeA = *auxSizeA;
-
-		initializeCollisionVariables(tempPositionA, tempSizeA, &xA, &yA, &wA, &hA);
-
-		for(size_t j = 0 ; j < lengthCollumnCollectible(&vectorCollectible); j++){
-
-			idB = getCellCollectible(&vectorCollectible, j);
-
-			if(idB == NULL){continue;}
-
-			indexB = idB->id;
-
-			if(indexB == indexA){continue;}
-
-			countB = 0;
-
-			auxPositionB = getPositionById(indexB, &countB);
-			auxSizeB = getSizeById(indexB, &countB);
-			// Collectible* auxCollectibleB = getCollectibleById(indexB, &countB);
-
-			if(countB != 2){continue;}
-			
-			positionB = *auxPositionB;
-			sizeB = *auxSizeB;
-		
-			initializeCollisionVariables(positionB, sizeB, &xB, &yB, &wB, &hB);
-
-			if(isItColliding(xA, yA, wA, hA, xB, yB, wB, hB)){
-        // printf("\n%d\n", rand());
-				if(arrayKey[MY_SCORE] == true){
-					arrayKey[MY_SCORE] = false;
-					// system("clear");
-
-					score++;
-
-					// printf("score: %d\n", score);
-
-					indexCollectible = indexB;
-
-					// printf("%d\n", score);
-
-					// float newX = 0, newY = 0;
-					
-					// printf("new x:%f\n", newX);
-					// printf("ort x:%f\n", auxPosMove.current2.x);
-					// printf("new y:%f\n", newY);
-					// printf("ort y:%f\n", auxPosMove.current2.y);
-
-					for (k = 0; k < lengthtemporaryComponents; k++){
-						if(temporaryComponents[k].index != 4){
-							continue;
-						}
-						// printf("%d\n", temporaryComponents[k].index);
-						count = 0;
-						pos = getPositionById(getSnakeTail(), &count);
-						createKindComponents((pos->old2.x), (pos->old2.y), k);
-					}
-
-					// do{
-					// 	positionB.current2.x = ((rand() % (9 - 0 + 1) + 0)*SPRITE) + (SPRITE * 2);
-					// 	positionB.current2.y = ((rand() % (9 - 0 + 1) + 0)*SPRITE) + (SPRITE * 2);
-					// // }while(newX == tempPositionA.current2.x || newY == tempPositionA.current2.y);
-					// }while(collisionBetween(&positionB, &sizeB));
-
-					// auxPositionB->old2.x = auxPositionB->current2.y;
-					// auxPositionB->old2.y = auxPositionB->current2.y;
-					// auxPositionB->current2.x = positionB.current2.x;
-					// auxPositionB->current2.y = positionB.current2.y;
-				}
-
-			}
-
-			continue;
-
-		}
-
-	}
-
-}
+static Occurrence pos;
 
 typedef struct positionAux{
 	bool active;
@@ -171,198 +80,325 @@ typedef struct positionAux{
 	float y;
 } PositionAux;
 
+bool checkCollisionBetwenHeadAndFruit(){
 
-void createNewFruit(){
 	int count = 0;
+	
+	for(size_t i = 0; i < lengthArray(playerArray); i++){
 
-	for(size_t i = 0 ; i < lengthCollumnCollectible(&vectorCollectible); i++){
+		if((idA = (Id*)getArray(playerArray, i)) == NULL){
+			continue;
+		}
 
-		Collectible* idB = getCellCollectible(&vectorCollectible, i);
+		indexPlayer = idA->id;
 
-		if(idB == NULL){continue;}
+		if(getOccurrenceById(positionArray, indexPlayer, &auxPositionA) == false){
+			continue;
+		}
+		if(getOccurrenceById(sizeArray, indexPlayer, &auxSizeA) == false){
+			continue;
+		}
 
-		indexB = idB->id;
+		tempPositionA = (*(Position*)auxPositionA.component);
+		tempSizeA = (*(Size*)auxSizeA.component);
 
-		if(indexB != indexCollectible){continue;}
+		initializeCollisionVariables(tempPositionA, tempSizeA, &xA, &yA, &wA, &hA);
 
-		if(arrayKey[MY_SCORE] != false){continue;}
+		for(size_t j = 0 ; j < lengthArray(collectibleArray); j++){
 
-		countB = 0;
+			if((idB = (Id*)getArray(collectibleArray, j)) == NULL){
+				continue;
+			}
 
-		auxPositionB = getPositionById(indexB, &countB);
-		auxSizeB = getSizeById(indexB, &countB);
+			if((indexCollectible = idB->id) == indexPlayer){
+				continue;
+			}
 
-		if(countB != 2){continue;}
+			if(getOccurrenceById(positionArray, indexCollectible, &auxPositionB) == false){
+				continue;
+			}
+			if(getOccurrenceById(sizeArray, indexCollectible, &auxSizeB) == false){
+				continue;
+			}
+			// Collectible* auxCollectibleB = getCollectibleById(indexB, &countB);
+
+			positionB = (*((Position*)auxPositionB.component));
+			sizeB = (*((Size*)auxSizeB.component));
 		
-		positionB = *auxPositionB;
-		sizeB = *auxSizeB;
+			initializeCollisionVariables(positionB, sizeB, &xB, &yB, &wB, &hB);
 
-		count = 0;
-		int randX = 0, randY = 0, row = getROW(), col = getCOL(), utilR = getUTILR(), utilC = getUTILC();
+			if(isItColliding(xA, yA, wA, hA, xB, yB, wB, hB) == false){
+				continue;
+			}
 
-		// int total = (row*col);
-		// bool voids[total];
-		// PositionAux pa[total];
+			return true;
 
-		// for (size_t c = 0; c < total; c++){
-		// 	voids[c] = false;
-		// }
-
-		// for (size_t f = 0; f < row; f++){
-		// 	for (size_t g = 0; g < col; g++){
-		// 		pa[(f * row) + g].active = true;
-		// 		pa[(f * row) + g].x = (g * SPRITE) + (SPRITE * 2);
-		// 		pa[(f * row) + g].y = (f * SPRITE) + (SPRITE * 2);
-		// 	}
-		// }
-
-		// int countC = 0;
-				
-		// for(int d = 0 ; d < lengthCollumnCollider(&vectorCollider); d++){
-
-		// 	Collider* id = getCellCollider(&vectorCollider, d);
-
-		// 	if(id == NULL){continue;}
-
-		// 	int index = id->id;
-
-		// 	int count = 0;
-
-		// 	Position* auxPosition = getPositionById(index, &count);
-
-		// 	if(count != 1){continue;}
-			
-		// 	int j = ((((int) auxPosition->current2.y) / 32) - (SPACE / 2)), i = ((((int) auxPosition->current2.x) / 32 )- (SPACE / 2));
-
-		// 	// printf("j: %d - i: %d\n", auxPosition->current2.y, auxPosition->current2.x);
-
-		// 	voids[d] = true;
-
-		// 	for (size_t f = 0; f < row; f++){
-		// 		for (size_t g = 0; g < col; g++){
-		// 			if(auxPosition->current2.y == pa[(f * row) + g].y && auxPosition->current2.x == pa[(f * row) + g].x){
-		// 				countC++;
-		// 				pa[(f * row) + g].active = false;
-		// 			}
-		// 			// pa[(f * row) + g].x = (g * SPRITE) + (SPRITE * 2);
-		// 			// pa[(f * row) + g].y = (f * SPRITE) + (SPRITE * 2);
-		// 		}
-		// 	}
-
-		// }
-
-		// for (size_t f = 0; f < total; f++){
-		// 	for (size_t g = 0; g < total; g++){
-		// 		if(pa[f].active == false && pa[g].active == true){
-		// 			PositionAux temp;
-		// 			temp = pa[f];
-		// 			pa[f] = pa[g];
-		// 			pa[g] = temp;
-		// 		}
-		// 	}
-		// }
-
-		// int newTotal = total - countC;
-		
-		// randX = (rand() % ((newTotal - 1) - 0 + 1) + 0);
-
-		// positionB.current2.x = pa[randX].x;
-		// positionB.current2.y = pa[randX].y;
-
-			randX = (rand() % (((utilC + 50) - 1) - 0 + 1) + (0 + utilC));
-			randY = (rand() % (((utilC + 50) - 1) - 0 + 1) + (0 + utilC));
-			positionB.current2.x = (randX * SPRITE) + (SPRITE * 2);
-			positionB.current2.y = (randY * SPRITE) + (SPRITE * 2);
-
-		auxPositionB->old2.x = auxPositionB->current2.x;
-		auxPositionB->old2.y = auxPositionB->current2.y;
-		auxPositionB->current2.x = positionB.current2.x;
-		auxPositionB->current2.y = positionB.current2.y;
-
-		// int total = utilR * utilC;
-			// bool attemptMatrix[row][col];
-			// for (size_t a = 0; a < row; a++){
-			// 	for (size_t b = 0; b < col; b++){
-			// 		attemptMatrix[a][b] = false;
-			// 	}
-			// }
-				
-			// for(int k = 0 ; k < lengthCollumnCollider(&vectorCollider); k++){
-
-			// 	Collider* id = getCellCollider(&vectorCollider, k);
-
-			// 	if(id == NULL){continue;}
-
-			// 	int index = id->id;
-
-			// 	int count = 0;
-
-			// 	Position* auxPosition = getPositionById(index, &count);
-
-			// 	if(count != 1){continue;}
-				
-			// 	int j = ((((int) auxPosition->current2.y) / 32) - (SPACE / 2)), i = ((((int) auxPosition->current2.x) / 32 )- (SPACE / 2));
-
-			// 	// printf("j: %d - i: %d\n", auxPosition->current2.y, auxPosition->current2.x);
-
-			// 	attemptMatrix[j][i] = true;
-
-			// }
-
-		// printf("%d\n", rand());
-		// printf("||||||\n");
-		// for (size_t a = 0; a < row; a++){
-		// 	for (size_t b = 0; b < col; b++){
-		// 		printf("%d", attemptMatrix[a][b]);
-		// 	}
-		// 	printf("\n");
-		// }
-		// printf("||||||\n");
-
-			// int isEmpty = 0;
-			// for (size_t a = 0; a < row; a++){
-			// 	for (size_t b = 0; b < col; b++){
-			// 		if(attemptMatrix[a][b] == false){
-			// 			isEmpty++;
-			// 		}
-			// 	}
-			// }
-		// printf("%d\n", isEmpty);
-
-			// if(isEmpty == 0){
-			// 	setIsEmpty(false);
-			// 	break;
-			// }
-		
-		// do{
-		// 	randX = (rand() % ((utilC - 1) - 0 + 1) + 0);
-		// 	randY = (rand() % ((utilR - 1) - 0 + 1) + 0);
-		// 	positionB.current2.x = (randX * SPRITE) + (SPRITE * 2);
-		// 	positionB.current2.y = (randY * SPRITE) + (SPRITE * 2);
-		// 	// if(attemptMatrix[randY][randX] == true){
-		// 	// 	count++;
-		// 	// }else{
-		// 	// 	attemptMatrix[randY][randX] = true;
-		// 	// }
-		// 	// if(count == total){
-		// 	// 	break;
-		// 	// }
-		// }while(collisionBetween(&positionB, &sizeB));
+		}
 
 	}
 
+	return false;
+
 }
 
-void  scoreCalculator();
+typedef struct auxiliarycoordinate {
+	int x;
+	int y;
+} AuxiliaryCoordinate;
 
-void  scoreCalculator(){
-		
+
+void createNewFruit(){
+
+	// int utilC = getUTILC(), utilR = getUTILR();
+
+	Occurrences auxPos;
+
+	const int auxLength = getROW() * getCOL();
+
+	for (size_t y = 0; y < getROW(); y++){
+		for (size_t x = 0; x < getCOL(); x++){
+			freeSpaces[y][x] = itIsFree;
+		}
+	}
+
+	for (size_t y = 0; y < getROW(); y++){
+		for (size_t x = 0; x < getCOL(); x++){
+			printf("%d", freeSpaces[y][x]);
+		}
+		printf("\n");
+	}
+
+	int count = 0;
+
+	for (size_t i = 0; i < lengthArray(positionArray); i++){
+
+		Position* auxPos;
+
+		if((auxPos = (Position*)getArray(positionArray, i)) == NULL){
+			continue;
+		}
+
+		freeSpaces[
+			(int)(auxPos->current2.y / SPRITE)
+		][
+			(int)(auxPos->current2.x / SPRITE)
+		] = NotFree;
+
+		count++;
+
+	}
+
+	for (size_t y = 0; y < getROW(); y++){
+		for (size_t x = 0; x < getCOL(); x++){
+			printf("%d", freeSpaces[y][x]);
+		}
+		printf("\n");
+	}
+
+	// printf("Tail Lenght: %d\n", lengthArray(anchorArray));
+	// printf("Position Lenght: %d\n", lengthArray(positionArray));
+
+	// for (size_t i = 0; i < lengthArray(anchorArray); i++){
+	// 	Anchor* auxAnchor = (Anchor*)getArray(anchorArray, i);
+	// 	printf("Anchor id: %d\n", auxAnchor->id);
+	// 	Occurrences auxOccurrences;
+	// 	if((auxOccurrences = getComponentsById(positionArray, auxAnchor->id)).size == 0){
+	// 		continue;
+	// 	}
+	// 	printf("Pos id: %d\n", ((Position*)(auxOccurrences.array[0].component))->id);
+	// 	if(((Position*)(auxOccurrences.array[0].component))->id != auxAnchor->id){
+	// 		continue;
+	// 	}
+	// 	printf("Pos id: %d\n", ((Position*)(auxOccurrences.array[0].component))->id);
+	// 	int auxX = (int)(((Position*)(auxOccurrences.array[0].component))->current2.x / SPRITE);
+	// 	int auxY = (int)(((Position*)(auxOccurrences.array[0].component))->current2.y / SPRITE);
+	// 	printf(
+	// 		"ID: %d - X: %d - Y: %d\n", 
+	// 		((Position*)(auxOccurrences.array[0].component))->id,
+	// 		auxX, 
+	// 		auxY
+	// 	);
+	// }
+
+	for (size_t i = 0; i < lengthArray(positionArray); i++){
+		Position* auxPosition = (Position*)getArray(positionArray, i);
+		printf(
+			"ID: %d\tX: %d\tY: %d\n", 
+			auxPosition->id, 
+			(int) auxPosition->current2.x / SPRITE, 
+			(int) auxPosition->current2.y / SPRITE
+		);
+	}
+
+	AuxiliaryCoordinate auxiliaryCoordinates[auxLength];
+
+	const int countFreeSpace = auxLength - count;
+
+	if(countFreeSpace <= 0){
+		return;
+	}
+
+	// AuxiliaryCoordinate auxiliaryCoordinates[countFreeSpace];
+
+	for (size_t i = 0; i < (countFreeSpace); i++){
+		auxiliaryCoordinates[i] = (AuxiliaryCoordinate){
+			.x = -1,
+			.y = -1
+		};
+	}
+
+	int count2 = 0;
+
+	for (size_t y = 0; y < getROW(); y++){
+		for (size_t x = 0; x < getCOL(); x++){
+			if(freeSpaces[y][x] == itIsFree){
+				auxiliaryCoordinates[count2] = (AuxiliaryCoordinate){
+					.x = x,
+					.y = y
+				};
+				count2++;
+			}
+		}
+	}
+
+	const int drawnNumber = rand() % ((countFreeSpace - 1) + 1 + 0) + 0;
+
+	// printf("Drawn Number = %d\n", drawnNumber);
+
+	AuxiliaryCoordinate selectedAuxiliaryCoordinate = auxiliaryCoordinates[drawnNumber];
+
+	// printf(
+	// 	"y = %d - x = %d\n",
+	// 	selectedAuxiliaryCoordinate.y,
+	// 	selectedAuxiliaryCoordinate.x
+	// );
+
+	for (k = 0; k < lengthtemporaryComponents; k++){
+		if(temporaryComponents[k].index == 2){
+			break;
+		}
+	}
+	
+	// printf("%f\n", (*(Position*)pos.array[0].component).old2.x);
+
+	createKindComponents(
+		selectedAuxiliaryCoordinate.x,
+		selectedAuxiliaryCoordinate.y,
+		// rand() % ((getCOL() - 2) + 0 - WALLS) + WALLS,
+		// rand() % ((getROW() - 2) + 0 - WALLS) + WALLS,
+		// rand() % (getCOL() + 1 - 3),
+		// rand() % (getROW() + 1 - 3),
+		// (((*(Position*)pos.array[0].component).old2.x) - SPRITE) / SPRITE, 
+		// (((*(Position*)pos.array[0].component).old2.y) - SPRITE) / SPRITE, 
+		getSnakeTail(),
+		k
+	);
+
+}
+
+// bool isUnloackScore(){
+// 	return 
+// 		(arrayKey[MY_SCORE] == false) ?
+// 			false :
+// 			true;
+// }
+
+// bool unloackScore(){
+// 	arrayKey[MY_SCORE] = false;
+// 	return true;
+// }
+
+bool incrementScore(){
+	score++;
+	return true;
+}
+
+bool removeFruit(){
+	return removeEntity(indexCollectible);
+}
+
+bool createTail(){
+
+	// printf("Tail Lenght: %d\n", lengthArray(anchorArray));
+	// printf("Position Lenght: %d\n", lengthArray(positionArray));
+
+	for (k = 0; k < lengthtemporaryComponents; k++){
+		if(temporaryComponents[k].index == 4){
+			break;
+		}
+	}
+
+	// printf("%d\n", temporaryComponents[k].index);
+
+	if(getOccurrenceById(positionArray, indexPlayer, &pos) == false){
+		printf("Player Position not find\n");
+		return;
+	}
+
+	float x = ((*((Position*)pos.component)).old2.x) / SPRITE;
+	float y = ((*((Position*)pos.component)).old2.y) / SPRITE;
+
+	// printf("%f\n", (*(Position*)pos.array[0].component).old2.x);
+
+	// printf("getSnakeTail: %d\n", getSnakeTail());
+
+	// printf(
+	// 	"X: %f - Y: %f\n", 
+	// 	((*(Position*)pos.array[0].component).old2.x) / SPRITE, 
+	// 	((*(Position*)pos.array[0].component).old2.y) / SPRITE
+	// );
+
+	createKindComponents(
+		x, 
+		y, 
+		getSnakeTail(),
+		k
+	);
+
+	// printf("Tail Lenght: %d\n", lengthArray(anchorArray));
+	// printf("Tail id: %d\n", ((Anchor*)(getArray(anchorArray, lengthArray(anchorArray) - 1)))->id);
+	// printf("Tail idParent: %d\n", ((Anchor*)(getArray(anchorArray, lengthArray(anchorArray) - 1)))->idParent);
+	// printf("Position Lenght: %d\n", lengthArray(positionArray));
+	// printf("Position id: %d\n", ((Position*)(getArray(positionArray, lengthArray(positionArray) - 1)))->id);
+
+	return true;
+
+}
+
+void scoreCalculator(){
+
 	xA = 0; yA = 0; wA = 0; hA = 0;	xB = 0; yB = 0; wB = 0; hB = 0;
 
-	indexCollectible = -1;
+	if(checkCollisionBetwenHeadAndFruit() == false){
+		return;
+	}
 
-	chekcCollisionBetwenHeadAndFruit_UnloackKey_IncrementScore_SetId_CreateTail();
-	
+	// if(isUnloackScore() == false){
+	// 	return;
+	// }
+
+	// if(unloackScore() == false){
+	// 	return;
+	// }
+
+	if(incrementScore() == false){
+		return;
+	}
+
+	// printf("\n%d\n", rand());
+
+	// printf("score: %d\n", score);
+
+	if(removeFruit() == false){
+		return;
+	}
+
+	// printf("%d\n", score);
+
+	if(createTail() == false){
+		return;
+	}
+
 	iterationSnake();
 
 	createNewFruit();

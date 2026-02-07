@@ -5,19 +5,23 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "../../../dependencies/my/dynamicarray/array.h"
+
 #include "entities.h"
-#include "../../../dependencies/my/dynamicvectors/vector.h"
+// // #include "../../../dependencies/my/dynamicvectors/vector.h"
 
 int getId();
 int setId(int idnew);
 void initializeEntities();
-bool addEntity(VectorEntity* vectorEntity, size_t row, int *id);
 void destroyEntities();
+bool removeEntity(int id);
+
+#endif
+
+// bool addEntity(VectorEntity* vectorEntity, size_t row, int *id);
 // bool existEntities(size_t scene, size_t index);
 // void printEntity(size_t scene, size_t index);
 // void printEntities(size_t scene);
-
-#endif
 
 // extern int lengthEntities;
 

@@ -8,6 +8,8 @@
 #include <SDL3/SDL_stdinc.h>
 #include "../entities/entities.h"
 
+#include "../../../dependencies/my/dynamicarray/array.h"
+
 // #include "../../../dependencies/my/matrix/matrix.h"
 
 // #include "dynamicvectors/vector.h"
@@ -39,6 +41,10 @@ typedef enum{
 } TypesOfComponents;
 
 /// SUB STRUCT ///
+
+typedef struct id{
+	int id;
+}Id;
 
 typedef struct Vector2{
 	float x;
@@ -128,11 +134,34 @@ typedef struct anchor {
 	int idParent;
 } Anchor;
 
+
+
+extern Array* informationArray;
+extern Array* positionArray;
+
+// extern Array* directionArray;
+// extern Array* velocityArray;
+// extern Array* accelerationArray;
+
+extern Array* sizeArray;
+extern Array* colorArray;
+extern Array* colliderArray;
+extern Array* layerArray;
+
+extern Array* playerArray;
+extern Array* collectibleArray;
+extern Array* anchorArray;
+
 #define QTD_TYPE_COMPONENTS TOTALCOMPONENTS
 
 extern char *namesOfCompenents[QTD_TYPE_COMPONENTS];
 
-#define MAX_COMPONENTS 20000
+
+enum components_config {
+    MAX_COMPONENTS = 20000
+};
+
+// #define MAX_COMPONENTS 20000
 
 #define SUBCOMPONENTS 2
 

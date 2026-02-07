@@ -4,21 +4,25 @@
 
 #include "components.h"
 #include "create.h"
+
 #include "../../constants.h"
+
+#include "../../../dependencies/my/dynamicarray/array.h"
+
 #include "initialize.h"
 
-#include "../../../dependencies/my/matrix/matrix.h"
-#include "../../../dependencies/my/matrix/initialize.h"
+// #include "../../../dependencies/my/matrix/matrix.h"
+// #include "../../../dependencies/my/matrix/initialize.h"
 
-#include "../../../dependencies/my/dynamicvectors/components/information.h"
-#include "../../../dependencies/my/dynamicvectors/components/position.h"
-#include "../../../dependencies/my/dynamicvectors/components/size.h"
-#include "../../../dependencies/my/dynamicvectors/components/color.h"
-#include "../../../dependencies/my/dynamicvectors/components/collider.h"
-#include "../../../dependencies/my/dynamicvectors/components/layer.h"
-#include "../../../dependencies/my/dynamicvectors/components/player.h"
-#include "../../../dependencies/my/dynamicvectors/components/collectible.h"
-#include "../../../dependencies/my/dynamicvectors/components/anchor.h"
+// // #include "../../../dependencies/my/dynamicvectors/components/information.h"
+// // #include "../../../dependencies/my/dynamicvectors/components/position.h"
+// // #include "../../../dependencies/my/dynamicvectors/components/size.h"
+// // #include "../../../dependencies/my/dynamicvectors/components/color.h"
+// // #include "../../../dependencies/my/dynamicvectors/components/collider.h"
+// // #include "../../../dependencies/my/dynamicvectors/components/layer.h"
+// // #include "../../../dependencies/my/dynamicvectors/components/player.h"
+// // #include "../../../dependencies/my/dynamicvectors/components/collectible.h"
+// // #include "../../../dependencies/my/dynamicvectors/components/anchor.h"
 
 Information defualtInformation = (Information){
 	.id = ID_INIT,
@@ -84,14 +88,30 @@ void initializeComponents();
 
 void initializeComponents(){
 
-	initializeVectorInformation(&vectorInformation, MAX_COMPONENTS);
-	initializeVectorPosition(&vectorPosition, MAX_COMPONENTS);
-	initializeVectorSize(&vectorSize, MAX_COMPONENTS);
-	initializeVectorColor(&vectorColor, MAX_COMPONENTS);
-	initializeVectorCollider(&vectorCollider, MAX_COMPONENTS);
-	initializeVectorLayer(&vectorLayer, MAX_COMPONENTS);
+	initializeArray(&informationArray, MAX_COMPONENTS, sizeof(Information));
+	initializeArray(&positionArray, MAX_COMPONENTS, sizeof(Position));
 
-	initializeVectorPlayer(&vectorPlayer, MAX_COMPONENTS);
-	initializeVectorCollectible(&vectorCollectible, MAX_COMPONENTS);
-	initializeVectorAnchor(&vectorAnchor, MAX_COMPONENTS);
+	// initializeArray(&directionArray, MAX_COMPONENTS, sizeof(Direction));
+	// initializeArray(&velocityArray, MAX_COMPONENTS, sizeof(Velocity));
+	// initializeArray(&accelerationArray, MAX_COMPONENTS, sizeof(Acceleration));
+
+	initializeArray(&sizeArray, MAX_COMPONENTS, sizeof(Size));
+	initializeArray(&colorArray, MAX_COMPONENTS, sizeof(Color));
+	initializeArray(&colliderArray, MAX_COMPONENTS, sizeof(Collider));
+	initializeArray(&layerArray, MAX_COMPONENTS, sizeof(Layer));
+
+	initializeArray(&playerArray, MAX_COMPONENTS, sizeof(Player));
+	initializeArray(&collectibleArray, MAX_COMPONENTS, sizeof(Collectible));
+	initializeArray(&anchorArray, MAX_COMPONENTS, sizeof(Anchor));
+
+	// initializeVectorInformation(&vectorInformation, MAX_COMPONENTS);
+	// initializeVectorPosition(&vectorPosition, MAX_COMPONENTS);
+	// initializeVectorSize(&vectorSize, MAX_COMPONENTS);
+	// initializeVectorColor(&vectorColor, MAX_COMPONENTS);
+	// initializeVectorCollider(&vectorCollider, MAX_COMPONENTS);
+	// initializeVectorLayer(&vectorLayer, MAX_COMPONENTS);
+
+	// initializeVectorPlayer(&vectorPlayer, MAX_COMPONENTS);
+	// initializeVectorCollectible(&vectorCollectible, MAX_COMPONENTS);
+	// initializeVectorAnchor(&vectorAnchor, MAX_COMPONENTS);
 }

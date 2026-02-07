@@ -1,163 +1,95 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdarg.h>
 
 #include "components.h"
 #include "get.h"
 
-#include "../../../dependencies/my/dynamicvectors/vector.h"
-#include "../../../dependencies/my/dynamicvectors/components/information.h"
-#include "../../../dependencies/my/dynamicvectors/components/position.h"
-#include "../../../dependencies/my/dynamicvectors/components/size.h"
-#include "../../../dependencies/my/dynamicvectors/components/color.h"
-#include "../../../dependencies/my/dynamicvectors/components/collider.h"
-#include "../../../dependencies/my/dynamicvectors/components/layer.h"
-#include "../../../dependencies/my/dynamicvectors/components/player.h"
-#include "../../../dependencies/my/dynamicvectors/components/collectible.h"
-#include "../../../dependencies/my/dynamicvectors/components/anchor.h"
+// Occurrences getComponentsByProperty(Array *array, int id){
 
-Information* getInformationById(int id, int* count){
-	Information* tempInformation = NULL;
-	for (size_t j = 0; j < lengthCollumnInformation(&vectorInformation); j++){
-		tempInformation = getCellInformation(&vectorInformation, j);
-		if(tempInformation != NULL){
-			if(tempInformation->id == id){
-				(*count)++;
-				return tempInformation;
-			}
-		}
-	}
-}
-Position* getPositionById(int id, int* count){
-	Position* tempPosition = NULL;
-	for (size_t j = 0; j < lengthCollumnPosition(&vectorPosition); j++){
-		tempPosition = getCellPosition(&vectorPosition, j);
-		if(tempPosition != NULL){
-			if(tempPosition->id == id){
-				(*count)++;
-				return tempPosition;
-			}
-		}
-	}
-}
-Size* getSizeById(int id, int* count){
-	Size* tempSize = NULL;
-	for (size_t j = 0; j < lengthCollumnSize(&vectorSize); j++){
-		tempSize = getCellSize(&vectorSize, j);
-		if(tempSize != NULL){
-			if(tempSize->id == id){
-				(*count)++;
-				return tempSize;
-			}
-		}
-	}
-}
-Color* getColorById(int id, int* count){
-	Color* tempColor = NULL;
-	for (size_t j = 0; j < lengthCollumnColor(&vectorColor); j++){
-		tempColor = getCellColor(&vectorColor, j);
-		if(tempColor != NULL){
-			if(tempColor->id == id){
-				(*count)++;
-				return tempColor;
-			}
-		}
-	}
-}
-Collider* getColliderById(int id, int* count){
-	Collider* tempCollider = NULL;
-	for (size_t j = 0; j < lengthCollumnCollider(&vectorCollider); j++){
-		tempCollider = getCellCollider(&vectorCollider, j);
-		if(tempCollider != NULL){
-			if(tempCollider->id == id){
-				(*count)++;
-				return tempCollider;
-			}
-		}
-	}
-}
-Layer* getLayerById(int id, int* count){
-	Layer* tempLayer = NULL;
-	for (size_t j = 0; j < lengthCollumnLayer(&vectorLayer); j++){
-		tempLayer = getCellLayer(&vectorLayer, j);
-		if(tempLayer != NULL){
-			if(tempLayer->id == id){
-				(*count)++;
-				return tempLayer;
-			}
-		}
-	}
-}
+// 	Occurrences occurrences;
 
-Player* getPlayerById(int id, int* count){
-	Player* tempPlayer = NULL;
-	for (size_t j = 0; j < lengthCollumnPlayer(&vectorPlayer); j++){
-		tempPlayer = getCellPlayer(&vectorPlayer, j);
-		if(tempPlayer != NULL){
-			if(tempPlayer->id == id){
-				(*count)++;
-				return tempPlayer;
-			}
-		}
-	}
-}
+// 	occurrences.size = 0;
 
-Collectible* getCollectibleById(int id, int* count){
-	Collectible* tempCollectible = NULL;
-	for (size_t j = 0; j < lengthCollumnCollectible(&vectorCollectible); j++){
-		tempCollectible = getCellCollectible(&vectorCollectible, j);
-		if(tempCollectible != NULL){
-			if(tempCollectible->id == id){
-				(*count)++;
-				return tempCollectible;
-			}
-		}
-	}
-}
+// 	void* temp = NULL;
 
-Anchor* getAnchor(int id, int* count){
-	Anchor* tempAnchor = NULL;
-	for (size_t j = 0; j < lengthCollumnAnchor(&vectorAnchor); j++){
-		tempAnchor = getCellAnchor(&vectorAnchor, j);
-		if(tempAnchor != NULL){
-			if(tempAnchor->id == id){
-				(*count)++;
-				return tempAnchor;
-			}
-		}
-	}
-}
-/// TEMPLATE ///
+// 	for (size_t j = 0; j < lengthArray(array); j++){
 
-	// ¨* temp¨ = NULL;
-	// for (size_t j = 0; j < lengthCollumn¨(&vector¨); j++){
-	// 	temp¨ = getCell¨(&vector¨, j);
-	// 	if(temp¨ != NULL){
-	// 		if(temp¨->id == id){
-	// 			(*count)++;
-	// 			return temp¨;
-	// 		}
-	// 	}
-	// }
+// 		temp = (Information*)getArray(array, j);
 
-// Direction getDirection(int id, float x, float y){
-// 	Direction direction;
-// 	direction.id = id;
-// 	direction.vector2.x = x;
-// 	direction.vector2.y = y;
-// 	return direction;
+// 		if(temp == NULL){
+// 			break;
+// 		}
+
+// 		if(((Id*)(temp))->id != id){
+// 			continue;
+// 		}
+
+// 		occurrences.size++;
+
+// 		occurrences.array = (occurrences.size == 1) ? 
+// 			malloc(sizeof(Occurrence) * occurrences.size) :
+// 			realloc(occurrences.array, sizeof(Occurrence) * occurrences.size);
+
+// 		occurrences.array[occurrences.size - 1].component = temp;
+// 		occurrences.array[occurrences.size - 1].index = j;
+
+// 	}
+
+// 	return occurrences;
 // }
-// Velocity getVelocity(int id, float x, float y){
-// 	Velocity velocity;
-// 	velocity.id = id;
-// 	velocity.vector2.x = x;
-// 	velocity.vector2.y = y;
-// 	return velocity;
-// }
-// Acceleration getAcceleration(int id, float x, float y){
-// 	Acceleration acceleration;
-// 	acceleration.id = id;
-// 	acceleration.vector2.x = x;
-// 	acceleration.vector2.y = y;
-// 	return acceleration;
-// }
+
+bool getOccurrenceById(Array *array, int id, Occurrence* temporaryOccurrence){
+
+	void* temporaryComponent = NULL;
+
+	for (size_t j = 0; j < lengthArray(array); j++){
+
+ 		temporaryComponent = getArray(array, j);
+
+		if(temporaryComponent == NULL){
+			continue;
+		}
+
+		if((*(Id*)temporaryComponent).id != id){
+			continue;
+		}
+
+		temporaryOccurrence->component = temporaryComponent;
+		temporaryOccurrence->index = j;
+
+		return true;
+
+	}
+
+	return false;
+}
+
+void freeComponent(Occurrences* Occurrences){
+	if(Occurrences == NULL){
+		return;
+	}
+	// printf("%s %s %d %p\n", __FILE__, __func__, __LINE__, Occurrences->array);
+	if(Occurrences->array == NULL){
+		return;
+	}
+	free(Occurrences->array);
+	Occurrences->array = NULL;
+}
+
+void freeComponents(int size, ...){
+
+	va_list args;
+
+	va_start(args, size);
+
+	for (size_t i = 0; i < size; i++){
+
+		freeComponent(va_arg(args, Occurrences*));
+
+	}
+
+	va_end(args);
+
+}

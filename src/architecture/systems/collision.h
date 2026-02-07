@@ -10,9 +10,10 @@
 #include "systems.h"
 
 // void collision();
-int isItColliding(float xA, float yA, float wA, float hA, float xB, float yB, float wB, float hB);
+bool isItColliding(float xA, float yA, float wA, float hA, float xB, float yB, float wB, float hB);
 int isTheSameIndex(Position entityA, Position entityB);
 void initializeCollisionVariables(Position entity, Size size, float* x, float* y, float* w, float* h);
-bool *collisionBetween(Position *positionA, Size *sizeA);
+void resetVariables();
+bool collisionBetween(Position positionA, Size sizeA);
 
 #endif

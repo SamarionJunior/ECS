@@ -13,10 +13,7 @@ MY_SRC=main.c
 MY_SRCS=$(MY_SRC) \
 	dependencies/mycustom/*.c \
 	dependencies/pure/*.c \
-	dependencies/my/matrix/*.c \
-	dependencies/my/dynamicvectors/*.c \
-	dependencies/my/dynamicvectors/components/*.c \
-	dependencies/my/dynamicvectors/entities/*.c \
+	dependencies/my/dynamicarray/*.c \
 	src/architecture/components/*.c \
 	src/architecture/entities/*.c \
 	src/architecture/systems/*.c \
@@ -25,6 +22,11 @@ MY_SRCS=$(MY_SRC) \
 	src/engine/*.c \
 	src/loader/*.c \
 	src/*.c
+# 	dependencies/my/matrix/*.c \
+# 	dependencies/my/dynamicvectors/*.c \
+# 	dependencies/my/dynamicvectors/components/*.c \
+# 	dependencies/my/dynamicvectors/entities/*.c \
+# 	dependencies/pure/glad/src/*.c \
 
 MY_OPT=-o
 
@@ -32,12 +34,28 @@ MY_PATH=build
 MY_TARGET=app
 MY_APP=$(MY_PATH)/$(MY_TARGET)
 
-MY_LIBS=`pkg-config --libs --cflags sdl3`
+# SDL2
+# MY_LIBS=\
+# 	-I/usr/local/include \
+# 	-L/usr/local/lib \
+# 	-lSDL2_image \
+# 	-Wl,-rpath,/usr/local/lib \
+# 	-Wl,--enable-new-dtags \
+# 	-lSDL2 \
+# 	-lGL
+# 	-I./glad/include/glad/glad.h
+
+# SDL3 + GLAD
+# MY_LIBS=-I./glad/include/glad/glad.h `pkg-config --libs --cflags sdl3 sdl3-image gl`
+# -I./glad/include/glad/glad.h 
+
+# SDL3
+MY_LIBS=-lSDL3 -lGL -lSDL3_image -L/usr/local/lib/libSDL3_image.so.0
 
 myall:	mybuild myrun
 
 mybuild:
-	@$(MY_CC) $(MY_CCFLAGS) $(MY_SRCS) $(MY_OPT) $(MY_APP) $(MY_LIBS)
+	$(MY_CC) $(MY_CCFLAGS) $(MY_SRCS) $(MY_OPT) $(MY_APP) $(MY_LIBS)
 
 myrun: 
 	@$(MY_APP)
@@ -46,7 +64,7 @@ myrun:
 
 MY_TEST_NAME=tests
 
-MY_TEST_PROJECT_NAME=tree
+MY_TEST_PROJECT_NAME=opengl# MODIFY HERE
 MY_TEST_PROJECT_FILE_NAME=main
 MY_TEST_PROJECT_FILE_EXTENSION=c
 MY_TEST_INPUT_PATH=$(MY_TEST_NAME)/$(MY_TEST_PROJECT_NAME)/$(MY_TEST_PROJECT_FILE_NAME).$(MY_TEST_PROJECT_FILE_EXTENSION)
@@ -63,7 +81,7 @@ MY_TEST_OUTPUT_PATH=$(MY_TEST_NAME)/$(MY_TEST_BUILD_NAME)/$(MY_TEST_BUILD_FILE_N
 mytestall:	mytestbuild mytestrun
 
 mytestbuild:
-	@$(MY_CC) $(MY_CCFLAGS) $(MY_TEST_INPUT_PATH) $(MY_OPT) $(MY_TEST_OUTPUT_PATH) $(MY_LIBS)
+	$(MY_CC) $(MY_CCFLAGS) glad.c $(MY_TEST_INPUT_PATH) $(MY_OPT) $(MY_TEST_OUTPUT_PATH) $(MY_LIBS)
 
 mytestrun: 
-	@$(MY_TEST_OUTPUT_PATH) 5 3 3
+	$(MY_TEST_OUTPUT_PATH)

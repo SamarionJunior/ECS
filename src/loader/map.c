@@ -21,6 +21,14 @@ FILE* openMap(char* path);
 void setMapDimension(char* file);
 void parseMapToMatrix(char* file, int **matrix);
 void closeMap(FILE* file);
+void destroyMap(int **auxiliaryMapMatrix);
+
+void destroyMap(int **auxiliaryMapMatrix){
+	for (size_t i = 0; i < getROW(); i++){
+		free(auxiliaryMapMatrix[i]);
+	}
+	free(auxiliaryMapMatrix);
+}
 
 void loadMap(){
 
@@ -35,6 +43,12 @@ void loadMap(){
   parseMapToMatrix(mapTxt, mapMatrix);
 
   closeMap(mapTxt);
+
+  printf(
+    "col = %d - row = %d\n",
+    getCOL(),
+    getROW()
+  );
 
 	// // // // printf("\n//////////////////////\n");
 	// // // // printf(  "/// END - LOAD MAP ///\n");
