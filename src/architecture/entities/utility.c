@@ -17,6 +17,7 @@ static int id = 0;
 
 int getId();
 int setId(int idnew);
+void addEntity();
 void initializeEntities();
 void destroyEntities();
 bool removeEntity(int id);
@@ -28,6 +29,17 @@ int getId(){
 int setId(int idnew){
 	id = idnew;
 	return id;
+}
+
+void addEntity(){
+	setId(getId() + 1);
+	addArray(
+		entityArray,
+		lengthArray(entityArray),
+		&(Entity){
+			.index = getId()
+		}
+	);
 }
 
 void initializeEntities(){

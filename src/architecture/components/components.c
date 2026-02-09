@@ -35,12 +35,14 @@ Array* playerArray;
 Array* collectibleArray;
 Array* anchorArray;
 
-char *namesOfCompenents[QTD_TYPE_COMPONENTS] = {
+Array* arrayOfArrayComponents[TOTALCOMPONENTS];
+
+char *namesOfCompenents[TOTALCOMPONENTS] = {
 	"Information",
 	"Position",
-	"Direction",
-	"Velocity",
-	"Acceleration",
+	// "Direction",
+	// "Velocity",
+	// "Acceleration",
 	"Size",
 	"Color",
 	"Collider",

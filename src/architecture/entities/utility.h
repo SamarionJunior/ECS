@@ -12,6 +12,7 @@
 
 int getId();
 int setId(int idnew);
+void addEntity();
 void initializeEntities();
 void destroyEntities();
 bool removeEntity(int id);

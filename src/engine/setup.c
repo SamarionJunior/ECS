@@ -51,17 +51,78 @@ void setup(void){
 	
 	initializeComponents();
 	initializeEntities();
+
+	// printf("Address: %p\n", arrayOfArrayComponents);
+	// printf("Address: %p\n", informationArray);
+	// printf("Address: %p\n", positionArray);
+
+	arrayOfArrayComponents[INFORMATION] = informationArray;
+	arrayOfArrayComponents[POSITION] = positionArray;
+	arrayOfArrayComponents[SIZE] = sizeArray;
+	arrayOfArrayComponents[COLOR] = colorArray;
+	arrayOfArrayComponents[COLLIDER] = colliderArray;
+	arrayOfArrayComponents[LAYER] = layerArray;
+	arrayOfArrayComponents[PLAYER] = playerArray;
+	arrayOfArrayComponents[COLLECTIBLE] = collectibleArray;
+	arrayOfArrayComponents[ANCHOR] = anchorArray;
+
+	// printf("Address: %p\n", arrayOfArrayComponents[POSITION]);
+
+	// printf("%d oi\n", lengthArray(temporaryEntities));
 	
 	for (size_t i = 0; i < getROW(); i++){
 		for (size_t j = 0; j < getCOL(); j++){
-			for (size_t k = 0; k < lengthtemporaryComponents; k++){
-				if(mapMatrix[i][j] != temporaryComponents[k].index){
+			for (size_t k = 0; k < lengthArray(temporaryEntities); k++){
+
+				TemporaryEntity te = *((TemporaryEntity*)(getArray(temporaryEntities, k)));
+
+				if(mapMatrix[i][j] != te.entityType){
 					continue;
 				}
-				createKindComponents(j, i, -1, k);
+
+				float x, y;
+				for (size_t l = 0; l < lengthArray(te.componentAndTypes); l++){
+					ComponentAndType cap = *((ComponentAndType*)(getArray(te.componentAndTypes, l)));
+					if(cap.type == POSITION){
+						x = (*(Position*)(cap.component)).current2.x;
+						y = (*(Position*)(cap.component)).current2.y;
+						((Position*)(cap.component))->current2.x = j * SPRITE;
+						((Position*)(cap.component))->current2.y = i * SPRITE;
+					}
+				}
+
+				createKindComponents(te);
+
+				for (size_t l = 0; l < lengthArray(te.componentAndTypes); l++){
+					ComponentAndType cap = *((ComponentAndType*)(getArray(te.componentAndTypes, l)));
+					if(cap.type == POSITION){
+						((Position*)(cap.component))->current2.x = x;
+						((Position*)(cap.component))->current2.y = y;
+					}
+				}
 			}
 		}
 	}
+
+	initializingFreeSpaces();
+
+	// for (size_t k = 0; k < lengthArray(temporaryEntities); k++){
+	// 	TemporaryEntity te = *((TemporaryEntity*)(getArray(temporaryEntities, k)));
+	// 	printf("%d\n", te.entityType);
+	// 	for (size_t l = 0; l < lengthArray(te.componentAndTypes); l++){
+	// 		ComponentAndType cap = *((ComponentAndType*)(getArray(te.componentAndTypes, l)));
+	// 		printf("%s\n", namesOfCompenents[cap.type]);
+	// 	}
+	// }
+
+	// for (size_t i = 0; i < TOTALCOMPONENTS; i++){
+	// 	printf(
+	// 		"%d %s %d\n",
+	// 		rand()%10,
+	// 		namesOfCompenents[i],
+	// 		lengthArray(arrayOfArrayComponents[i])
+	// 	);
+	// }
 
 	// printf("Entity:\t");
 
@@ -73,8 +134,6 @@ void setup(void){
   // }
 
   // printf("\n\n");
-
-	initializingFreeSpaces();
 
 	// // // // printf("entities: %d\n", lengthRow(&entities, 0));
 

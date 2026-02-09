@@ -22,6 +22,7 @@
 #include "src/architecture/systems/systems.h"
 #include "src/architecture/systems/gravity.h"
 #include "src/architecture/systems/collision.h"
+#include "src/architecture/systems/setupCollision.h"
 
 #include "src/engine/setup.h"
 #include "src/engine/input.h"
@@ -139,10 +140,9 @@ void destroyGame(){
 	// destroySystem();
 	destroy_window();
 
+	destroyTemporaryEntities(temporaryEntities);
 	destroyMap(mapMatrix);
-	for (size_t i = 0; i < lengthtemporaryComponents; i++){
-		free(temporaryComponents[i].information.name);
-	}
+	destroyFreeSpaces();
 }
 
 int main(int argc, char* args[]) {

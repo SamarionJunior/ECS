@@ -14,13 +14,19 @@
 
 #include "../../loader/map.h"
 
-bool freeSpaces[18][18] = {false};
+bool** freeSpaces = NULL;
 
 const int vazio = 0;
 const int itIsFree = true;
 const int NotFree = false;
 
 void initializingFreeSpaces(){
+
+	freeSpaces = malloc(sizeof(bool*)*getROW());
+	for (size_t y = 0; y < getROW(); y++){
+		freeSpaces[y] = malloc(sizeof(bool*)*getCOL());
+	}
+	
 	for (size_t y = 0; y < getROW(); y++){
 		for (size_t x = 0; x < getCOL(); x++){
 			if(mapMatrix[y][x] == vazio){
@@ -30,4 +36,14 @@ void initializingFreeSpaces(){
 			freeSpaces[y][x] = NotFree;
 		}
 	}
+
+}
+
+void destroyFreeSpaces(){
+	for (size_t y = 0; y < getROW(); y++){
+		free(freeSpaces[y]);
+		freeSpaces[y] = NULL;
+	}
+	free(freeSpaces);
+	freeSpaces = NULL;
 }

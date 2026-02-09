@@ -33,9 +33,9 @@ void setColor(Color color);
 void clearWindow(Color color);
 void draw(SDL_FRect* auxRect, Position position, Size size, Color color);
 
-static Occurrence occurrencesPosition;
-static Occurrence occurrencesSize;
-static Occurrence occurrencesColor;
+static Occurrence occurrencePosition;
+static Occurrence occurrenceSize;
+static Occurrence occurrenceColor;
 
 // static Position* temporaryPointerPosition;
 // static Size* temporaryPointerSize;
@@ -74,19 +74,22 @@ void render() {
 
 			temporaryIndex = temporaryId->id;
 
-			if(getOccurrenceById(positionArray, temporaryIndex, &occurrencesPosition) == false){
+			if(getOccurrenceById(positionArray, temporaryIndex, &occurrencePosition) == false){
 				continue;
 			}
-			if(getOccurrenceById(sizeArray, temporaryIndex, &occurrencesSize) == false){
+			if(getOccurrenceById(sizeArray, temporaryIndex, &occurrenceSize) == false){
 				continue;
 			}
-			if(getOccurrenceById(colorArray, temporaryIndex, &occurrencesColor) == false){
+			if(getOccurrenceById(colorArray, temporaryIndex, &occurrenceColor) == false){
 				continue;
 			}
 
-			temporaryPosition = (*((Position*)occurrencesPosition.component));
-			temporarySize = (*((Size*)occurrencesSize.component));
-			temporaryColor = (*((Color*)occurrencesColor.component));
+			temporaryPosition = (*((Position*)occurrencePosition.component));
+			temporarySize = (*((Size*)occurrenceSize.component));
+			temporaryColor = (*((Color*)occurrenceColor.component));
+
+
+			// printf("%.0f %.0f\n", (*((Position*)(occurrencePosition.component))).current2.x, (*((Position*)(occurrencePosition.component))).current2.y);
 
 			// printf(
 			// 	"%d: x %f y %f\n", 

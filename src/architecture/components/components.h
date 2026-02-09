@@ -24,12 +24,12 @@ typedef enum {
 // Direction
 Coordenate;
 
-typedef enum{
+typedef enum typesofcomponents{
 	INFORMATION,
 	POSITION,
-	DIRECTION,
-	VELOCITY,
-	ACCELERATION,
+	// DIRECTION,
+	// VELOCITY,
+	// ACCELERATION,
 	SIZE,
 	COLOR,
 	COLLIDER,
@@ -152,9 +152,11 @@ extern Array* playerArray;
 extern Array* collectibleArray;
 extern Array* anchorArray;
 
+extern Array* arrayOfArrayComponents[TOTALCOMPONENTS];
+
 #define QTD_TYPE_COMPONENTS TOTALCOMPONENTS
 
-extern char *namesOfCompenents[QTD_TYPE_COMPONENTS];
+extern char *namesOfCompenents[TOTALCOMPONENTS];
 
 
 enum components_config {
@@ -168,35 +170,45 @@ enum components_config {
 // int getDirectionCollision(int indexSubsistem, int id, Coordenate direction);
 void destroyComponents();
 
-typedef struct TemporaryComponent{
-	int index;
-	Information information;
-	bool isThereInformation;
-	Position position;
-	bool isTherePosition;
-	Direction direction;
-	bool isThereDirection;
-	Velocity velocity;
-	bool isThereVelocity;
-	Acceleration acceleration;
-	bool isThereAcceleration;
-	Size size;
-	bool isThereSize;
-	Color color;
-	bool isThereColor;
-	Collider collider;
-	bool isThereCollider;
-	Layer layer;
-	bool isThereLayer;
-	Player player;
-	bool isTherePlayer;
-	Collectible collectible;
-	bool isThereCollectible;
-	Anchor anchor;
-	bool isThereAnchor;
-	int arrayComponentTypes[QTD_TYPE_COMPONENTS];
-	int lengtharrayComponentTypes;
-} TemporaryComponent;
+typedef struct componentandtype{
+	void* component;
+	TypesOfComponents type;
+} ComponentAndType;
+
+typedef struct temporaryentity{
+	int entityType;
+	Array* componentAndTypes;
+} TemporaryEntity;
+
+// typedef struct TemporaryComponent{
+// 	int index;
+// 	Information information;
+// 	bool isThereInformation;
+// 	Position position;
+// 	bool isTherePosition;
+// 	Direction direction;
+// 	bool isThereDirection;
+// 	Velocity velocity;
+// 	bool isThereVelocity;
+// 	Acceleration acceleration;
+// 	bool isThereAcceleration;
+// 	Size size;
+// 	bool isThereSize;
+// 	Color color;
+// 	bool isThereColor;
+// 	Collider collider;
+// 	bool isThereCollider;
+// 	Layer layer;
+// 	bool isThereLayer;
+// 	Player player;
+// 	bool isTherePlayer;
+// 	Collectible collectible;
+// 	bool isThereCollectible;
+// 	Anchor anchor;
+// 	bool isThereAnchor;
+// 	int arrayComponentTypes[QTD_TYPE_COMPONENTS];
+// 	int lengtharrayComponentTypes;
+// } TemporaryComponent;
 
 // typedef enum types{
 //     NOTYPES,

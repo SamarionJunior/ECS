@@ -22,6 +22,8 @@
 
 #include "../../../dependencies/my/dynamicarray/array.h"
 
+#include "../../loader/json.h"
+
 // #include "../../../dependencies/my/dynamicvectors/vector.h"
 
 // #include "../../../dependencies/my/dynamicvectors/entities/entity.h"
@@ -161,12 +163,12 @@ void createNewFruit(){
 		}
 	}
 
-	for (size_t y = 0; y < getROW(); y++){
-		for (size_t x = 0; x < getCOL(); x++){
-			printf("%d", freeSpaces[y][x]);
-		}
-		printf("\n");
-	}
+	// for (size_t y = 0; y < getROW(); y++){
+	// 	for (size_t x = 0; x < getCOL(); x++){
+	// 		printf("%d", freeSpaces[y][x]);
+	// 	}
+	// 	printf("\n");
+	// }
 
 	int count = 0;
 
@@ -188,12 +190,12 @@ void createNewFruit(){
 
 	}
 
-	for (size_t y = 0; y < getROW(); y++){
-		for (size_t x = 0; x < getCOL(); x++){
-			printf("%d", freeSpaces[y][x]);
-		}
-		printf("\n");
-	}
+	// for (size_t y = 0; y < getROW(); y++){
+	// 	for (size_t x = 0; x < getCOL(); x++){
+	// 		printf("%d", freeSpaces[y][x]);
+	// 	}
+	// 	printf("\n");
+	// }
 
 	// printf("Tail Lenght: %d\n", lengthArray(anchorArray));
 	// printf("Position Lenght: %d\n", lengthArray(positionArray));
@@ -220,15 +222,15 @@ void createNewFruit(){
 	// 	);
 	// }
 
-	for (size_t i = 0; i < lengthArray(positionArray); i++){
-		Position* auxPosition = (Position*)getArray(positionArray, i);
-		printf(
-			"ID: %d\tX: %d\tY: %d\n", 
-			auxPosition->id, 
-			(int) auxPosition->current2.x / SPRITE, 
-			(int) auxPosition->current2.y / SPRITE
-		);
-	}
+	// for (size_t i = 0; i < lengthArray(positionArray); i++){
+	// 	Position* auxPosition = (Position*)getArray(positionArray, i);
+	// 	printf(
+	// 		"ID: %d\tX: %d\tY: %d\n", 
+	// 		auxPosition->id, 
+	// 		(int) auxPosition->current2.x / SPRITE, 
+	// 		(int) auxPosition->current2.y / SPRITE
+	// 	);
+	// }
 
 	AuxiliaryCoordinate auxiliaryCoordinates[auxLength];
 
@@ -273,26 +275,53 @@ void createNewFruit(){
 	// 	selectedAuxiliaryCoordinate.x
 	// );
 
-	for (k = 0; k < lengthtemporaryComponents; k++){
-		if(temporaryComponents[k].index == 2){
-			break;
+	for (k = 0; k < lengthArray(temporaryEntities); k++){
+
+		TemporaryEntity te = *((TemporaryEntity*)(getArray(temporaryEntities, k)));
+
+		if(te.entityType != 2){
+			continue;
 		}
+
+		float x, y;
+		for (size_t l = 0; l < lengthArray(te.componentAndTypes); l++){
+			ComponentAndType cap = *((ComponentAndType*)(getArray(te.componentAndTypes, l)));
+			if(cap.type == POSITION){
+				x = ((Position*)(cap.component))->current2.x;
+				y = ((Position*)(cap.component))->current2.y;
+				((Position*)(cap.component))->current2.x = selectedAuxiliaryCoordinate.x * SPRITE;
+				((Position*)(cap.component))->current2.y = selectedAuxiliaryCoordinate.y * SPRITE;
+			}
+		}
+
+		createKindComponents(te);
+
+		for (size_t l = 0; l < lengthArray(te.componentAndTypes); l++){
+			ComponentAndType cap = *((ComponentAndType*)(getArray(te.componentAndTypes, l)));
+			if(cap.type == POSITION){
+				((Position*)(cap.component))->current2.x = x;
+				((Position*)(cap.component))->current2.y = y;
+			}
+		}
+
+		break;
+
 	}
 	
 	// printf("%f\n", (*(Position*)pos.array[0].component).old2.x);
 
-	createKindComponents(
-		selectedAuxiliaryCoordinate.x,
-		selectedAuxiliaryCoordinate.y,
-		// rand() % ((getCOL() - 2) + 0 - WALLS) + WALLS,
-		// rand() % ((getROW() - 2) + 0 - WALLS) + WALLS,
-		// rand() % (getCOL() + 1 - 3),
-		// rand() % (getROW() + 1 - 3),
-		// (((*(Position*)pos.array[0].component).old2.x) - SPRITE) / SPRITE, 
-		// (((*(Position*)pos.array[0].component).old2.y) - SPRITE) / SPRITE, 
-		getSnakeTail(),
-		k
-	);
+	// createKindComponents(
+	// 	selectedAuxiliaryCoordinate.x,
+	// 	selectedAuxiliaryCoordinate.y,
+	// 	// rand() % ((getCOL() - 2) + 0 - WALLS) + WALLS,
+	// 	// rand() % ((getROW() - 2) + 0 - WALLS) + WALLS,
+	// 	// rand() % (getCOL() + 1 - 3),
+	// 	// rand() % (getROW() + 1 - 3),
+	// 	// (((*(Position*)pos.array[0].component).old2.x) - SPRITE) / SPRITE, 
+	// 	// (((*(Position*)pos.array[0].component).old2.y) - SPRITE) / SPRITE, 
+	// 	getSnakeTail(),
+	// 	k
+	// );
 
 }
 
@@ -322,11 +351,12 @@ bool createTail(){
 	// printf("Tail Lenght: %d\n", lengthArray(anchorArray));
 	// printf("Position Lenght: %d\n", lengthArray(positionArray));
 
-	for (k = 0; k < lengthtemporaryComponents; k++){
-		if(temporaryComponents[k].index == 4){
-			break;
-		}
-	}
+	// for (k = 0; k < lengthArray(temporaryEntities); k++){
+	// 	TemporaryEntity te = *((TemporaryEntity*)(getArray(temporaryEntities, k)));
+	// 	if(te.entityType == 4){
+	// 		break;
+	// 	}
+	// }
 
 	// printf("%d\n", temporaryComponents[k].index);
 
@@ -335,8 +365,8 @@ bool createTail(){
 		return;
 	}
 
-	float x = ((*((Position*)pos.component)).old2.x) / SPRITE;
-	float y = ((*((Position*)pos.component)).old2.y) / SPRITE;
+	float x = ((*((Position*)pos.component)).old2.x);
+	float y = ((*((Position*)pos.component)).old2.y);
 
 	// printf("%f\n", (*(Position*)pos.array[0].component).old2.x);
 
@@ -348,12 +378,52 @@ bool createTail(){
 	// 	((*(Position*)pos.array[0].component).old2.y) / SPRITE
 	// );
 
-	createKindComponents(
-		x, 
-		y, 
-		getSnakeTail(),
-		k
-	);
+	for (k = 0; k < lengthArray(temporaryEntities); k++){
+
+		TemporaryEntity te = *((TemporaryEntity*)(getArray(temporaryEntities, k)));
+
+		if(te.entityType != 4){
+			continue;
+		}
+
+		float tempX, tempY;
+		int id;
+		for (size_t l = 0; l < lengthArray(te.componentAndTypes); l++){
+			ComponentAndType cap = *((ComponentAndType*)(getArray(te.componentAndTypes, l)));
+			if(cap.type == POSITION){
+				tempX = ((Position*)(cap.component))->current2.x;
+				tempY = ((Position*)(cap.component))->current2.y;
+				((Position*)(cap.component))->current2.x = x;
+				((Position*)(cap.component))->current2.y = y;
+			}
+			if(cap.type == ANCHOR){
+				id = ((Anchor*)(cap.component))->idParent;
+				((Anchor*)(cap.component))->idParent = getSnakeTail();
+			}
+		}
+
+		printf("createKindComponents\n");
+
+		createKindComponents(te);
+
+		for (size_t l = 0; l < lengthArray(te.componentAndTypes); l++){
+			ComponentAndType cap = *((ComponentAndType*)(getArray(te.componentAndTypes, l)));
+			if(cap.type == POSITION){
+				((Position*)(cap.component))->current2.x = tempX;
+				((Position*)(cap.component))->current2.y = tempY;
+			}
+			if(cap.type == ANCHOR){
+				((Anchor*)(cap.component))->idParent = id;
+			}
+		}
+	}
+
+	// createKindComponents(
+	// 	x, 
+	// 	y, 
+	// 	getSnakeTail(),
+	// 	k
+	// );
 
 	// printf("Tail Lenght: %d\n", lengthArray(anchorArray));
 	// printf("Tail id: %d\n", ((Anchor*)(getArray(anchorArray, lengthArray(anchorArray) - 1)))->id);
@@ -373,27 +443,13 @@ void scoreCalculator(){
 		return;
 	}
 
-	// if(isUnloackScore() == false){
-	// 	return;
-	// }
-
-	// if(unloackScore() == false){
-	// 	return;
-	// }
-
 	if(incrementScore() == false){
 		return;
 	}
 
-	// printf("\n%d\n", rand());
-
-	// printf("score: %d\n", score);
-
 	if(removeFruit() == false){
 		return;
 	}
-
-	// printf("%d\n", score);
 
 	if(createTail() == false){
 		return;
@@ -402,4 +458,14 @@ void scoreCalculator(){
 	iterationSnake();
 
 	createNewFruit();
+
+	// if(isUnloackScore() == false){
+	// 	return;
+	// }
+
+	// if(unloackScore() == false){
+	// 	return;
+	// }
+
+	// printf("score: %d\n", score);
 }

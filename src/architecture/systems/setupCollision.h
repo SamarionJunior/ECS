@@ -9,12 +9,13 @@
 #include "../components/components.h"
 #include "systems.h"
 
-extern bool freeSpaces[18][18];
+extern bool** freeSpaces;
 
 extern const int vazio;
 extern const int itIsFree;
 extern const int NotFree;
 
 void initializingFreeSpaces();
+void destroyFreeSpaces();
 
 #endif

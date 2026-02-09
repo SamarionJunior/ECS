@@ -33,12 +33,13 @@
 // 	int lengthArraySystems;
 // } TemporaryComponent;
 
-extern int lengthtemporaryComponents;
-
-extern TemporaryComponent temporaryComponents[10];
+// extern TemporaryComponents* temporaryComponents;
+extern Array* temporaryEntities;
 
 void printJSONScene();
 
 void loadJSON();
+
+void destroyTemporaryEntities(Array* tes);
 
 #endif
