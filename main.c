@@ -141,7 +141,7 @@ void destroyGame(){
 	destroy_window();
 
 	destroyTemporaryEntities(temporaryEntities);
-	destroyMap(mapMatrix);
+	destroyMap(map);
 	destroyFreeSpaces();
 }
 

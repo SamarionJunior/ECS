@@ -6,23 +6,18 @@
 #include <stdbool.h>
 
 #include <SDL3/SDL_stdinc.h>
-#include "../entities/entities.h"
+
+// #include "../entities/entities.h"
 
 #include "../../../dependencies/my/dynamicarray/array.h"
 
-// #include "../../../dependencies/my/matrix/matrix.h"
-
-// #include "dynamicvectors/vector.h"
-
-typedef enum {
+typedef enum coordenate{
 	TOP,
 	RIGHT,
 	BOTTOM,
 	LEFT,
 	TOTALCOORDENATE
-}
-// Direction
-Coordenate;
+} Coordenate;
 
 typedef enum typesofcomponents{
 	INFORMATION,
@@ -103,6 +98,8 @@ typedef struct Color{
 	Vector4 vector4;
 } Color;
 
+extern Color black;
+
 // top right bottom left
 
 typedef struct Collider {
@@ -111,8 +108,6 @@ typedef struct Collider {
 	int collisionDirection[TOTALCOORDENATE];
 	bool isStatic;
 } Collider;
-
-extern Color black;
 
 #define MAX_LAYER 6
 
@@ -134,15 +129,11 @@ typedef struct anchor {
 	int idParent;
 } Anchor;
 
-
-
 extern Array* informationArray;
 extern Array* positionArray;
-
 // extern Array* directionArray;
 // extern Array* velocityArray;
 // extern Array* accelerationArray;
-
 extern Array* sizeArray;
 extern Array* colorArray;
 extern Array* colliderArray;
@@ -154,20 +145,12 @@ extern Array* anchorArray;
 
 extern Array* arrayOfArrayComponents[TOTALCOMPONENTS];
 
-#define QTD_TYPE_COMPONENTS TOTALCOMPONENTS
-
 extern char *namesOfCompenents[TOTALCOMPONENTS];
-
 
 enum components_config {
     MAX_COMPONENTS = 20000
 };
 
-// #define MAX_COMPONENTS 20000
-
-#define SUBCOMPONENTS 2
-
-// int getDirectionCollision(int indexSubsistem, int id, Coordenate direction);
 void destroyComponents();
 
 typedef struct componentandtype{
@@ -179,47 +162,5 @@ typedef struct temporaryentity{
 	int entityType;
 	Array* componentAndTypes;
 } TemporaryEntity;
-
-// typedef struct TemporaryComponent{
-// 	int index;
-// 	Information information;
-// 	bool isThereInformation;
-// 	Position position;
-// 	bool isTherePosition;
-// 	Direction direction;
-// 	bool isThereDirection;
-// 	Velocity velocity;
-// 	bool isThereVelocity;
-// 	Acceleration acceleration;
-// 	bool isThereAcceleration;
-// 	Size size;
-// 	bool isThereSize;
-// 	Color color;
-// 	bool isThereColor;
-// 	Collider collider;
-// 	bool isThereCollider;
-// 	Layer layer;
-// 	bool isThereLayer;
-// 	Player player;
-// 	bool isTherePlayer;
-// 	Collectible collectible;
-// 	bool isThereCollectible;
-// 	Anchor anchor;
-// 	bool isThereAnchor;
-// 	int arrayComponentTypes[QTD_TYPE_COMPONENTS];
-// 	int lengtharrayComponentTypes;
-// } TemporaryComponent;
-
-// typedef enum types{
-//     NOTYPES,
-//     TEXT,
-//     NUMBER,
-//     MAXIMUMTYPES
-// } Types;
-
-// typedef struct component{
-//     char id;
-//     void* data;
-// }Component;
 
 #endif

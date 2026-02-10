@@ -14,9 +14,9 @@
 
 // #include "../../dependencies/mycustom/myjson.h"
 
-extern int **mapMatrix;
+extern Array* map;
 
 void loadMap();
-void destroyMap(int **auxiliaryMapMatrix);
+void destroyMap(Array *auxiliarymap);
 
 #endif

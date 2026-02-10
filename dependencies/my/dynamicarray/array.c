@@ -23,7 +23,7 @@ bool addArray(Array* array, size_t index, void* data){
 
   // frre(DATA)
   if(tempColumn == NULL){
-    printf("Temporary Array Not Can Allocate!\n");
+    // printf("Temporary Array Not Can Allocate!\n");
     return false;
   }
 
@@ -87,25 +87,25 @@ unsigned int lengthArray(Array* array){
 
 bool initializeArray(Array** array, unsigned int maximumArray, unsigned int sizeData){
 
-  printf("Size Data: %d\n", sizeData);
+  // printf("Size Data: %d\n", sizeData);
     
-    *array = (Array*) malloc(sizeof(Array));
+  *array = (Array*) malloc(sizeof(Array));
 
-    if(*array == NULL){
-        return false;
-    }
+  if(*array == NULL){
+      return false;
+  }
 
-    **array = (Array){
-        .sizeData = sizeData,
-        .arrayLength = 0,
-        .maximumArray = maximumArray,
-        .data = NULL
-    };
-    
-    printf("initialize:\tarray == %p\n", *array);
-    printf("initialize:\tarray->data == %p\n", (*array)->data);
+  **array = (Array){
+      .sizeData = sizeData,
+      .arrayLength = 0,
+      .maximumArray = maximumArray,
+      .data = NULL
+  };
+  
+  // printf("initialize:\tarray == %p\n", *array);
+  // printf("initialize:\tarray->data == %p\n", (*array)->data);
 
-    return true;
+  return true;
 
 }
 
@@ -117,8 +117,8 @@ bool destroyArray(Array* array){
 
     }
 
-    printf("destroy:\tarray == %p\n", array);
-    printf("destroy:\tarray->data == %p\n", array->data);
+    // printf("destroy:\tarray == %p\n", array);
+    // printf("destroy:\tarray->data == %p\n", array->data);
 
     free(array->data);
 

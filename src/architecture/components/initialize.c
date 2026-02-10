@@ -3,26 +3,13 @@
 #include <stdbool.h>
 
 #include "components.h"
-#include "create.h"
+// #include "create.h"
 
 #include "../../constants.h"
 
 #include "../../../dependencies/my/dynamicarray/array.h"
 
 #include "initialize.h"
-
-// #include "../../../dependencies/my/matrix/matrix.h"
-// #include "../../../dependencies/my/matrix/initialize.h"
-
-// // #include "../../../dependencies/my/dynamicvectors/components/information.h"
-// // #include "../../../dependencies/my/dynamicvectors/components/position.h"
-// // #include "../../../dependencies/my/dynamicvectors/components/size.h"
-// // #include "../../../dependencies/my/dynamicvectors/components/color.h"
-// // #include "../../../dependencies/my/dynamicvectors/components/collider.h"
-// // #include "../../../dependencies/my/dynamicvectors/components/layer.h"
-// // #include "../../../dependencies/my/dynamicvectors/components/player.h"
-// // #include "../../../dependencies/my/dynamicvectors/components/collectible.h"
-// // #include "../../../dependencies/my/dynamicvectors/components/anchor.h"
 
 Information defualtInformation = (Information){
 	.id = ID_INIT,

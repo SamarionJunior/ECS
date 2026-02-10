@@ -29,7 +29,7 @@ void initializingFreeSpaces(){
 	
 	for (size_t y = 0; y < getROW(); y++){
 		for (size_t x = 0; x < getCOL(); x++){
-			if(mapMatrix[y][x] == vazio){
+			if((*((int*)(getArray(getArray(map, y), x)))) == vazio){
 				freeSpaces[y][x] = itIsFree;
 				continue;
 			}

@@ -57,33 +57,15 @@ static Array* temporaryArray;
 
 bool removeEntity(int id){
 
-	printf("id: %d\n", id);
+	for(size_t i = 0; i < TOTALCOMPONENTS ;i++){
 
-	Array* temporaryArrays[] = {
-		informationArray,
-		positionArray,
-		sizeArray,
-		colorArray,
-		colliderArray,
-		layerArray,
-		playerArray,
-		collectibleArray,
-		anchorArray,
-		entityArray
-	};
-
-	int lenghtTemporaryArrays = 10;
-
-	for(size_t i = 0; i < lenghtTemporaryArrays ;i++){
-
-		temporaryArray = temporaryArrays[i];
+		temporaryArray = arrayOfArrayComponents[i];
 
 		if(getOccurrenceById(temporaryArray, id, &temporaryComponent) == false){
 			continue;
 		}
 
 		if(((Id*)temporaryComponent.component)->id != id){
-			printf("%d %d", ((Id*)temporaryComponent.component)->id, id);
 			continue;
 		}
 
@@ -93,78 +75,6 @@ bool removeEntity(int id){
 		);
 
 	}
-
-	// temporaryArray = informationArray;
-	// if(getOccurrenceById(temporaryArray, id, &temporaryComponent)){
-	// 	removeArray(
-	// 		temporaryArray,
-	// 		temporaryComponent.index
-	// 	);
-	// }
-
-	// temporaryArray = positionArray;
-	// if(getOccurrenceById(temporaryArray, id, &temporaryComponent)){
-	// 	removeArray(
-	// 		temporaryArray,
-	// 		temporaryComponent.index
-	// 	);
-	// }
-
-	// temporaryArray = sizeArray;
-	// if(getOccurrenceById(temporaryArray, id, &temporaryComponent)){
-	// 	removeArray(
-	// 		temporaryArray,
-	// 		temporaryComponent.index
-	// 	);
-	// }
-
-	// temporaryArray = colorArray;
-	// if(getOccurrenceById(temporaryArray, id, &temporaryComponent)){
-	// 	removeArray(
-	// 		temporaryArray,
-	// 		temporaryComponent.index
-	// 	);
-	// }
-
-	// temporaryArray = colliderArray;
-	// if(getOccurrenceById(temporaryArray, id, &temporaryComponent)){
-	// 	removeArray(
-	// 		temporaryArray,
-	// 		temporaryComponent.index
-	// 	);
-	// }
-
-	// temporaryArray = layerArray;
-	// if(getOccurrenceById(temporaryArray, id, &temporaryComponent)){
-	// 	removeArray(
-	// 		temporaryArray,
-	// 		temporaryComponent.index
-	// 	);
-	// }
-
-	// temporaryArray = collectibleArray;
-	// if(getOccurrenceById(temporaryArray, id, &temporaryComponent)){
-	// 	removeArray(
-	// 		temporaryArray,
-	// 		temporaryComponent.index
-	// 	);
-	// }
-
-	// temporaryArray = anchorArray;
-	// if(getOccurrenceById(temporaryArray, id, &temporaryComponent)){
-	// 	removeArray(
-	// 		temporaryArray,
-	// 		temporaryComponent.index
-	// 	);
-	// }
-
-	// temporaryArray = entityArray;
-	// if(getOccurrenceById(temporaryArray, id, &temporaryComponent)){
-	// 	removeArray(
-	// 		temporaryArray,
-	// 		temporaryComponent.index
-	// 	);
-	// }
 
 	return true;
 }
