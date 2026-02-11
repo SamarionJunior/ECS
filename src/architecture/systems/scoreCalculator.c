@@ -338,6 +338,7 @@ void createNewFruit(){
 
 bool incrementScore(){
 	score++;
+	printf("score: %d\n", score);
 	return true;
 }
 
@@ -401,7 +402,7 @@ bool createTail(){
 			}
 		}
 
-		printf("createKindComponents\n");
+		// printf("createKindComponents\n");
 
 		createKindComponents(te);
 

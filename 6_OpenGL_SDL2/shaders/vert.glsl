@@ -11,7 +11,7 @@ void main(){
   gl_Position = vec4(
     position.x, 
     position.y, 
-    position., 
+    position.z, 
     // position.x + u_OffsetX, 
     // position.y + u_OffsetY, 
     // position.z + u_OffsetZ, 

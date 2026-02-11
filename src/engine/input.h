@@ -41,6 +41,8 @@ typedef enum key{
 
 extern bool keys[KEY_LENGHT];
 
+void resertInput();
+
 void process_input(int *game_is_running);
 
 #endif

@@ -26,6 +26,20 @@
 #include "../architecture/systems/setupCollision.h"
 
 void setup(void){
+
+	loadMap();
+
+	loadJSON();
+
+	// destroyTemporaryEntities(temporaryEntities);
+
+	// loadJSON();
+
+	resertInput();
+
+	resertFrameVariables();
+
+	resetDelay();
 	
 	setIsEmpty(true);
 

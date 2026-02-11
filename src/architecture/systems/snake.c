@@ -25,6 +25,10 @@
 int getSnakeTail();
 void iterationSnake();
 
+// void snakeSetup(){
+
+// }
+
 Anchor* getAnchorByParent(int idParent, int* count){
 	Anchor* tempAnchor = NULL;
 	for (size_t j = 0; j < lengthArray(anchorArray); j++){

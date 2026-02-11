@@ -117,13 +117,13 @@ void updateOldPosition(Position *aux, Position temp){
 }
 
 void printPosition(Position *aux){
-	printf(
-		"X: %f - Y: %f - OldX: %f - OldY: %f\n",
-		aux->current2.x,
-		aux->current2.y,
-		aux->old2.x,
-		aux->old2.y
-	);
+	// printf(
+	// 	"X: %f - Y: %f - OldX: %f - OldY: %f\n",
+	// 	aux->current2.x,
+	// 	aux->current2.y,
+	// 	aux->old2.x,
+	// 	aux->old2.y
+	// );
 }
 
 bool isClickDown(MoveConfig moveconfig){

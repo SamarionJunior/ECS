@@ -83,34 +83,51 @@ void setMapDimension(char* file){
 }
 
 void initilizeMatrix(int row, int col){
-  initializeArray(
+  
+  bool test = initializeArray(
     &map, 
     row, 
-    sizeof(Array)
+    sizeof(Array*)
   );
+
+  if(test == false){
+    printf("Matrix\n");
+    // exit(0);
+  }
+
+  printf("Matrix: %d\n", map->maximumArray);
+  
   // int** auxMatrix = malloc(sizeof(int*) * row);
   for (size_t i = 0; i < row; i++){
     Array* line;
-    initializeArray(
+    test = initializeArray(
       &line, 
       col, 
       sizeof(int)
     );
+
+    if(test == false){
+      printf("line\n");
+    }
+
+    printf("line: %d\n", line->maximumArray);
+
     // printf("lenght %d\n", lengthArray(line));
     addArray(
       map,
       i,
       line
     );
+    printf("line l %d\n", (*(Array*)getArray(map, i)).maximumArray);
   }
   // printf("lenght %d\n", lengthArray(map));
 
-  for (size_t i = 0; i < row; i++){
-    // for (size_t j = 0; j < col; j++){
-    Array* a = (Array*)getArray(map, i);
-      printf("%d f\n", lengthArray(a));
-    // }
-  }
+  // for (size_t i = 0; i < row; i++){
+  //   // for (size_t j = 0; j < col; j++){
+  //   Array* a = (Array*)getArray(map, i);
+  //     printf("%d f\n", lengthArray(a));
+  //   // }
+  // }
   
 }
 
@@ -126,8 +143,9 @@ void parseMapToMatrix(char* file, Array* matrix){
     }
     CodeANSIConvertedInInteger = (int)(c - '0');
 		// printf("[%d][%d]", i, j);
-    Array* line = (Array*)getArray(matrix, i);
-    // printf("j %d\n", j);
+    Array* line = getArray(map, i);
+    printf("j %d\n", j);
+    printf("line l %d\n", line->maximumArray);
     addArray(line, j, &CodeANSIConvertedInInteger);
     // matrix[i][j] = CodeANSIConvertedInInteger;
     j++;
@@ -142,8 +160,22 @@ void closeMap(FILE* file){
 }
 
 void destroyMap(Array *auxiliarymap){
-	for (size_t i = 0; i < getROW(); i++){
-		free(getArray(auxiliarymap, i));
+  int size = lengthArray(auxiliarymap);
+  // printf("fsdkhgusfdgjdfkhsjlgjsdfgsdf, %d\n", size);
+  // printf("init %d\n", i);
+	for(int i = size; i >= 0 ; i--){
+    // printf("%d\n", i);
+    Array* temp = (Array*)getArray(auxiliarymap, i);
+    // for (size_t j = (lengthArray(temp) - 1); j >= 0 ; j--){
+    //   printf("%d", *(int*)getArray(temp, j));
+    // }
+    // printf("saa\n");
+    // printf("%p\n", auxiliarymap->data);
+    printf("%p\n", temp->data);
+		// destroyArray(temp);
+    // printf("sdfgsf\n");
+    // printf("%p\n", temp->data);
+    // printf("\n");
 	}
-	free(auxiliarymap);
+	// destroyArray(auxiliarymap);
 }

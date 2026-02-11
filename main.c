@@ -50,9 +50,8 @@ void loop(){
 
 	// printf("%d\n",score);
 
-	resertFrameVariables();
-
-	while (true) {
+	bool execute = true;
+	while(execute){
 
 		// printf("\n////////////////////\n");
 		// printf(  "/// LOOP - WHILE ///\n");
@@ -81,7 +80,9 @@ void loop(){
 				break;
 			case RESTART:
 				game_is_running = PAUSE;
-				setup();
+				execute = false;
+				// return;
+				// setup();
 				break;
 			case CLOSE:
 				return;
@@ -112,13 +113,7 @@ void scene(void){
 		// // // // printf(  "/// SCENE - DO WHILE ///\n");
 		// // // // printf(  "////////////////////////\n\n");
 
-		loadMap();
-
-		loadJSON();
-
 		setup();
-
-		resetDelay();
 	
 		loop();
 

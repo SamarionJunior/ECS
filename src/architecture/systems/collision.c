@@ -102,7 +102,7 @@ bool collisionBetween(Position temporaryPositionA, Size temporarySizeA){
 		return true;
 	}
 
-		printf("oi\n");
+		// printf("oi\n");
 
 	return false;
 }

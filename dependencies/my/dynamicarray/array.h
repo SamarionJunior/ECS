@@ -18,14 +18,14 @@ typedef struct array{
 
 //////////////////////////////////
 
-bool addArray(Array* array, size_t collum, void* data);
-bool removeArray(Array* array, size_t collum);
-bool setArray(Array* array, size_t collum, void* data);
-void* getArray(Array* array, size_t collum);
-bool fullArray(Array* array);
-bool emptyArray(Array* array);
-unsigned int lengthArray(Array* array);
-bool initializeArray(Array** array, unsigned int maximumArray, unsigned int sizeData);
+bool addArray(Array* array, size_t index, void* data);
+bool removeArray(Array* array, size_t index);
+bool setArray(Array array, size_t index, void* data);
+void* getArray(Array array, size_t index);
+bool fullArray(Array array);
+bool emptyArray(Array array);
+unsigned int lengthArray(Array array);
+bool initializeArray(Array* array, unsigned int maximumArray, unsigned int sizeData);
 bool destroyArray(Array* array);
 
 #endif

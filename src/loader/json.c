@@ -160,16 +160,16 @@ void destroyTemporaryEntities(Array* tes){
 	for (size_t i = 0; i < lengthArray(tes); i++){
 		TemporaryEntity* te = (TemporaryEntity*)getArray(tes, i);
 		for (size_t j = 0; j < lengthArray(te->componentAndTypes); j++){
-			ComponentAndType* cap = (ComponentAndType*)getArray(te->componentAndTypes, i);
+			ComponentAndType* cap = (ComponentAndType*)getArray(te->componentAndTypes, j);
 			if(cap->type == INFORMATION){
-				// printf("%s\n", (*((Information*)(cap->component))).name);
-				free((*((Information*)(cap->component))).name);
+				printf("%s\n", (*((Information*)(cap->component))).name);
+				// free((*((Information*)(cap->component))).name);
 			}
-			free(cap->component);
+			// free(cap->component);
 		}
-		destroyArray(te->componentAndTypes);
+		// destroyArray(te->componentAndTypes);
 	}
-	destroyArray(tes);
+	// destroyArray(tes);
 }
 
 void printJSONScene(){
@@ -220,7 +220,7 @@ void printJSONScene(){
 			}
 			(*((Information*)(cat.component))).lengthName = strlen((*((Information*)(cat.component))).name);
 
-			printf("%s\n", (*((Information*)(cat.component))).name);
+			// printf("%s\n", (*((Information*)(cat.component))).name);
 
 			addArray(
 				temporaryEntity.componentAndTypes,
@@ -354,7 +354,7 @@ void printJSONScene(){
 			}
 			// temporaryComponents[i].isThereLayer = true;
 
-			printf("after: %d\n", lengthArray(temporaryEntity.componentAndTypes));
+			// printf("after: %d\n", lengthArray(temporaryEntity.componentAndTypes));
 
 			addArray(
 				temporaryEntity.componentAndTypes,
@@ -362,7 +362,7 @@ void printJSONScene(){
 				&cat
 			);
 
-			printf("befor: %d\n", lengthArray(temporaryEntity.componentAndTypes));
+			// printf("befor: %d\n", lengthArray(temporaryEntity.componentAndTypes));
 		}
 		
 		if(getObjectAndVerify(ind, (char*){"player"}, &aux, OBJECT)){

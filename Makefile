@@ -14,6 +14,7 @@ MY_SRCS=$(MY_SRC) \
 	dependencies/mycustom/*.c \
 	dependencies/pure/*.c \
 	dependencies/my/dynamicarray/*.c \
+	dependencies/my/dynamicmatrix/*.c \
 	src/architecture/components/*.c \
 	src/architecture/entities/*.c \
 	src/architecture/systems/*.c \

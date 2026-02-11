@@ -14,6 +14,12 @@
 
 bool keys[KEY_LENGHT] = {true};
 
+void resertInput(){
+	for (size_t i = 0; i < KEY_LENGHT; i++){
+		keys[i] = true;
+	}
+}
+
 void process_input(int *game_is_running) {
 
 	// printf("\n/////////////////////\n");
