@@ -14,9 +14,12 @@
 
 // #include "../../dependencies/mycustom/myjson.h"
 
-extern Array* map;
+#include "../../dependencies/my/dynamicarray/array.h"
+#include "../../dependencies/my/dynamicmatrix/matrix.h"
+
+extern Matrix map;
 
 void loadMap();
-void destroyMap(Array *auxiliarymap);
+void destroyMap();
 
 #endif

@@ -15,7 +15,7 @@
 
 #include "json.h"
 
-Array* temporaryEntities;
+Array temporaryEntities;
 
 cJSON* getItemArray(const cJSON *array, int index);
 bool verify(cJSON *object, typeOBjectJson type);
@@ -157,8 +157,8 @@ void initializeTemporaryComponent(){
 }
 
 void destroyTemporaryEntities(Array* tes){
-	for (size_t i = 0; i < lengthArray(tes); i++){
-		TemporaryEntity* te = (TemporaryEntity*)getArray(tes, i);
+	for (size_t i = 0; i < lengthArray(*tes); i++){
+		TemporaryEntity* te = (TemporaryEntity*)getArray(*tes, i);
 		for (size_t j = 0; j < lengthArray(te->componentAndTypes); j++){
 			ComponentAndType* cap = (ComponentAndType*)getArray(te->componentAndTypes, j);
 			if(cap->type == INFORMATION){
@@ -223,7 +223,7 @@ void printJSONScene(){
 			// printf("%s\n", (*((Information*)(cat.component))).name);
 
 			addArray(
-				temporaryEntity.componentAndTypes,
+				&temporaryEntity.componentAndTypes,
 				lengthArray(temporaryEntity.componentAndTypes),
 				&cat
 			);
@@ -252,7 +252,7 @@ void printJSONScene(){
 			}
 
 			addArray(
-				temporaryEntity.componentAndTypes,
+				&temporaryEntity.componentAndTypes,
 				lengthArray(temporaryEntity.componentAndTypes),
 				&cat
 			);
@@ -276,7 +276,7 @@ void printJSONScene(){
 			// temporaryComponents[i].isThereSize = true;
 
 			addArray(
-				temporaryEntity.componentAndTypes,
+				&temporaryEntity.componentAndTypes,
 				lengthArray(temporaryEntity.componentAndTypes),
 				&cat
 			);
@@ -305,7 +305,7 @@ void printJSONScene(){
 			// temporaryComponents[i].isThereColor = true;
 
 			addArray(
-				temporaryEntity.componentAndTypes,
+				&temporaryEntity.componentAndTypes,
 				lengthArray(temporaryEntity.componentAndTypes),
 				&cat
 			);
@@ -334,7 +334,7 @@ void printJSONScene(){
 			// temporaryComponents[i].isThereCollider = true;
 
 			addArray(
-				temporaryEntity.componentAndTypes,
+				&temporaryEntity.componentAndTypes,
 				lengthArray(temporaryEntity.componentAndTypes),
 				&cat
 			);
@@ -357,7 +357,7 @@ void printJSONScene(){
 			// printf("after: %d\n", lengthArray(temporaryEntity.componentAndTypes));
 
 			addArray(
-				temporaryEntity.componentAndTypes,
+				&temporaryEntity.componentAndTypes,
 				lengthArray(temporaryEntity.componentAndTypes),
 				&cat
 			);
@@ -376,7 +376,7 @@ void printJSONScene(){
 			// temporaryComponents[i].isTherePlayer = true;
 
 			addArray(
-				temporaryEntity.componentAndTypes,
+				&temporaryEntity.componentAndTypes,
 				lengthArray(temporaryEntity.componentAndTypes),
 				&cat
 			);
@@ -393,7 +393,7 @@ void printJSONScene(){
 			// temporaryComponents[i].isThereCollectible= true;
 
 			addArray(
-				temporaryEntity.componentAndTypes,
+				&temporaryEntity.componentAndTypes,
 				lengthArray(temporaryEntity.componentAndTypes),
 				&cat
 			);
@@ -410,7 +410,7 @@ void printJSONScene(){
 			// temporaryComponents[i].isThereAnchor= true;
 
 			addArray(
-				temporaryEntity.componentAndTypes,
+				&temporaryEntity.componentAndTypes,
 				lengthArray(temporaryEntity.componentAndTypes),
 				&cat
 			);
@@ -422,7 +422,7 @@ void printJSONScene(){
 		// }
 
 		addArray(
-			temporaryEntities, 
+			&temporaryEntities, 
 			lengthArray(temporaryEntities),
 			&temporaryEntity
 		);

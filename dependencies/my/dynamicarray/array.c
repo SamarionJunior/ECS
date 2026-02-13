@@ -122,6 +122,8 @@ bool initializeArray(Array* array, unsigned int maximumArray, unsigned int sizeD
 
 bool destroyArray(Array* array){
 
+  printf("sasdASA\n");
+
   if(array->data == NULL){
     printf("array->data == NULL\n");
     return false;

@@ -5,8 +5,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include <SDL3_ttf/SDL_ttf.h>
+
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;
+extern TTF_Font *font;
+// extern SDL_Texture *texture;
 
 typedef signed long sint32;
 

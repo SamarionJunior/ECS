@@ -16,6 +16,8 @@ typedef enum{
   RESTART = 2,
   CLOSE = 3,
   RESUME = 4,
+  WIN = 5,
+  LOSS = 6,
 
   ERROR = 1,
   SUCESS = 0,
@@ -37,6 +39,8 @@ typedef enum{
   FRAME_TARGET_TIME = (1000/FPS)
 
 } Config;
+
+extern int game_is_running;
 
 extern int globalCount;
 

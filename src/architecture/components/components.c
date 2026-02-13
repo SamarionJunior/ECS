@@ -8,19 +8,19 @@
 
 Color black = {0, 0, 0, 255};
 
-Array* informationArray;
-Array* positionArray;
-// Array* directionArray;
-// Array* velocityArray;
-// Array* accelerationArray;
-Array* sizeArray;
-Array* colorArray;
-Array* colliderArray;
-Array* layerArray;
+Array informationArray;
+Array positionArray;
+// Array directionArray;
+// Array velocityArray;
+// Array accelerationArray;
+Array sizeArray;
+Array colorArray;
+Array colliderArray;
+Array layerArray;
 
-Array* playerArray;
-Array* collectibleArray;
-Array* anchorArray;
+Array playerArray;
+Array collectibleArray;
+Array anchorArray;
 
 Array* arrayOfArrayComponents[TOTALCOMPONENTS];
 
@@ -41,17 +41,17 @@ char *namesOfCompenents[TOTALCOMPONENTS] = {
 
 void destroyComponents(){
 
-	destroyArray(informationArray);
-	destroyArray(positionArray);
+	destroyArray(&informationArray);
+	destroyArray(&positionArray);
 	// destroyArray(directionArray);
 	// destroyArray(velocityArray);
 	// destroyArray(accelerationArray);
-	destroyArray(sizeArray);
-	destroyArray(colorArray);
-	destroyArray(colliderArray);
-	destroyArray(layerArray);
+	destroyArray(&sizeArray);
+	destroyArray(&colorArray);
+	destroyArray(&colliderArray);
+	destroyArray(&layerArray);
 
-	destroyArray(playerArray);
-	destroyArray(collectibleArray);
-	destroyArray(anchorArray);
+	destroyArray(&playerArray);
+	destroyArray(&collectibleArray);
+	destroyArray(&anchorArray);
 }

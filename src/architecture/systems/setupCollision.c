@@ -14,6 +14,9 @@
 
 #include "../../loader/map.h"
 
+#include "../../../dependencies/my/dynamicarray/array.h"
+#include "../../../dependencies/my/dynamicmatrix/matrix.h"
+
 bool** freeSpaces = NULL;
 
 const int vazio = 0;
@@ -29,14 +32,13 @@ void initializingFreeSpaces(){
 	
 	for (size_t y = 0; y < getROW(); y++){
 		for (size_t x = 0; x < getCOL(); x++){
-			if((*((int*)(getArray(getArray(map, y), x)))) == vazio){
+			if((*((int*)(getMatrixArray(map, y, x)))) == vazio){
 				freeSpaces[y][x] = itIsFree;
 				continue;
 			}
 			freeSpaces[y][x] = NotFree;
 		}
 	}
-
 }
 
 void destroyFreeSpaces(){

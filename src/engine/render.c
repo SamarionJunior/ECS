@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include <string.h>
+
 #include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 // #include <SDL3_image/SDL_image.h>
 
 #include "render.h"
@@ -50,6 +53,14 @@ static SDL_FRect auxRect;
 static Id* temporaryId;
 static int temporaryIndex;
 
+SDL_Color color = { 255, 255, 255, 255};
+
+SDL_Texture *texture1 = NULL;
+SDL_Surface *suface1 = NULL;
+
+SDL_Texture *texture2 = NULL;
+SDL_Surface *suface2 = NULL;
+
 void render() {
 
 	// printf("\n//////////////\n");
@@ -60,6 +71,43 @@ void render() {
 
 	if(lengthArray(layerArray) == 0){
 		return;
+	}
+
+	texture1 = NULL;
+	char s1[6+1+21] = "Score: ";
+	char s2[21] = "";
+	snprintf(s2, 21, "%d", score);
+	const char* texto1 = strcat(s1, s2);
+	// congratulations
+	if((suface1 = TTF_RenderText_Solid(font, texto1, 0, color)) == NULL) {
+		return false;
+	}
+	texture1 = SDL_CreateTextureFromSurface(renderer, suface1);
+	SDL_DestroySurface(suface1);
+	if (texture1 == NULL) {
+		return false;
+	}
+
+	texture2 = NULL;
+	char normal[] = " ";
+	char win[] = "Congratulations!";
+	char loss[] = "Game Over!";
+	const char* texto2 = 
+	(game_is_running == WIN || game_is_running == LOSS) ? 
+		((game_is_running == WIN) ? 
+			win : 
+			loss
+		) : 
+		normal;
+	if((suface2 = TTF_RenderText_Solid(font, texto2, 0, color)) == NULL) {
+		printf("dafdadf\n");
+		return false;
+	}
+	texture2 = SDL_CreateTextureFromSurface(renderer, suface2);
+	SDL_DestroySurface(suface2);
+	if (texture2 == NULL) {
+		printf("adfdfadsfasdfasd\n");
+		return false;
 	}
 
 	clearWindow(createColor(ID_INIT, 0, 0, 0, 255));
@@ -116,7 +164,23 @@ void render() {
 
 	// }
 
+	SDL_FRect aux1;
+  SDL_GetTextureSize(texture1, &aux1.w, &aux1.h);
+	aux1.x = 10;
+	aux1.y = 7 + getROW() * SPRITE;
+  SDL_RenderTexture(renderer, texture1, NULL, &aux1);
+
+	SDL_FRect aux2;
+  SDL_GetTextureSize(texture2, &aux2.w, &aux2.h);
+	aux2.x = 10;
+	// aux2.y = 7 + getROW() * SPRITE;
+	aux2.y = aux1.y + aux1.h + 7;
+  SDL_RenderTexture(renderer, texture2, NULL, &aux2);
+
 	SDL_RenderPresent(renderer);
+
+	SDL_DestroyTexture(texture1);
+	SDL_DestroyTexture(texture2);
 
 	// printf("\n////////////////////\n");
 	// printf(  "/// END - RENDER ///\n");

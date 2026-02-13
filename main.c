@@ -38,7 +38,6 @@
 float acerelacion = 1;
 
 // int game_is_running = PAUSE;
-int game_is_running = RUN;
 
 void loop(){
 
@@ -76,6 +75,12 @@ void loop(){
 				}
 				break;
 			case PAUSE:
+				/// ENCERRAR THREADS ENTRE OUTROS
+				break;
+			case WIN:
+				/// ENCERRAR THREADS ENTRE OUTROS
+				break;
+			case LOSS:
 				/// ENCERRAR THREADS ENTRE OUTROS
 				break;
 			case RESTART:
@@ -135,7 +140,7 @@ void destroyGame(){
 	// destroySystem();
 	destroy_window();
 
-	destroyTemporaryEntities(temporaryEntities);
+	destroyTemporaryEntities(&temporaryEntities);
 	destroyMap(map);
 	destroyFreeSpaces();
 }

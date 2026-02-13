@@ -7,6 +7,6 @@
 
 #include "../../../dependencies/my/dynamicarray/array.h"
 
-Array* entityArray;
+Array entityArray;
 
 // Entity entityDefualt = (Entity){.index = &(int){-1}};

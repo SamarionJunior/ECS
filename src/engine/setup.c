@@ -18,6 +18,9 @@
 
 #include "../../dependencies/mycustom/myjson.h"
 
+#include "../../dependencies/my/dynamicarray/array.h"
+#include "../../dependencies/my/dynamicmatrix/matrix.h"
+
 #include "../loader/json.h"
 #include "../loader/map.h"
 
@@ -56,15 +59,15 @@ void setup(void){
 	// printf("Address: %p\n", informationArray);
 	// printf("Address: %p\n", positionArray);
 
-	arrayOfArrayComponents[INFORMATION] = informationArray;
-	arrayOfArrayComponents[POSITION] = positionArray;
-	arrayOfArrayComponents[SIZE] = sizeArray;
-	arrayOfArrayComponents[COLOR] = colorArray;
-	arrayOfArrayComponents[COLLIDER] = colliderArray;
-	arrayOfArrayComponents[LAYER] = layerArray;
-	arrayOfArrayComponents[PLAYER] = playerArray;
-	arrayOfArrayComponents[COLLECTIBLE] = collectibleArray;
-	arrayOfArrayComponents[ANCHOR] = anchorArray;
+	arrayOfArrayComponents[INFORMATION] = &informationArray;
+	arrayOfArrayComponents[POSITION] = &positionArray;
+	arrayOfArrayComponents[SIZE] = &sizeArray;
+	arrayOfArrayComponents[COLOR] = &colorArray;
+	arrayOfArrayComponents[COLLIDER] = &colliderArray;
+	arrayOfArrayComponents[LAYER] = &layerArray;
+	arrayOfArrayComponents[PLAYER] = &playerArray;
+	arrayOfArrayComponents[COLLECTIBLE] = &collectibleArray;
+	arrayOfArrayComponents[ANCHOR] = &anchorArray;
 
 	// printf("Address: %p\n", arrayOfArrayComponents[POSITION]);
 
@@ -76,7 +79,9 @@ void setup(void){
 
 				TemporaryEntity te = *((TemporaryEntity*)(getArray(temporaryEntities, k)));
 
-				if((*((int*)(getArray(getArray(map, i), j)))) != te.entityType){
+				int* entityType = getMatrixArray(map, i, j);
+
+				if(*entityType != te.entityType){
 					continue;
 				}
 

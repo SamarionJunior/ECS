@@ -34,7 +34,7 @@
 // } TemporaryComponent;
 
 // extern TemporaryComponents* temporaryComponents;
-extern Array* temporaryEntities;
+extern Array temporaryEntities;
 
 void printJSONScene();
 

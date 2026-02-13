@@ -34,7 +34,7 @@ int setId(int idnew){
 void addEntity(){
 	setId(getId() + 1);
 	addArray(
-		entityArray,
+		&entityArray,
 		lengthArray(entityArray),
 		&(Entity){
 			.index = getId()
@@ -48,7 +48,7 @@ void initializeEntities(){
 }
 
 void destroyEntities(){
-	destroyArray(entityArray);
+	destroyArray(&entityArray);
 }
 
 static Occurrence temporaryComponent;
@@ -61,7 +61,7 @@ bool removeEntity(int id){
 
 		temporaryArray = arrayOfArrayComponents[i];
 
-		if(getOccurrenceById(temporaryArray, id, &temporaryComponent) == false){
+		if(getOccurrenceById(*temporaryArray, id, &temporaryComponent) == false){
 			continue;
 		}
 

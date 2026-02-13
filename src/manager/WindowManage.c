@@ -3,12 +3,15 @@
 #include <stdbool.h>
 
 #include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 // #include <SDL3/SDL_video.h>
 #include "WindowManage.h"
 #include "../constants.h"
 
 SDL_Window* window;
 SDL_Renderer* renderer;
+TTF_Font *font = NULL;
+// SDL_Texture *texture = NULL;
 
 typedef signed long sint32;
 
@@ -49,6 +52,14 @@ bool initialize_window() {
 		return false;
 	}
 
+	if (TTF_Init() == false) {
+		return false;
+	}
+
+	if ((font = TTF_OpenFont("./Jersey10-Regular.ttf", 18.0f)) == NULL) {
+		return false;
+	}
+
 	return true;
 
 	// // // // printf("\n///////////////////////////////\n");
@@ -57,6 +68,11 @@ bool initialize_window() {
 }
 
 void destroy_window() {
+
+	if(font != NULL) {
+    TTF_CloseFont(font);
+  }
+  TTF_Quit();
 
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);

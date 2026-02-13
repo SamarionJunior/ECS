@@ -51,7 +51,8 @@ MY_APP=$(MY_PATH)/$(MY_TARGET)
 # -I./glad/include/glad/glad.h 
 
 # SDL3
-MY_LIBS=-lSDL3 -lGL -lSDL3_image -L/usr/local/lib/libSDL3_image.so.0
+# MY_LIBS=-lSDL3 -lGL -lSDL3_image -L/usr/local/lib/libSDL3_image.so.0
+MY_LIBS= -I/usr/local/include -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -L/usr/local/lib -lSDL3_ttf -Wl,-rpath,/usr/local/lib -Wl,--enable-new-dtags -lSDL3
 
 myall:	mybuild myrun
 

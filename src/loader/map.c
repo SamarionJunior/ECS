@@ -10,10 +10,11 @@
 #include "../constants.h"
 
 #include "../../dependencies/my/dynamicarray/array.h"
+#include "../../dependencies/my/dynamicmatrix/matrix.h"
 
 #include "map.h"
 
-Array* map;
+Matrix map;
 FILE *txt = NULL;
 
 FILE* openMap(char* path);
@@ -21,33 +22,7 @@ void setMapDimension(char* file);
 void initilizeMatrix(int row, int col);
 void parseMapToMatrix(char* file, Array* matrix);
 void closeMap(FILE* file);
-void destroyMap(Array *auxiliarymap);
-
-void loadMap(){
-
-	// // // // printf("\n////////////////\n");
-	// // // // printf(  "/// LOAD MAP ///\n");
-	// // // // printf(  "////////////////\n\n");
-
-  txt = openMap(pathMap);
-  setMapDimension(txt);
-  
-  initilizeMatrix(getROW(), getCOL());
-  parseMapToMatrix(txt, map);
-
-  closeMap(txt);
-
-  printf(
-    "col = %d - row = %d\n",
-    getCOL(),
-    getROW()
-  );
-
-	// // // // printf("\n//////////////////////\n");
-	// // // // printf(  "/// END - LOAD MAP ///\n");
-	// // // // printf(  "//////////////////////\n\n");
-
-}
+void destroyMap();
 
 FILE* openMap(char* path){
   FILE* file = fopen(path, "r");
@@ -83,52 +58,12 @@ void setMapDimension(char* file){
 }
 
 void initilizeMatrix(int row, int col){
-  
-  bool test = initializeArray(
-    &map, 
-    row, 
-    sizeof(Array*)
-  );
-
-  if(test == false){
-    printf("Matrix\n");
-    // exit(0);
-  }
-
-  printf("Matrix: %d\n", map->maximumArray);
-  
-  // int** auxMatrix = malloc(sizeof(int*) * row);
+  initializeMatrix(&map, row);
   for (size_t i = 0; i < row; i++){
-    Array* line;
-    test = initializeArray(
-      &line, 
-      col, 
-      sizeof(int)
-    );
-
-    if(test == false){
-      printf("line\n");
-    }
-
-    printf("line: %d\n", line->maximumArray);
-
-    // printf("lenght %d\n", lengthArray(line));
-    addArray(
-      map,
-      i,
-      line
-    );
-    printf("line l %d\n", (*(Array*)getArray(map, i)).maximumArray);
+    Array line;
+    initializeArray(&line, col, sizeof(int));
+    addMatrix(&map, i, line);
   }
-  // printf("lenght %d\n", lengthArray(map));
-
-  // for (size_t i = 0; i < row; i++){
-  //   // for (size_t j = 0; j < col; j++){
-  //   Array* a = (Array*)getArray(map, i);
-  //     printf("%d f\n", lengthArray(a));
-  //   // }
-  // }
-  
 }
 
 void parseMapToMatrix(char* file, Array* matrix){
@@ -142,40 +77,69 @@ void parseMapToMatrix(char* file, Array* matrix){
       continue;
     }
     CodeANSIConvertedInInteger = (int)(c - '0');
-		// printf("[%d][%d]", i, j);
-    Array* line = getArray(map, i);
-    printf("j %d\n", j);
-    printf("line l %d\n", line->maximumArray);
-    addArray(line, j, &CodeANSIConvertedInInteger);
-    // matrix[i][j] = CodeANSIConvertedInInteger;
+    addMatrixArray(&map, i, j, &CodeANSIConvertedInInteger);
     j++;
   }
 	// printf("\n");
   fseek(file, 0, SEEK_SET);
 }
   
+// void parseMapToMatrix(char* file, Array* matrix){
+//   int i = 0, j = 0, c = 0, CodeANSIConvertedInInteger = 0;
+//   Array line = getMatrix(map, i);
+//   while((c = fgetc(file)) != EOF){
+//     if(c == '\n'){
+// 		  // printf("\n");
+//       setMatrix(map, i, line);
+//       j = 0;
+//       i++;
+//       line = getMatrix(map, i);
+//       // printf("i %d\n", i);
+//       continue;
+//     }
+//     CodeANSIConvertedInInteger = (int)(c - '0');
+// 		// printf("[%d][%d]", i, j);  
+//     // printf("j %d\n", j);
+//     // printf("line l %d\n", line->maximumArray);
+//     addArray(&line, j, &CodeANSIConvertedInInteger);
+//     // matrix[i][j] = CodeANSIConvertedInInteger;
+//     j++;
+//   }
+// 	// printf("\n");
+//   fseek(file, 0, SEEK_SET);
+// }
+
 void closeMap(FILE* file){
   fclose(file);
   file = NULL;
 }
 
-void destroyMap(Array *auxiliarymap){
-  int size = lengthArray(auxiliarymap);
-  // printf("fsdkhgusfdgjdfkhsjlgjsdfgsdf, %d\n", size);
-  // printf("init %d\n", i);
-	for(int i = size; i >= 0 ; i--){
-    // printf("%d\n", i);
-    Array* temp = (Array*)getArray(auxiliarymap, i);
-    // for (size_t j = (lengthArray(temp) - 1); j >= 0 ; j--){
-    //   printf("%d", *(int*)getArray(temp, j));
-    // }
-    // printf("saa\n");
-    // printf("%p\n", auxiliarymap->data);
-    printf("%p\n", temp->data);
-		// destroyArray(temp);
-    // printf("sdfgsf\n");
-    // printf("%p\n", temp->data);
-    // printf("\n");
-	}
-	// destroyArray(auxiliarymap);
+void destroyMap(){
+  destroyMatrix(&map);
+}
+
+void loadMap(){
+
+	// // // // printf("\n////////////////\n");
+	// // // // printf(  "/// LOAD MAP ///\n");
+	// // // // printf(  "////////////////\n\n");
+
+  txt = openMap(pathMap);
+  setMapDimension(txt);
+  
+  initilizeMatrix(getROW(), getCOL());
+  parseMapToMatrix(txt, &map);
+
+  closeMap(txt);
+
+  printf(
+    "col = %d - row = %d\n",
+    getCOL(),
+    getROW()
+  );
+
+	// // // // printf("\n//////////////////////\n");
+	// // // // printf(  "/// END - LOAD MAP ///\n");
+	// // // // printf(  "//////////////////////\n\n");
+
 }

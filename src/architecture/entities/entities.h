@@ -15,19 +15,6 @@ typedef struct entity{
     int index;
 } Entity;
 
-extern Array* entityArray;
+extern Array entityArray;
 
 #endif
-
-// typedef struct entity{
-//     int index;
-// } Entity;
-
-// extern int lengthEntities;
-
-// extern int entities[MAX_ENTITIES];
-
-// #include "../../../dependencies/my/matrix/matrix.h"
-// extern Entities entities;
-// #define SUBENTITIES 2
-// extern Matrix entities;

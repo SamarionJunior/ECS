@@ -19,7 +19,7 @@ typedef struct occurrences{
 
 // Occurrence getComponentsById(Array *array, int id);
 
-bool getOccurrenceById(Array *array, int id, Occurrence* temporaryOccurrence);
+bool getOccurrenceById(Array array, int id, Occurrence* temporaryOccurrence);
 
 void freeComponent(Occurrences* Occurrences);
 

@@ -147,6 +147,7 @@ void click(MoveConfig moveconfig){
 
 	if(collisionBetween(temporaryPosition, temporarySize) == true){
 		// printf("%d\n", rand());
+		game_is_running = LOSS;
 		return;
 	}
 
@@ -202,6 +203,9 @@ void move(){
 					*(currentMoveConfig.keyBlock) = false;
 				}
 
+
+
+				// return;
 				continue;
 			}
 

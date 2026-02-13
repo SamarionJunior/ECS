@@ -4,6 +4,8 @@
 
 #include "constants.h"
 
+int game_is_running = RUN;
+
 int globalCount = 10;
 int score = 0;
 

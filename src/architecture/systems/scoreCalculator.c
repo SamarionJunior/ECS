@@ -147,6 +147,7 @@ typedef struct auxiliarycoordinate {
 	int y;
 } AuxiliaryCoordinate;
 
+static int countFreeSpace = 0;
 
 void createNewFruit(){
 
@@ -154,7 +155,7 @@ void createNewFruit(){
 
 	Occurrences auxPos;
 
-	const int auxLength = getROW() * getCOL();
+	const int cellTotal = getROW() * getCOL();
 
 	for (size_t y = 0; y < getROW(); y++){
 		for (size_t x = 0; x < getCOL(); x++){
@@ -169,7 +170,7 @@ void createNewFruit(){
 	// 	printf("\n");
 	// }
 
-	int count = 0;
+	int fullSpace = 0;
 
 	for (size_t i = 0; i < lengthArray(positionArray); i++){
 
@@ -185,7 +186,7 @@ void createNewFruit(){
 			(int)(auxPos->current2.x / SPRITE)
 		] = NotFree;
 
-		count++;
+		fullSpace++;
 
 	}
 
@@ -231,11 +232,12 @@ void createNewFruit(){
 	// 	);
 	// }
 
-	AuxiliaryCoordinate auxiliaryCoordinates[auxLength];
+	AuxiliaryCoordinate auxiliaryCoordinates[cellTotal];
 
-	const int countFreeSpace = auxLength - count;
+	countFreeSpace = cellTotal - fullSpace;
 
 	if(countFreeSpace <= 0){
+
 		return;
 	}
 
@@ -359,6 +361,7 @@ bool createTail(){
 	// }
 
 	// printf("%d\n", temporaryComponents[k].index);
+	
 
 	if(getOccurrenceById(positionArray, indexPlayer, &pos) == false){
 		printf("Player Position not find\n");
@@ -447,9 +450,23 @@ void scoreCalculator(){
 		return;
 	}
 
+	printf("1º - lenght size: %d\n", lengthArray(positionArray));
+
 	if(removeFruit() == false){
 		return;
 	}
+
+	printf("2º - lenght size: %d\n", lengthArray(positionArray));
+			
+	// for (size_t i = 0; i < lengthArray(sizeArray); i++){
+	// 	Size* positionTem = getArray(sizeArray, i);
+	// 	printf(
+	// 		"id:\t%d\n",
+	// 		positionTem->id
+	// 	);
+	// }
+
+	printf("3º - lenght size: %d\n", lengthArray(positionArray));
 
 	if(createTail() == false){
 		return;
@@ -458,6 +475,11 @@ void scoreCalculator(){
 	iterationSnake();
 
 	createNewFruit();
+
+	if(countFreeSpace <= 0){
+		game_is_running = WIN;
+		printf("oi\n");
+	}
 
 	// if(isUnloackScore() == false){
 	// 	return;

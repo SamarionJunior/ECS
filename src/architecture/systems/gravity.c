@@ -11,13 +11,6 @@
 
 #include "../../engine/input.h"
 
-// #include "../../../dependencies/my/matrix/matrix.h"
-// #include "../../../dependencies/my/matrix/initialize.h"
-// #include "../../../dependencies/my/matrix/full.h"
-// #include "../../../dependencies/my/matrix/add.h"
-// #include "../../../dependencies/my/matrix/length.h"
-// #include "../../../dependencies/my/matrix/get.h"
-
 // void gravity();
 
 // void gravity(){

@@ -15,10 +15,14 @@
 
 #include "../../dependencies/mycustom/myjson.h"
 
+#include "../../dependencies/my/dynamicarray/array.h"
+// #include "../../dependencies/my/dynamicmatrix/matrix.h"
+
 #include "../loader/json.h"
 #include "../loader/map.h"
 
 #include "../utilities/space.h"
+
 void addComponentsinEntity(TemporaryEntity te);
 void createKindComponents(TemporaryEntity te);
 
@@ -32,7 +36,7 @@ void addComponentInEntity(void* component, Array* destino){
 
 	addArray(
 		destino, 
-		lengthArray(destino), 
+		lengthArray(*destino), 
 		component
 	);
 

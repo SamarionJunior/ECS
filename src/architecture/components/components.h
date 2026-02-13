@@ -129,19 +129,19 @@ typedef struct anchor {
 	int idParent;
 } Anchor;
 
-extern Array* informationArray;
-extern Array* positionArray;
-// extern Array* directionArray;
-// extern Array* velocityArray;
-// extern Array* accelerationArray;
-extern Array* sizeArray;
-extern Array* colorArray;
-extern Array* colliderArray;
-extern Array* layerArray;
+extern Array informationArray;
+extern Array positionArray;
+// extern Array directionArray;
+// extern Array velocityArray;
+// extern Array accelerationArray;
+extern Array sizeArray;
+extern Array colorArray;
+extern Array colliderArray;
+extern Array layerArray;
 
-extern Array* playerArray;
-extern Array* collectibleArray;
-extern Array* anchorArray;
+extern Array playerArray;
+extern Array collectibleArray;
+extern Array anchorArray;
 
 extern Array* arrayOfArrayComponents[TOTALCOMPONENTS];
 
@@ -160,7 +160,7 @@ typedef struct componentandtype{
 
 typedef struct temporaryentity{
 	int entityType;
-	Array* componentAndTypes;
+	Array componentAndTypes;
 } TemporaryEntity;
 
 #endif

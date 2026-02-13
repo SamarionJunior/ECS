@@ -7,9 +7,13 @@
 #include "matrix.h"
 
 bool addMatrix(Matrix* matrix, size_t index, Array array);
+bool addMatrixArray(Matrix* matrix, size_t indexMatrix, size_t indexArray, void* data);
 bool removeMatrix(Matrix* matrix, size_t index);
+bool removeMatrixArray(Matrix* matrix, size_t indexMatrix, size_t indexArray);
 bool setMatrix(Matrix matrix, size_t index, Array array);
+bool setMatrixArray(Matrix matrix, size_t indexMatrix, size_t indexArray, void* data);
 Array getMatrix(Matrix matrix, size_t index);
+void* getMatrixArray(Matrix matrix, size_t indexMatrix, size_t indexArray);
 bool fullMatrix(Matrix matrix);
 bool emptyMatrix(Matrix matrix);
 unsigned int lengthMatrix(Matrix matrix);
@@ -51,11 +55,16 @@ bool addMatrix(Matrix* matrix, size_t index, Array array){
   return true;
 
 }
+bool addMatrixArray(Matrix* matrix, size_t indexMatrix, size_t indexArray, void* data){
+  Array* temp = &(matrix->array[indexMatrix]);
+  addArray(temp, indexArray, data);
+  return true;
+}
 
 bool removeMatrix(Matrix* matrix, size_t index){
 
-  Array temp = matrix->array[index];
-  destroyArray(&temp);
+  Array* temp = &(matrix->array[index]);
+  destroyArray(temp);
 
   for (size_t j = index; j < (matrix->matrixLength - 1); j++){
     matrix->array[j] = matrix->array[(j + 1)];
@@ -67,23 +76,40 @@ bool removeMatrix(Matrix* matrix, size_t index){
   return true;
 
 }
+bool removeMatrixArray(Matrix* matrix, size_t indexMatrix, size_t indexArray){
 
-bool setMatrix(Matrix matrix, size_t index, Array array){
+  Array* temp = &(matrix->array[indexMatrix]);
+  // destroyArray(&temp);
 
-  /// DESALOCATE ARRAY MEMORY BEFOR
-
-  Array temp = matrix.array[index];
-  destroyArray(&temp);
-
-  matrix.array[index] = array;
+  removeArray(temp, indexArray);
 
   return true;
 
 }
 
+bool setMatrix(Matrix matrix, size_t index, Array array){
+  /// DESALOCATE ARRAY MEMORY BEFOR
+  Array temp = matrix.array[index];
+  destroyArray(&temp);
+  matrix.array[index] = array;
+  return true;
+}
+bool setMatrixArray(Matrix matrix, size_t indexMatrix, size_t indexArray, void* data){
+  /// DESALOCATE ARRAY MEMORY BEFOR
+  // Array temp = matrix.array[index];
+  // destroyArray(&temp);
+  setArray(matrix.array[indexMatrix], indexArray, data);
+  return true;
+}
+
 Array getMatrix(Matrix matrix, size_t index){
 
   return matrix.array[index];
+
+}
+void* getMatrixArray(Matrix matrix, size_t indexMatrix, size_t indexArray){
+
+  return getArray(getMatrix(matrix, indexMatrix), indexArray);
 
 }
 
@@ -147,18 +173,14 @@ bool destroyMatrix(Matrix* matrix){
     return false;
   }
 
+  for (size_t i = 0; i < matrix->matrixLength; i++){
+    Array array = getMatrix(*matrix, i);
+    destroyArray(&array);
+  }
+
   free(matrix->array);
 
   matrix->array = NULL;
-
-  // printf("destroy:\tarray == %p\n", array);
-  // printf("destroy:\tarray->data == %p\n", array->data);
-
-  // free(matrix);
-
-  // printf("array %p\n", array);
-
-  // printf("array->data %p\n", array->data);
 
   return true;
 
