@@ -55,8 +55,8 @@ static Id* idA = NULL;
 static Occurrence auxPositionA;
 static Occurrence auxSizeA;
 
-static Position tempPositionA;
-static Size tempSizeA;
+static Position* tempPositionA;
+static Size* tempSizeA;
 
 // int j = 0;
 
@@ -68,12 +68,12 @@ static int countB = 0;
 static Occurrence auxPositionB;
 static Occurrence auxSizeB;
 
-static Position positionB;
-static Size sizeB;
+static Position* positionB;
+static Size* sizeB;
 
 static size_t k = 0;
 // int count = 0;
-static Occurrence pos;
+static Position* pos;
 
 typedef struct positionAux{
 	bool active;
@@ -87,27 +87,15 @@ bool checkCollisionBetwenHeadAndFruit(){
 	
 	for(size_t i = 0; i < lengthArray(playerArray); i++){
 
-		if((idA = (Id*)getArray(playerArray, i)) == NULL){
+		if(getComponentsByIndex(playerArray, i, 4, positionArray, &tempPositionA, sizeArray, &tempSizeA) == false){
 			continue;
 		}
 
-		indexPlayer = idA->id;
-
-		if(getOccurrenceById(positionArray, indexPlayer, &auxPositionA) == false){
-			continue;
-		}
-		if(getOccurrenceById(sizeArray, indexPlayer, &auxSizeA) == false){
-			continue;
-		}
-
-		tempPositionA = (*(Position*)auxPositionA.component);
-		tempSizeA = (*(Size*)auxSizeA.component);
-
-		initializeCollisionVariables(tempPositionA, tempSizeA, &xA, &yA, &wA, &hA);
+		initializeCollisionVariables(*tempPositionA, *tempSizeA, &xA, &yA, &wA, &hA);
 
 		for(size_t j = 0 ; j < lengthArray(collectibleArray); j++){
 
-			if((idB = (Id*)getArray(collectibleArray, j)) == NULL){
+			if(getIdByIndex(collectibleArray, j, idB) == false){
 				continue;
 			}
 
@@ -115,18 +103,11 @@ bool checkCollisionBetwenHeadAndFruit(){
 				continue;
 			}
 
-			if(getOccurrenceById(positionArray, indexCollectible, &auxPositionB) == false){
+			if(getComponentsById(indexCollectible, 4, positionArray, &positionB, sizeArray, &sizeB) == false){
 				continue;
 			}
-			if(getOccurrenceById(sizeArray, indexCollectible, &auxSizeB) == false){
-				continue;
-			}
-			// Collectible* auxCollectibleB = getCollectibleById(indexB, &countB);
-
-			positionB = (*((Position*)auxPositionB.component));
-			sizeB = (*((Size*)auxSizeB.component));
 		
-			initializeCollisionVariables(positionB, sizeB, &xB, &yB, &wB, &hB);
+			initializeCollisionVariables(*positionB, *sizeB, &xB, &yB, &wB, &hB);
 
 			if(isItColliding(xA, yA, wA, hA, xB, yB, wB, hB) == false){
 				continue;
@@ -363,13 +344,13 @@ bool createTail(){
 	// printf("%d\n", temporaryComponents[k].index);
 	
 
-	if(getOccurrenceById(positionArray, indexPlayer, &pos) == false){
+	if(getComponentById(positionArray, indexPlayer, &pos) == false){
 		printf("Player Position not find\n");
 		return;
 	}
 
-	float x = ((*((Position*)pos.component)).old2.x);
-	float y = ((*((Position*)pos.component)).old2.y);
+	float x = pos->old2.x;
+	float y = pos->old2.y;
 
 	// printf("%f\n", (*(Position*)pos.array[0].component).old2.x);
 

@@ -58,7 +58,6 @@ Collider defualtCollider = (Collider){
 };
 Layer defualtLayer = (Layer){
 	.id = ID_INIT,
-	.layer = 0
 };
 Player defualtPlayer = (Player){
 	.id = ID_INIT
@@ -85,7 +84,10 @@ void initializeComponents(){
 	initializeArray(&sizeArray, MAX_COMPONENTS, sizeof(Size));
 	initializeArray(&colorArray, MAX_COMPONENTS, sizeof(Color));
 	initializeArray(&colliderArray, MAX_COMPONENTS, sizeof(Collider));
-	initializeArray(&layerArray, MAX_COMPONENTS, sizeof(Layer));
+	
+	initializeArray(&layer0Array, MAX_COMPONENTS, sizeof(Layer));
+	initializeArray(&layer1Array, MAX_COMPONENTS, sizeof(Layer));
+	initializeArray(&layer2Array, MAX_COMPONENTS, sizeof(Layer));
 
 	initializeArray(&playerArray, MAX_COMPONENTS, sizeof(Player));
 	initializeArray(&collectibleArray, MAX_COMPONENTS, sizeof(Collectible));

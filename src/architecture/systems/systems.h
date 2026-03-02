@@ -1,34 +1,34 @@
-#ifndef SYSTEMS_H_
-#define SYSTEMS_H_
+// #ifndef SYSTEMS_H_
+// #define SYSTEMS_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <stdbool.h>
 
-#include "../entities/entities.h"
-#include "../components/components.h"
+// #include "../entities/entities.h"
+// #include "../components/components.h"
 
-typedef enum{
-	GRAVITY,
-	COLLISION,
-	LAYERS,
-	MOVE,
-	SCORE
-} TypesOfSystems;
-
-// typedef enum {
-// 	NOSYSTEMS = -1,
+// typedef enum{
 // 	GRAVITY,
-// 	Collider
-// } SYSTEMS;
+// 	COLLISION,
+// 	LAYERS,
+// 	MOVE,
+// 	SCORE
+// } TypesOfSystems;
 
-#define MAX_SYSTEMS 4
+// // typedef enum {
+// // 	NOSYSTEMS = -1,
+// // 	GRAVITY,
+// // 	Collider
+// // } SYSTEMS;
 
-// extern int lengthSystems;
+// #define MAX_SYSTEMS 4
 
-// extern int systems[MAX_SYSTEMS];
-extern char *namesOfSystems[MAX_SYSTEMS];
+// // extern int lengthSystems;
 
-#define SUBSYSTEMS 2
+// // extern int systems[MAX_SYSTEMS];
+// extern char *namesOfSystems[MAX_SYSTEMS];
 
-#endif
+// #define SUBSYSTEMS 2
+
+// #endif

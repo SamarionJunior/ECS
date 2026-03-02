@@ -91,24 +91,18 @@ bool getArrayAndVerify(const cJSON *const parent, int i, cJSON** child, typeOBje
 }
 
 // void printComponetTemporary(){
-	
 // 	// // // // printf("\n");
-
 // 	// for (size_t i = 0; i < lengthtemporaryComponents; i++){
-
 // 	// 	// // // // printf("\n[%d]\n\n", i);
-
 // 	// 	// // // // printf("temporaryComponents[i].index = %d\n", temporaryComponents[i].index);
 // 	// 	// // // // printf("temporaryComponents[i].lengthArraySystems = %d\n", temporaryComponents[i].lengthArraySystems);
 // 	// 	// // // // printf("temporaryComponents[i].lengtharrayComponentTypes = %d\n", temporaryComponents[i].lengtharrayComponentTypes);
-		
 // 	// 	for (size_t j = 0; j < QTD_TYPE_COMPONENTS; j++){
 // 	// 		// // // // printf("temporaryComponents[i].arrayComponentTypes[j] = %d\n", temporaryComponents[i].arrayComponentTypes[j]);
 // 	// 	}
 // 	// 	for (size_t j = 0; j < MAX_SYSTEMS; j++){
 // 	// 		// // // // printf("temporaryComponents[i].arraySystems[j] = %d\n", temporaryComponents[i].arraySystems[j]);
 // 	// 	}
-
 // 	// 	// // // // printf("temporaryComponents[i].information.id = %d\n", temporaryComponents[i].information.id);
 // 		// // // // printf("temporaryComponents[i].information.name = %s\n", temporaryComponents[i].information.name);
 // 	// 	// // // // printf("temporaryComponents[i].position.id = %d\n", temporaryComponents[i].position.id);
@@ -141,9 +135,7 @@ bool getArrayAndVerify(const cJSON *const parent, int i, cJSON** child, typeOBje
 // 	// 	// // // // printf("temporaryComponents[i].collider.collisionDirection[3] = %d\n", temporaryComponents[i].collider.collisionDirection[3]);
 // 	// 	// // // // printf("temporaryComponents[i].collider.isStatic = %d\n", temporaryComponents[i].collider.isStatic);
 // 	// 	// // // // printf("temporaryComponents[i].layer.layer = %d\n", temporaryComponents[i].layer.layer);
-		
 // 	// }
-	
 // }
 
 void initializeTemporaryComponent(){
@@ -215,8 +207,9 @@ void printJSONScene(){
 			cat.component = malloc(sizeof(Information));
 
 			if(getObjectAndVerify(aux, (char*){"name"}, &aux2, STRING)){
-				(*((Information*)(cat.component))).name = malloc(sizeof(char)*(strlen(aux2->valuestring)+1));
-				strcpy((*((Information*)(cat.component))).name, aux2->valuestring);
+				unsigned int lengthString = strlen(aux2->valuestring)+1;
+				(*((Information*)(cat.component))).name = malloc(sizeof(char)*lengthString);
+				memcpy((*((Information*)(cat.component))).name, aux2->valuestring, lengthString);
 			}
 			(*((Information*)(cat.component))).lengthName = strlen((*((Information*)(cat.component))).name);
 
@@ -340,21 +333,74 @@ void printJSONScene(){
 			);
 		}
 		
-		if(getObjectAndVerify(ind, (char*){"layer"}, &aux, OBJECT)){
+		if(getObjectAndVerify(ind, (char*){"layer0"}, &aux, OBJECT)){
 			// printf("layer type: %p\n", aux->type);
+			printf("field: %s\n", aux->string);
 
 			ComponentAndType cat;
-			cat.type = LAYER;
+			cat.type = LAYER0;
 			cat.component = malloc(sizeof(Layer));
 			
-			// setTypeAndLength(temporaryComponents, i, LAYER);
-			if(getObjectAndVerify(aux, (char*){"layer"}, &aux2, NUMBER)){
-				(*((Layer*)(cat.component))).layer = aux2->valueint;
-				// printf("layer %d\n", (*((Layer*)(cat.component))).layer);
-			}
-			// temporaryComponents[i].isThereLayer = true;
+			// // setTypeAndLength(temporaryComponents, i, LAYER);
+			// if(getObjectAndVerify(aux, (char*){"layer"}, &aux2, NUMBER)){
+			// 	(*((Layer*)(cat.component))).layer = aux2->valueint;
+			// 	// printf("layer %d\n", (*((Layer*)(cat.component))).layer);
+			// }
+			// // temporaryComponents[i].isThereLayer = true;
 
-			// printf("after: %d\n", lengthArray(temporaryEntity.componentAndTypes));
+			// // printf("after: %d\n", lengthArray(temporaryEntity.componentAndTypes));
+
+			addArray(
+				&temporaryEntity.componentAndTypes,
+				lengthArray(temporaryEntity.componentAndTypes),
+				&cat
+			);
+
+			// printf("befor: %d\n", lengthArray(temporaryEntity.componentAndTypes));
+		}
+		
+		if(getObjectAndVerify(ind, (char*){"layer1"}, &aux, OBJECT)){
+			// printf("layer type: %p\n", aux->type);
+			printf("field: %s\n", aux->string);
+
+			ComponentAndType cat;
+			cat.type = LAYER1;
+			cat.component = malloc(sizeof(Layer));
+			
+			// // setTypeAndLength(temporaryComponents, i, LAYER);
+			// if(getObjectAndVerify(aux, (char*){"layer"}, &aux2, NUMBER)){
+			// 	(*((Layer*)(cat.component))).layer = aux2->valueint;
+			// 	// printf("layer %d\n", (*((Layer*)(cat.component))).layer);
+			// }
+			// // temporaryComponents[i].isThereLayer = true;
+
+			// // printf("after: %d\n", lengthArray(temporaryEntity.componentAndTypes));
+
+			addArray(
+				&temporaryEntity.componentAndTypes,
+				lengthArray(temporaryEntity.componentAndTypes),
+				&cat
+			);
+
+			// printf("befor: %d\n", lengthArray(temporaryEntity.componentAndTypes));
+		}
+		
+		if(getObjectAndVerify(ind, (char*){"layer2"}, &aux, OBJECT)){
+			// printf("layer type: %p\n", aux->type);
+			printf("field: %s\n", aux->string);
+
+			ComponentAndType cat;
+			cat.type = LAYER2;
+			cat.component = malloc(sizeof(Layer));
+			
+			// // setTypeAndLength(temporaryComponents, i, LAYER);
+			// if(getObjectAndVerify(aux, (char*){"layer"}, &aux2, NUMBER)){
+			// 	(*((Layer*)(cat.component))).layer = aux2->valueint;
+			// 	// printf("layer %d\n", (*((Layer*)(cat.component))).layer);
+			// }
+			// // temporaryComponents[i].isThereLayer = true;
+
+			// // printf("after: %d\n", lengthArray(temporaryEntity.componentAndTypes));
 
 			addArray(
 				&temporaryEntity.componentAndTypes,

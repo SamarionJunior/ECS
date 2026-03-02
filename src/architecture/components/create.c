@@ -14,7 +14,7 @@ Size createSize(int id, float width, float height);
 Color createColor(int id, int red, int green, int blue, int alpha);
 Collider createCollider(int id, int isItColliding, int *direction, int isStatic);
 
-Layer createLayer(int id, int number);
+Layer createLayer(int id);
 Collectible createCollectible(int id);
 Anchor createAnchor(int id, int idParent);
 
@@ -92,10 +92,9 @@ Collider createCollider(int id, int isItColliding, int *direction, int isStatic)
 
 	return collision;
 }
-Layer createLayer(int id, int number){
+Layer createLayer(int id){
 	Layer layer;
 	layer.id = id;
-	layer.layer = number;
 	return layer;
 }
 

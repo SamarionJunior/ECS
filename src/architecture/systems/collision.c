@@ -21,10 +21,11 @@ bool collisionBetween(Position positionA, Size sizeA);
 static float xA = 0, yA = 0, wA = 0, hA = 0,
 			xB = 0, yB = 0, wB = 0, hB = 0;
 
-static Position temporaryPositionB;
-static Size temporarySizeB;
+static Position* temporaryPositionB;
+static Size* temporarySizeB;
 
-static Id* temporaryId = NULL;
+static Id temporaryId;
+// static Id* temporaryId;
 
 static int temporaryIndex;
 
@@ -54,9 +55,9 @@ int isTheSameIndex(Position entityA, Position entityB){
 	return false;
 }
 
-void initializeCollisionVariables(Position entity, Size size, float* x, float* y, float* w, float* h){
-	*x = entity.current2.x;
-	*y = entity.current2.y;
+void initializeCollisionVariables(Position position, Size size, float* x, float* y, float* w, float* h){
+	*x = position.current2.x;
+	*y = position.current2.y;
 	*w = size.vector2.x;
 	*h = size.vector2.y;
 }
@@ -74,25 +75,19 @@ bool collisionBetween(Position temporaryPositionA, Size temporarySizeA){
 		
 	for(size_t i = 0 ; i < lengthArray(colliderArray); i++){
 
-		if((temporaryId = (Id*)getArray(colliderArray, i)) == NULL){
+		if(getIdByIndex(colliderArray, i, &temporaryId) == false){
 			continue;
 		}
 
-    if((temporaryIndex = temporaryId->id) == temporaryPositionA.id){
+    if(temporaryId.id == temporaryPositionA.id){
 			continue;
 		}
 
-		if(getOccurrenceById(positionArray, temporaryIndex, &occurrencesPosition) == false){
+		if(getComponentsById(temporaryId.id, 4, positionArray, &temporaryPositionB, sizeArray, &temporarySizeB) == false){
 			continue;
 		}
-		if(getOccurrenceById(sizeArray, temporaryIndex, &occurrencesSize) == false){
-			continue;
-		}
-		
-		temporaryPositionB = (*((Position*)occurrencesPosition.component));
-		temporarySizeB = (*((Size*)occurrencesSize.component));
 
-		initializeCollisionVariables(temporaryPositionB, temporarySizeB, &xB, &yB, &wB, &hB);
+		initializeCollisionVariables(*temporaryPositionB, *temporarySizeB, &xB, &yB, &wB, &hB);
 
 		if(isItColliding(xA, yA, wA, hA, xB, yB, wB, hB) == false){
 			continue;
@@ -105,4 +100,20 @@ bool collisionBetween(Position temporaryPositionA, Size temporarySizeA){
 		// printf("oi\n");
 
 	return false;
+}
+
+bool collisionBetweenAendB(Position temporaryPositionA, Size temporarySizeA, Position temporaryPositionB, Size temporarySizeB){
+
+	resetVariables();
+
+	initializeCollisionVariables(temporaryPositionA, temporarySizeA, &xA, &yA, &wA, &hA);
+
+	initializeCollisionVariables(temporaryPositionB, temporarySizeB, &xB, &yB, &wB, &hB);
+
+	if(isItColliding(xA, yA, wA, hA, xB, yB, wB, hB) == false){
+		return false;
+	}
+	
+	return true;
+
 }

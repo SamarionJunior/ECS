@@ -15,7 +15,7 @@ Acceleration createAcceleration(int id, float x, float y);
 Size createSize(int id, float width, float height);
 Color createColor(int id, int red, int green, int blue, int alpha);
 Collider createCollider(int id, int isItColliding, int *direction, int isStatic);
-Layer createLayer(int id, int number);
+Layer createLayer(int id);
 
 Player createPlayer(int id);
 Collectible createCollectible(int id);

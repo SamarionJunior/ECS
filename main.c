@@ -95,6 +95,26 @@ void loop(){
 
 		render();
 
+		// SDL_SetRenderDrawColor(
+		// 	renderer, 
+		// 	255, 
+		// 	255, 
+		// 	255, 
+		// 	255
+		// );
+		// SDL_RenderClear(renderer);
+
+		// SDL_SetRenderDrawColor(
+		// 		renderer, 
+		// 		0, 
+		// 		255, 
+		// 		255, 
+		// 		255
+		// 	);
+		// SDL_RenderFillRect(renderer, &(SDL_FRect){.h = WINDOW_HEIGHT, .w = WINDOW_WIDTH, .x = 0, .y = 0});
+
+		// SDL_RenderPresent(renderer);
+
 		endFrameCount();
 		calculateFramesNumber();
 

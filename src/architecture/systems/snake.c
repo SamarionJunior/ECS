@@ -84,8 +84,8 @@ void iterationSnake(){
 	Player* player;
 	int idA;
 	int idB;
-	Occurrence auxPositionA;
-	Occurrence auxPositionB;
+	Position* auxPositionA = NULL;
+	Position* auxPositionB = NULL;
 	float oldX;
 	float oldY;
 	Anchor* tail;
@@ -103,12 +103,12 @@ void iterationSnake(){
 
 		idA = player->id;
 
-		if(getOccurrenceById(positionArray, idA, &auxPositionA) == false){
+		if(getComponentById(positionArray, idA, &auxPositionA) == false){
 			continue;
 		}
 
-		oldX = (*((Position*)auxPositionA.component)).old2.x;
-		oldY = (*((Position*)auxPositionA.component)).old2.y;
+		oldX = auxPositionA->old2.x;
+		oldY = auxPositionA->old2.y;
 
 		// printf("%f - %f\n", oldX, oldY);
 
@@ -130,24 +130,24 @@ void iterationSnake(){
 
 			// printf("%d\n", idA);
 
-			if(getOccurrenceById(positionArray, idA, &auxPositionB) == false){
+			if(getComponentById(positionArray, idA, &auxPositionB) == false){
 				continue;
 			}
 
 			// printf("%f - %f\n", oldX, oldY);
 
 			if(
-				(*((Position*)auxPositionB.component)).current2.x == oldX &&
-				(*((Position*)auxPositionB.component)).current2.y == oldY 
+				auxPositionB->current2.x == oldX &&
+				auxPositionB->current2.y == oldY 
 			){
 				break;
 			}
 
-			tempX = (*((Position*)auxPositionB.component)).current2.x;
-			tempY = (*((Position*)auxPositionB.component)).current2.y;
+			tempX = auxPositionB->current2.x;
+			tempY = auxPositionB->current2.y;
 
-			(*((Position*)auxPositionB.component)).current2.x = oldX;
-			(*((Position*)auxPositionB.component)).current2.y = oldY;
+			auxPositionB->current2.x = oldX;
+			auxPositionB->current2.y = oldY;
 
 			oldX = tempX;
 			oldY = tempY;

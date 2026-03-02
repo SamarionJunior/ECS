@@ -65,7 +65,11 @@ bool removeEntity(int id){
 			continue;
 		}
 
-		if(((Id*)temporaryComponent.component)->id != id){
+		// if(((Id*)temporaryComponent.component)->id != id){
+		// 	continue;
+		// }
+
+		if(getIdByOccurrence(temporaryComponent) != id){
 			continue;
 		}
 

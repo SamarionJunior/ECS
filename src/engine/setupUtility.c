@@ -81,11 +81,25 @@ void addComponentsinEntity(TemporaryEntity te){
 					arrayOfArrayComponents[COLLIDER]
 				);
 				break;
-			case LAYER:
+			case LAYER0:
 				// printf("layer: %d\n", (*(Layer*)cap.component).layer);
 				addComponentInEntity(
 					cap.component, 
-					arrayOfArrayComponents[LAYER]
+					arrayOfArrayComponents[LAYER0]
+				);
+				break;
+			case LAYER1:
+				// printf("layer: %d\n", (*(Layer*)cap.component).layer);
+				addComponentInEntity(
+					cap.component, 
+					arrayOfArrayComponents[LAYER1]
+				);
+				break;
+			case LAYER2:
+				// printf("layer: %d\n", (*(Layer*)cap.component).layer);
+				addComponentInEntity(
+					cap.component, 
+					arrayOfArrayComponents[LAYER2]
 				);
 				break;
 			case PLAYER:

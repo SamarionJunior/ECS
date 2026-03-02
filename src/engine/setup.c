@@ -64,7 +64,9 @@ void setup(void){
 	arrayOfArrayComponents[SIZE] = &sizeArray;
 	arrayOfArrayComponents[COLOR] = &colorArray;
 	arrayOfArrayComponents[COLLIDER] = &colliderArray;
-	arrayOfArrayComponents[LAYER] = &layerArray;
+	arrayOfArrayComponents[LAYER0] = &layer0Array;
+	arrayOfArrayComponents[LAYER1] = &layer1Array;
+	arrayOfArrayComponents[LAYER2] = &layer2Array;
 	arrayOfArrayComponents[PLAYER] = &playerArray;
 	arrayOfArrayComponents[COLLECTIBLE] = &collectibleArray;
 	arrayOfArrayComponents[ANCHOR] = &anchorArray;
@@ -93,6 +95,8 @@ void setup(void){
 						y = (*(Position*)(cap.component)).current2.y;
 						((Position*)(cap.component))->current2.x = j * SPRITE;
 						((Position*)(cap.component))->current2.y = i * SPRITE;
+						((Position*)(cap.component))->old2.x = ((Position*)(cap.component))->current2.x;
+						((Position*)(cap.component))->old2.y = ((Position*)(cap.component))->current2.y;
 					}
 				}
 
@@ -103,6 +107,8 @@ void setup(void){
 					if(cap.type == POSITION){
 						((Position*)(cap.component))->current2.x = x;
 						((Position*)(cap.component))->current2.y = y;
+						((Position*)(cap.component))->old2.x = x;
+						((Position*)(cap.component))->old2.y = y;
 					}
 				}
 			}
@@ -110,6 +116,10 @@ void setup(void){
 	}
 
 	initializingFreeSpaces();
+
+	printf("length: %d\n", lengthArray(layer0Array));
+	printf("length: %d\n", lengthArray(layer1Array));
+	printf("length: %d\n", lengthArray(layer2Array));
 
 	// // // // printf("\n///////////////////\n");
 	// // // // printf(  "/// END - SETUP ///\n");

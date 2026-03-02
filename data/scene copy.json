@@ -3,9 +3,13 @@
 		"index": 1,
 		"components":	{
 			"information":	{
-				"name": "bricks"
+				"name": "floor"
 			},
 			"position":	{
+				"x": 0,
+				"y": 0,
+				"oldX": 0,
+				"oldY": 0
 			},
 			"size": {
 				"width": 64,
@@ -22,41 +26,26 @@
 				"collisionDirection": "NULL",
 				"isStatic": "true"
 			},
-			"layer0": {
+			"layer": {
+				"layer": 0
 			}
-		}
+		},
+		"systems": [0, 1, 2]
 	},{
 		"index": 2,
 		"components":	{
 			"information":	{
-				"name": "column"
+				"name": "fruit"
 			},
 			"position":	{
+				"x": 0,
+				"y": 0,
+				"oldX": 0,
+				"oldY": 0
 			},
 			"size": {
 				"width": 64,
 				"height": 64
-			},
-			"color": {
-				"red": 127,
-				"green": 127,
-				"blue":	127,
-				"alpha": 255
-			},
-			"layer0": {
-			}
-		}
-	},{
-		"index": 4,
-		"components":	{
-			"information":	{
-				"name": "door"
-			},
-			"position":	{
-			},
-			"size": {
-				"width": 64,
-				"height": 192
 			},
 			"color": {
 				"red": 0,
@@ -64,25 +53,29 @@
 				"blue":	0,
 				"alpha": 255
 			},
-			"collider": {
-				"isItColliding": "false",
-				"direction": "NULL",
-				"isStatic": "false"
+			"layer": {
+				"layer": 1
 			},
-			"layer0": {
+			"collectible": {
+				"id": 0
 			}
-		}
+		},
+		"systems": [0, 2, 4]
 	},{
-		"index": 5,
+		"index": 3,
 		"components":	{
 			"information":	{
-				"name": "zumbi"
+				"name": "player"
 			},
 			"position":	{
+				"x": 64,
+				"y": 64,
+				"oldX": 0,
+				"oldY": 0
 			},
 			"size": {
 				"width": 64,
-				"height": 192
+				"height": 64
 			},
 			"color": {
 				"red": 255,
@@ -95,25 +88,34 @@
 				"direction": "NULL",
 				"isStatic": "false"
 			},
-			"layer1": {
+			"layer": {
+				"layer": 3
+			},
+			"player": {
+				"id": 0
 			}
-		}
+		},
+		"systems": [0, 1, 2, 3]
 	},{
-		"index": 3,
+		"index": 4,
 		"components":	{
 			"information":	{
-				"name": "player"
+				"name": "tail"
 			},
 			"position":	{
+				"x": 64,
+				"y": 64,
+				"oldX": 0,
+				"oldY": 0
 			},
 			"size": {
 				"width": 64,
-				"height": 192
+				"height": 64
 			},
 			"color": {
 				"red": 255,
-				"green": 127,
-				"blue":	255,
+				"green": 255,
+				"blue":	0,
 				"alpha": 255
 			},
 			"collider": {
@@ -121,11 +123,14 @@
 				"direction": "NULL",
 				"isStatic": "false"
 			},
-			"layer2": {
+			"layer": {
+				"layer": 2
 			},
-			"player": {
-				"id": 0
+			"anchor":{
+				"idParent": -1,
+				"idChild": -1
 			}
-		}
+		},
+		"systems": [0, 1, 2, 3]
 	}]
 }

@@ -16,7 +16,9 @@ Array positionArray;
 Array sizeArray;
 Array colorArray;
 Array colliderArray;
-Array layerArray;
+Array layer0Array;
+Array layer1Array;
+Array layer2Array;
 
 Array playerArray;
 Array collectibleArray;
@@ -41,7 +43,13 @@ char *namesOfCompenents[TOTALCOMPONENTS] = {
 
 void destroyComponents(){
 
+	///// RESOLVER PROBLEMA DE COPIA DE REFERENCIA DO PONTEIRO "NAME" AO INCIALIZAR COMPONENTE INFORMATION ////
+	// for (size_t i = 0; i < lengthArray(informationArray); i++){
+	// 	Information* temporaryInformation = getArray(informationArray, i);
+	// 	free(temporaryInformation->name);
+	// } <- RESOLVER PROBLEMA DE COPIA DE REFERENCIA DO PONTEIRO "NAME" AO INCIALIZAR COMPONENTE INFORMATION
 	destroyArray(&informationArray);
+
 	destroyArray(&positionArray);
 	// destroyArray(directionArray);
 	// destroyArray(velocityArray);
@@ -49,7 +57,9 @@ void destroyComponents(){
 	destroyArray(&sizeArray);
 	destroyArray(&colorArray);
 	destroyArray(&colliderArray);
-	destroyArray(&layerArray);
+	destroyArray(&layer0Array);
+	destroyArray(&layer1Array);
+	destroyArray(&layer2Array);
 
 	destroyArray(&playerArray);
 	destroyArray(&collectibleArray);

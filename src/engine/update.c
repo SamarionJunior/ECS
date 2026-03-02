@@ -12,6 +12,7 @@
 #include "../architecture/systems/move.h"
 #include "../architecture/systems/scoreCalculator.h"
 #include "../architecture/systems/snake.h"
+#include "../architecture/systems/gravity.h"
 #include "../constants.h"
 #include "input.h"
 

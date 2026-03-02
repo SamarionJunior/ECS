@@ -19,8 +19,21 @@ typedef struct occurrences{
 
 // Occurrence getComponentsById(Array *array, int id);
 
-bool getOccurrenceById(Array array, int id, Occurrence* temporaryOccurrence);
+int getIdByComponent(void* temporaryComponent);
 
+int getIdByOccurrence(Occurrence temporaryComponent);
+
+bool getComponentByIndex(Array temporaryArray, int index, void** temporaryComponent);
+
+bool getComponentsByIndex(Array temporaryArray, int index, int size, ...);
+
+bool getIdByIndex(Array temporaryArray, int index, Id* temporaryId);
+
+bool getComponentById(Array array, int id, void** temporaryComponent);
+
+bool getComponentsById(int id, int size, ...);
+
+bool getOccurrenceById(Array array, int id, Occurrence* temporaryOccurrence);
 void freeComponent(Occurrences* Occurrences);
 
 void freeComponents(int size, ...);

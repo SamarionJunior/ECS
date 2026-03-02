@@ -28,7 +28,9 @@ typedef enum typesofcomponents{
 	SIZE,
 	COLOR,
 	COLLIDER,
-	LAYER,
+	LAYER0,
+	LAYER1,
+	LAYER2,
 	PLAYER,
 	COLLECTIBLE,
 	ANCHOR,
@@ -113,7 +115,6 @@ typedef struct Collider {
 
 typedef struct Layer {
 	int id;
-	int layer;
 } Layer;
 
 typedef struct Player {
@@ -137,7 +138,9 @@ extern Array positionArray;
 extern Array sizeArray;
 extern Array colorArray;
 extern Array colliderArray;
-extern Array layerArray;
+extern Array layer0Array;
+extern Array layer1Array;
+extern Array layer2Array;
 
 extern Array playerArray;
 extern Array collectibleArray;

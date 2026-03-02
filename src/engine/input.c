@@ -12,11 +12,11 @@
 
 // int arrayKey[TOTAL_MY_KEYS] = {false};
 
-bool keys[KEY_LENGHT] = {true};
+bool keys[KEY_LENGHT] = {false};
 
 void resertInput(){
 	for (size_t i = 0; i < KEY_LENGHT; i++){
-		keys[i] = true;
+		keys[i] = false;
 	}
 }
 
@@ -40,8 +40,8 @@ void process_input(int *game_is_running) {
 			}
 
 			if (event.key.key == SDLK_D) {
-				keys[UP_LEFT] = true;
-				keys[DOWN_LEFT] = false;
+				keys[UP_RIGHT] = true;
+				keys[DOWN_RIGHT] = false;
 				// printf("up = %d - %d\n", keys[DOWN_LEFT], keys[UP_LEFT]);
 			}
 
@@ -51,8 +51,8 @@ void process_input(int *game_is_running) {
 			}
 
 			if (event.key.key == SDLK_A) {
-				keys[UP_RIGHT] = true;
-				keys[DOWN_RIGHT] = false;
+				keys[UP_LEFT] = true;
+				keys[DOWN_LEFT] = false;
 			}
 
 			break;
@@ -67,9 +67,9 @@ void process_input(int *game_is_running) {
 			}
 
 			if (event.key.key == SDLK_D) {
+				keys[DOWN_RIGHT] = true;
+				keys[UP_RIGHT] = false;
 				// globalCount++;
-				keys[DOWN_LEFT] = true;
-				keys[UP_LEFT] = false;
 				// printf("down = %d - %d\n", keys[DOWN_LEFT], keys[UP_LEFT]);
 			}
 
@@ -83,8 +83,8 @@ void process_input(int *game_is_running) {
 			if (event.key.key == SDLK_A) {
 				// globalCount++;
 				// printf("%d\n",globalCount);
-				keys[DOWN_RIGHT] = true;
-				keys[UP_RIGHT] = false;
+				keys[DOWN_LEFT] = true;
+				keys[UP_LEFT] = false;
 			}
 
 			if (event.key.key == SDLK_ESCAPE) {

@@ -15,5 +15,6 @@ int isTheSameIndex(Position entityA, Position entityB);
 void initializeCollisionVariables(Position entity, Size size, float* x, float* y, float* w, float* h);
 void resetVariables();
 bool collisionBetween(Position positionA, Size sizeA);
+bool collisionBetweenAendB(Position temporaryPositionA, Size temporarySizeA, Position temporaryPositionB, Size temporarySizeB);
 
 #endif

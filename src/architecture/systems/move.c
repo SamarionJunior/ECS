@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include <SDL3/SDL.h>
+
 #include "move.h"
 #include "collision.h"
 #include "systems.h"
@@ -45,10 +47,14 @@ static const float moveTop 		= -32.f;
 static const float moveBottom 	= 32.f;
 static const float moveRight 	= -32.f;
 static const float moveLeft 		= 32.f;
+// static const float moveTop 		= -0.032f;
+// static const float moveBottom 	= 0.032f;
+// static const float moveRight 	= -0.032f;
+// static const float moveLeft 		= 0.032f;
 
 // static int i = 0;
 
-static Id* id = NULL;
+static Id temporaryId;
 
 static int count = 0;
 
@@ -58,7 +64,7 @@ static Occurrence occurrencePosition;
 static Occurrence occurrenceSize;
 // static Occurrence occurrencesPlayer;
 
-static Position* temporaryPointerPosition;
+static Position* temporaryPointerPosition = NULL;
 
 static Position temporaryPosition;
 static Size temporarySize;
@@ -160,6 +166,8 @@ void click(MoveConfig moveconfig){
 
 }
 
+static float increment = 2.0f;
+
 void move(){
 
 	if(lengthArray(playerArray) == 0){
@@ -170,62 +178,22 @@ void move(){
 
 	for(size_t i = 0 ; i < lengthArray(playerArray); i++){
 
-		if((id = (Id*)getArray(playerArray, i)) == NULL){
+		if(getIdByIndex(playerArray, i, &temporaryId) == false){
 			continue;
 		}
 
-		temporaryIndex = id->id;
-
-		if(getOccurrenceById(positionArray, temporaryIndex, &occurrencePosition) == false){
-			continue;
-		}
-		if(getOccurrenceById(sizeArray, temporaryIndex, &occurrenceSize) == false){
+		if(getComponentById(positionArray, temporaryId.id, &temporaryPointerPosition) == false){
 			continue;
 		}
 
-		temporaryPosition = (*((Position*)occurrencePosition.component));
-		temporarySize = (*((Size*)occurrenceSize.component));
-
-		temporaryPointerPosition = (Position*)occurrencePosition.component;
-
-		for (size_t j = 0; j < lenghtMoveConfig; j++){
-
-			MoveConfig currentMoveConfig = moveconfig[j];
-			
-			bool result;
-
-			if((result = isClickDown(currentMoveConfig)) == false){
-
-				if(
-					*(currentMoveConfig.down) == false && 
-					*(currentMoveConfig.up) == true
-				){
-					*(currentMoveConfig.keyBlock) = false;
-				}
-
-
-
-				// return;
-				continue;
-			}
-
-			// printf(
-			// 	"%d: down = %d - %d\n", 
-			// 	rand(),
-			// 	*(currentMoveConfig.down), 
-			// 	*(currentMoveConfig.up)
-			// );
-
-			// printf("%d\n", result);
-
-			click(currentMoveConfig);
-
-			// printf("%d\n", rand());
-
-			scoreCalculator();
-
-			iterationSnake();
-
+		if(keys[DOWN_RIGHT] == true){
+			temporaryPointerPosition->old2.x = temporaryPointerPosition->current2.x;
+			// temporaryPointerPosition->current2.x += 1.f * delta_time;
+			temporaryPointerPosition->current2.x += increment;
+		}
+		if(keys[DOWN_LEFT] == true){
+			temporaryPointerPosition->old2.x = temporaryPointerPosition->current2.x;
+			temporaryPointerPosition->current2.x -= increment;
 		}
 	}
 }
